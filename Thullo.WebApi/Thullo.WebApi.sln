@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thullo.WebApi", "Thullo.WebApi\Thullo.WebApi.csproj", "{3E6D1492-7A95-49C5-BF1A-889F8979A2A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thullo.Application", "Thullo.Application\Thullo.Application.csproj", "{003CAAE0-86CB-41A0-BB24-40936BFAEB85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E6D1492-7A95-49C5-BF1A-889F8979A2A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6D1492-7A95-49C5-BF1A-889F8979A2A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6D1492-7A95-49C5-BF1A-889F8979A2A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6D1492-7A95-49C5-BF1A-889F8979A2A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{003CAAE0-86CB-41A0-BB24-40936BFAEB85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{003CAAE0-86CB-41A0-BB24-40936BFAEB85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{003CAAE0-86CB-41A0-BB24-40936BFAEB85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{003CAAE0-86CB-41A0-BB24-40936BFAEB85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75C8FA69-6DD2-48E2-B08A-E825183909CA}
+	EndGlobalSection
+EndGlobal
