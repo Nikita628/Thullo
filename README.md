@@ -22,3 +22,5 @@ Thullo - Trello Clone
     User story: When a card is selected, I can add labels with given colors
 
 Tech stack: Frontend - React, Backend - .Net Core Web Api, EF Core.
+
+Original post - https://devchallenges.io/challenges/wP0LbGgEeKhpFHUpPpDh
