@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+thullo-react-app/node_modules/
+thullo-react-app/.vscode/
+
 # User-specific files
 *.rsuser
 *.suo
