@@ -20,3 +20,5 @@ Thullo - Trello Clone
     User story: When a card is selected, I can add a new comment. Given I am the author, I can edit and delete the comment.
     User story: When a card is selected, I can change the card cover image by searching from Unsplash
     User story: When a card is selected, I can add labels with given colors
+
+Tech stack: Frontend - React, Backend - .Net Core Web Api, EF Core.
