@@ -1,0 +1,22 @@
+the idea is to break the app by functionality type (eg. compoments, services)
+inside of each functionality module, break by domain (eg. auth, product, order)
+
+src
+ │
+ ├── components (organized by domain)
+ │  ├── auth (signin, signup, etc..)
+ │  ├── product(product-details, product-list, etc...)
+ │
+ ├── state (aka ducks)
+ │  ├── index.js (combineReducers + complex selectors)
+ │  ├── auth.js (reducers, action types, actions creators, selectors)
+ │  └── product.js (reducers, action types, actions creators, selectors) - turn the file into a directory, if necessary (eg. product/productDetails, product/productSearch)
+ │
+ ├── sagas
+ │  ├── index.js (root saga / table of content of all the sagas)
+ │  ├── auth.js
+ │  └── product.js - file can be turned into a directory, as necessary
+ │
+ └── services
+    ├── authenticationService.js
+    └── productsApi.js
