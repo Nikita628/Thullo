@@ -24,3 +24,4 @@ Thullo - Trello Clone
 Tech stack: Frontend - React, Backend - .Net Core Web Api, EF Core.
 
 Original post - https://devchallenges.io/challenges/wP0LbGgEeKhpFHUpPpDh
+designs - https://www.figma.com/file/UOqXCGxVb1fjY7pWUzvI8K/Thullo---Trello-Clone?node-id=0%3A1
