@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Files\" />
     <Folder Include="Dtos\" />
+    <Folder Include="Files\" />
     <Folder Include="MapperConfigs\" />
   </ItemGroup>
 

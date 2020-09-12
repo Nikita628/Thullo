@@ -1,4 +1,6 @@
-﻿namespace Thullo.Application.Common
+﻿using Thullo.Application.Common;
+
+namespace Thullo.Application.Models
 {
 	public class PageRequest
 	{

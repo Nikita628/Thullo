@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-	public class CardCommentService : ICardCommentService
+    public class CardCommentService : ICardCommentService
 	{
 		private readonly CurrentUserAccessor _userAccessor;
 		private readonly ThulloDbContext _db;

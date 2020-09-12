@@ -5,10 +5,11 @@ using System.IO;
 using System.Threading.Tasks;
 using Thullo.Application.Common;
 using Thullo.Application.Contracts;
+using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-	public class CloudService : ICloudService
+    public class CloudService : ICloudService
 	{
 		private readonly Cloudinary _cloudinary;
 

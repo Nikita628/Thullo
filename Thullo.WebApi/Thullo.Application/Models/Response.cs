@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Thullo.Application.Common
+namespace Thullo.Application.Models
 {
 	public class BaseResponse
 	{

@@ -16,11 +16,12 @@ using System.Text;
 using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 using Thullo.Application.Services;
 
 namespace Thullo.WebApi
 {
-	public class Startup
+    public class Startup
 	{
 		public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 

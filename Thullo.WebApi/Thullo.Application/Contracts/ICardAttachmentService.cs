@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Thullo.Application.Common;
+using Thullo.Application.Models;
 
 namespace Thullo.Application.Contracts
 {
-	public interface ICardAttachmentService
+    public interface ICardAttachmentService
 	{
 		Task<Response<int>> Create(FileData file, int cardId);
 		Task<Response<bool>> Delete(int attachmentId);
