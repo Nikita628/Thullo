@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-	public class BoardListService : IBoardListService
+    public class BoardListService : IBoardListService
 	{
 		private readonly CurrentUserAccessor _userAccessor;
 		private readonly ThulloDbContext _db;
@@ -27,7 +27,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			boardList.CreatedById = _userAccessor.CurrentUser.Id;
+			boardList.CreatedById = _userAccessor.CurrentUserId;
 			boardList.CreatedDate = DateTime.UtcNow;
 
 			await _db.BoardLists.AddAsync(boardList);
@@ -90,7 +90,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			boardList.UpdatedById = _userAccessor.CurrentUser.Id;
+			boardList.UpdatedById = _userAccessor.CurrentUserId;
 			boardList.UpdatedDate = DateTime.UtcNow;
 			boardList.Title = title;
 

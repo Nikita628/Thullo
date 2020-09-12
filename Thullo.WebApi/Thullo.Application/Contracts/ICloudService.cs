@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Thullo.Application.Common;
+using Thullo.Application.Models;
 
 namespace Thullo.Application.Contracts
 {
-	public interface ICloudService
+    public interface ICloudService
 	{
 		Task<CloudUploadResult> UploadAsync(FileData file);
 		Task<Response<string>> DeleteAsync(string publicId);

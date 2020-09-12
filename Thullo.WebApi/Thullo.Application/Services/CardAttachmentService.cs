@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-	public class CardAttachmentService : ICardAttachmentService
+    public class CardAttachmentService : ICardAttachmentService
 	{
 		private readonly CurrentUserAccessor _userAccessor;
 		private readonly ThulloDbContext _db;
@@ -44,7 +44,7 @@ namespace Thullo.Application.Services
 					{
 						CardId = cardId,
 						FileId = file.Id,
-						CreatedById = _userAccessor.CurrentUser.Id,
+						CreatedById = _userAccessor.CurrentUserId,
 						CreatedDate = DateTime.UtcNow
 					};
 

@@ -67,8 +67,12 @@ namespace Thullo.Application.Services
 
             if (res.Succeeded)
 			{
-                result.Item.User = user;
-                result.Item.Token = GenerateJwtToken(user);
+                var signInResult = new Models.SignInResult
+                {
+                    User = user,
+                    Token = GenerateJwtToken(user)
+                };
+                result.Item = signInResult;
 			}
             else
 			{

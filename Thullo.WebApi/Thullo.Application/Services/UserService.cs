@@ -2,14 +2,13 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
 using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-	public class UserService : IUserService
+    public class UserService : IUserService
 	{
 		private readonly ThulloDbContext _db;
 		private readonly ICloudService _cloudService;

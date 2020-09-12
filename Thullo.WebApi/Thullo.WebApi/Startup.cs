@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -12,15 +13,17 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Text;
 using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 using Thullo.Application.Services;
 
 namespace Thullo.WebApi
 {
-	public class Startup
+    public class Startup
 	{
 		public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
@@ -64,6 +67,7 @@ namespace Thullo.WebApi
 
 			services.AddCors();
 			services.AddControllers();
+			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 			services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
@@ -77,6 +81,7 @@ namespace Thullo.WebApi
 			services.AddScoped<ICardService, CardService>();
 			services.AddScoped<ICloudService, CloudService>();
 			services.AddScoped<IUserService, UserService>();
+			services.AddScoped(typeof(CurrentUserAccessor));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

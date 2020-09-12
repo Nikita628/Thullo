@@ -50,7 +50,7 @@ namespace Thullo.Application.DbModel
 						auditEntity.UpdatedDate = DateTime.UtcNow;
 
 					if (_userAccessor != null && !auditEntity.UpdatedById.HasValue)
-						auditEntity.UpdatedById = _userAccessor.CurrentUser.Id;
+						auditEntity.UpdatedById = _userAccessor.CurrentUserId;
 				}
 				else if (entityEntry.State == EntityState.Added)
 				{
@@ -58,7 +58,7 @@ namespace Thullo.Application.DbModel
 						auditEntity.CreatedDate = DateTime.UtcNow;
 
 					if (_userAccessor != null && auditEntity.CreatedById == default)
-						auditEntity.CreatedById = _userAccessor.CurrentUser.Id;
+						auditEntity.CreatedById = _userAccessor.CurrentUserId;
 				}
 			}
 

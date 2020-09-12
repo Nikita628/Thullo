@@ -30,7 +30,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			board.CreatedById = _userAccessor.CurrentUser.Id;
+			board.CreatedById = _userAccessor.CurrentUserId;
 			board.CreatedDate = DateTime.UtcNow;
 
 			await _db.Boards.AddAsync(board);
@@ -94,7 +94,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			board.UpdatedById = _userAccessor.CurrentUser.Id;
+			board.UpdatedById = _userAccessor.CurrentUserId;
 			board.UpdatedDate = DateTime.UtcNow;
 			board.Description = description;
 
@@ -117,7 +117,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			board.UpdatedById = _userAccessor.CurrentUser.Id;
+			board.UpdatedById = _userAccessor.CurrentUserId;
 			board.UpdatedDate = DateTime.UtcNow;
 			board.Title = title;
 
@@ -140,7 +140,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			board.UpdatedById = _userAccessor.CurrentUser.Id;
+			board.UpdatedById = _userAccessor.CurrentUserId;
 			board.UpdatedDate = DateTime.UtcNow;
 			board.IsPrivate = isPrivate;
 

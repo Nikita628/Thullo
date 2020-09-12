@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-	public class CardCommentService : ICardCommentService
+    public class CardCommentService : ICardCommentService
 	{
 		private readonly CurrentUserAccessor _userAccessor;
 		private readonly ThulloDbContext _db;
@@ -28,7 +28,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			comment.CreatedById = _userAccessor.CurrentUser.Id;
+			comment.CreatedById = _userAccessor.CurrentUserId;
 			comment.CreatedDate = DateTime.UtcNow;
 
 			await _db.CardComments.AddAsync(comment);
@@ -72,7 +72,7 @@ namespace Thullo.Application.Services
 			}
 
 			comment.Text = text;
-			comment.UpdatedById = _userAccessor.CurrentUser.Id;
+			comment.UpdatedById = _userAccessor.CurrentUserId;
 			comment.UpdatedDate = DateTime.UtcNow;
 			await _db.SaveChangesAsync();
 
