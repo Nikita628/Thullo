@@ -54,7 +54,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			label.CreatedById = _userAccessor.CurrentUser.Id;
+			label.CreatedById = _userAccessor.CurrentUserId;
 			label.CreatedDate = DateTime.UtcNow;
 
 			await _db.CardLabels.AddAsync(label);

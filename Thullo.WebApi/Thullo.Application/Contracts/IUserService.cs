@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.DbModel;
 using Thullo.Application.Models;
 
 namespace Thullo.Application.Contracts
 {
-	public interface IUserService
+    public interface IUserService
 	{
 		Task<Response<bool>> InviteToBoard(int userId, int boardId);
 		Task<Response<bool>> DeleteFromBoard(int userId, int boardId);

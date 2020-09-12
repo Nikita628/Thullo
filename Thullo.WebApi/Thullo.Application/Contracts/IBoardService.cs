@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.DbModel;
 using Thullo.Application.Models;
 
 namespace Thullo.Application.Contracts
 {
-	public interface IBoardService
+    public interface IBoardService
 	{
 		Task<PageResponse<Board>> Search(BoardSearchParam param);
 		Task<Response<int>> Create(Board board);

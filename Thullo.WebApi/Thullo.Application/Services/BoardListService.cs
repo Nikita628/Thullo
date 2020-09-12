@@ -27,7 +27,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			boardList.CreatedById = _userAccessor.CurrentUser.Id;
+			boardList.CreatedById = _userAccessor.CurrentUserId;
 			boardList.CreatedDate = DateTime.UtcNow;
 
 			await _db.BoardLists.AddAsync(boardList);
@@ -90,7 +90,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			boardList.UpdatedById = _userAccessor.CurrentUser.Id;
+			boardList.UpdatedById = _userAccessor.CurrentUserId;
 			boardList.UpdatedDate = DateTime.UtcNow;
 			boardList.Title = title;
 

@@ -45,10 +45,21 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpPut("{boardId}")]
-		public async Task<IActionResult> UpdateVisibility(int boardId, bool isPrivate)
+		[HttpPut("updateVisibility")]
+		public async Task<IActionResult> UpdateVisibility(Dtos.Board.UpdateVisibility param)
 		{
-			var res = await _boardService.UpdateVisibility(isPrivate, boardId);
+            var res = await _boardService.UpdateVisibility(param.IsPrivate, param.BoardId);
+
+            if (res.Errors.Any())
+                return BadRequest(res);
+
+            return Ok();
+		}
+
+		[HttpPut("updateTitle")]
+		public async Task<IActionResult> UpdateTitle(Dtos.Board.UpdateTitle param)
+		{
+			var res = await _boardService.UpdateTitle(param.Title, param.BoardId);
 
 			if (res.Errors.Any())
 				return BadRequest(res);
@@ -56,10 +67,10 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpPut("{boardId}")]
-		public async Task<IActionResult> UpdateTitle(int boardId, string title)
+		[HttpPut("updateDescription")]
+		public async Task<IActionResult> UpdateDescription(Dtos.Board.UpdateDescription param)
 		{
-			var res = await _boardService.UpdateTitle(title, boardId);
+			var res = await _boardService.UpdateDescription(param.Description, param.BoardId);
 
 			if (res.Errors.Any())
 				return BadRequest(res);
@@ -67,18 +78,7 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpPut("{boardId}")]
-		public async Task<IActionResult> UpdateDescription(int boardId, string description)
-		{
-			var res = await _boardService.UpdateDescription(description, boardId);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
-
-			return Ok(res);
-		}
-
-		[HttpGet("{boardId}")]
+		[HttpGet("get/{boardId}")]
 		public async Task<IActionResult> Get(int boardId)
 		{
 			var res = await _boardService.Get(boardId);

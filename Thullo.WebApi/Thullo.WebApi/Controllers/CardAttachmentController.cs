@@ -41,7 +41,7 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpDelete("{id}")]
+		[HttpDelete("delete/{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			var res = await _attachmentService.Delete(id);

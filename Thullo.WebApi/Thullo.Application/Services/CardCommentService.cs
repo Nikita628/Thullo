@@ -28,7 +28,7 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			comment.CreatedById = _userAccessor.CurrentUser.Id;
+			comment.CreatedById = _userAccessor.CurrentUserId;
 			comment.CreatedDate = DateTime.UtcNow;
 
 			await _db.CardComments.AddAsync(comment);
@@ -72,7 +72,7 @@ namespace Thullo.Application.Services
 			}
 
 			comment.Text = text;
-			comment.UpdatedById = _userAccessor.CurrentUser.Id;
+			comment.UpdatedById = _userAccessor.CurrentUserId;
 			comment.UpdatedDate = DateTime.UtcNow;
 			await _db.SaveChangesAsync();
 

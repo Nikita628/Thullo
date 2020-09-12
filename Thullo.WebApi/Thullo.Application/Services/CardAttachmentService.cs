@@ -44,7 +44,7 @@ namespace Thullo.Application.Services
 					{
 						CardId = cardId,
 						FileId = file.Id,
-						CreatedById = _userAccessor.CurrentUser.Id,
+						CreatedById = _userAccessor.CurrentUserId,
 						CreatedDate = DateTime.UtcNow
 					};
 

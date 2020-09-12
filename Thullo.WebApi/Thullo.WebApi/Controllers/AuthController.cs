@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.Models;
 using Thullo.WebApi.Extensions;
 
 namespace Thullo.WebApi.Controllers
 {
-    [Authorize]
-	[ApiController]
+    [ApiController]
 	[Route("api/[controller]")]
 	public class AuthController : ControllerBase
 	{
@@ -26,10 +23,10 @@ namespace Thullo.WebApi.Controllers
 			_mapper = m;
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> SignIn(string login, string password)
+		[HttpPost("signIn")]
+		public async Task<IActionResult> SignIn(Dtos.Auth.SignIn param)
 		{
-			var res = await _authService.SignIn(login, password);
+			var res = await _authService.SignIn(param.Login, param.Password);
 			
 			if (res.Errors.Any())
 				return BadRequest(res);
@@ -37,7 +34,7 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpPost]
+		[HttpPost("signUp")]
 		public async Task<IActionResult> SignUp([FromForm]IFormFile userImg, [FromForm]string signUpDataJson)
         {
 			var file = new FileData

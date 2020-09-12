@@ -33,10 +33,10 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateTitle(string title, int id)
+		[HttpPut("updateTitle")]
+		public async Task<IActionResult> UpdateTitle(Dtos.BoardList.UpdateTitle param)
 		{
-			var res = await _listService.UpdateTitle(title, id);
+			var res = await _listService.UpdateTitle(param.Title, param.BoardListId);
 
 			if (res.Errors.Any())
 				return BadRequest(res);
@@ -44,7 +44,7 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpDelete("{id}")]
+		[HttpDelete("delete/{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			var res = await _listService.Delete(id);
@@ -55,7 +55,7 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpGet("{id}")]
+		[HttpGet("get/{id}")]
 		public async Task<IActionResult> Get(int id)
 		{
 			var res = await _listService.Get(id);
