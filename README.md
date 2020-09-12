@@ -21,7 +21,7 @@ Thullo - Trello Clone
     User story: When a card is selected, I can change the card cover image by searching from Unsplash
     User story: When a card is selected, I can add labels with given colors
 
-Tech stack: Frontend - React, Backend - .Net Core Web Api, EF Core.
+Tech stack: Frontend - React (Redux, Saga), Backend - .Net Core Web Api, EF Core.
 
 Original post - https://devchallenges.io/challenges/wP0LbGgEeKhpFHUpPpDh
 designs - https://www.figma.com/file/UOqXCGxVb1fjY7pWUzvI8K/Thullo---Trello-Clone?node-id=0%3A1
