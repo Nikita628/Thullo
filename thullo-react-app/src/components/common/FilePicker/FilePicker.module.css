@@ -1,0 +1,130 @@
+#fileInput {
+    display: none;
+}
+
+.fileForm {
+    border: 2px dashed #acacac;
+    border-radius: 5px;
+    background: white;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.fileFormHighlited {
+    border-color: #2f80ed;
+}
+
+.filePickerMessage {
+    margin: 10px;
+    color: #646c83;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filePreviews {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filePreview {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    display: block;
+    margin: 10px;
+    cursor: default;
+}
+
+.deleteFileButton {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.deleteFileIcon {
+    opacity: 0.4;
+    color: #f00;
+}
+
+.deleteFileIcon:hover {
+    opacity: 1;
+}
+
+.filePreviewImgPlaceholder {
+    background-color: #cacaca;
+    width: 120px;
+    height: 120px;
+}
+
+.filePreviewImgContainer {
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+}
+
+.filePreviewName {
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.filePreviewNameText {
+    display: inline-block;
+    background-color: #acacac;
+    opacity: 0.7;
+}
+
+.filePreviewNameText:hover {
+    opacity: 1;
+    background-color: #dbdbdb;
+}
+
+.filePreviewName:hover {
+    overflow: visible;
+    z-index: 2;
+}
+
+.uploadButton {
+    background-color: #2f80ed;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    outline: none;
+}
+
+.uploadButton:hover {
+    background-color: #2664b6;
+}
+
+.uploadButton:active {
+    background-color: #0d4ea3;
+}
+
+.uploadButtonDisabled {
+    opacity: 0.6;
+    background-color: #2f80ed;
+}
+
+.uploadButtonDisabled:hover {
+    opacity: 0.6;
+    background-color: #2f80ed;
+}
+
