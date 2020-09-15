@@ -36,6 +36,28 @@ let canvasHeight = 0;
 
 const resizeButtonRadius = 8;
 
+/*
+const getCanvasDimensions = (img: HTMLImageElement): Dimensions => {
+        let width = img.width;
+        let height = img.height;
+
+        if (img.width >= img.height) {
+            const scaleFactor = img.width / defaultCanvasWidth;
+            width /= scaleFactor;
+            height /= scaleFactor;
+        } else if (img.height >= img.width) {
+            const scaleFactor = img.height / defaultCanvasHeight;
+            width /= scaleFactor;
+            height /= scaleFactor;
+        }
+
+        return {
+            width,
+            height
+        };
+    }
+*/
+
 const ImgCropper = (props: ImgCropperProps) => {
     if (props.cropType === "square" && props.minHeight !== props.minWidth) {
         throw Error("For the square crop the minHeight and minWidth must be the same");
