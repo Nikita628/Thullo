@@ -110,7 +110,7 @@ const FilePicker = (props: FilePickerProps) => {
         setFilePreviews(newFilePreviews);
 
         if (props.onSelectedFilesChanged) {
-            props.onSelectedFilesChanged(selectedFiles);
+            props.onSelectedFilesChanged(newFiles);
         }
     }
 
@@ -149,7 +149,7 @@ const FilePicker = (props: FilePickerProps) => {
                         return [...prevState, filePreview];
                     });
                 }
-            }
+            };
         }
     }
 
