@@ -22,6 +22,8 @@ interface Dimensions {
 const defaultResizerButtonRadius = 8;
 const defaultImageWidth = 400;
 const defaultImageHeight = 300;
+const defaultCropperColor = "#c4c4c4";
+const defaultLineWidth = 2;
 
 let originalImage: HTMLImageElement;
 let isDragging = false;
@@ -218,9 +220,9 @@ const draw = (canvas: HTMLCanvasElement) => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(originalImage, 0, 0, canvasDimensions.width, canvasDimensions.height);
 
-    ctx.lineWidth = 3;
-    ctx.fillStyle = "red";
-    ctx.strokeStyle = "red";
+    ctx.lineWidth = defaultLineWidth;
+    ctx.fillStyle = defaultCropperColor;
+    ctx.strokeStyle = defaultCropperColor;
 
     ctx.beginPath();
     ctx.arc(cropperRectanglePosition.x + cropperRectangleDimensions.width, cropperRectanglePosition.y + cropperRectangleDimensions.height, defaultResizerButtonRadius, 0, 2 * Math.PI);
