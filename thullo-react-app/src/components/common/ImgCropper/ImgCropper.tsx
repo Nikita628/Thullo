@@ -35,28 +35,8 @@ let canvasWidth = 0;
 let canvasHeight = 0;
 
 const resizeButtonRadius = 8;
-
-/*
-const getCanvasDimensions = (img: HTMLImageElement): Dimensions => {
-        let width = img.width;
-        let height = img.height;
-
-        if (img.width >= img.height) {
-            const scaleFactor = img.width / defaultCanvasWidth;
-            width /= scaleFactor;
-            height /= scaleFactor;
-        } else if (img.height >= img.width) {
-            const scaleFactor = img.height / defaultCanvasHeight;
-            width /= scaleFactor;
-            height /= scaleFactor;
-        }
-
-        return {
-            width,
-            height
-        };
-    }
-*/
+const defaultImageWidth = 400;
+const defaultImageHeight = 300;
 
 const ImgCropper = (props: ImgCropperProps) => {
     if (props.cropType === "square" && props.minHeight !== props.minWidth) {
@@ -82,15 +62,17 @@ const ImgCropper = (props: ImgCropperProps) => {
             const inputImage = new Image();
 
             inputImage.onload = () => {
-                originalImage = inputImage;
-                canvasWidth = inputImage.naturalWidth;
-                canvasHeight = inputImage.naturalHeight;
+                scaleImageToDefault(inputImage)
+                    .then((img: { scaledImg: HTMLImageElement, scaledImgSrc: string }) => {
+                        originalImage = img.scaledImg;
+                        canvasWidth = img.scaledImg.naturalWidth;
+                        canvasHeight = img.scaledImg.naturalHeight;
+                        canvasRef.current.width = img.scaledImg.naturalWidth;
+                        canvasRef.current.height = img.scaledImg.naturalHeight;
 
-                canvasRef.current.width = inputImage.naturalWidth;
-                canvasRef.current.height = inputImage.naturalHeight;
-
-                drawRect();
-                setOriginalImageSrc(imgSrc);
+                        draw();
+                        setOriginalImageSrc(img.scaledImgSrc);
+                    });
             };
 
             inputImage.src = imgSrc;
@@ -101,9 +83,48 @@ const ImgCropper = (props: ImgCropperProps) => {
         if (!croppedImageSrc && originalImage && canvasRef.current) {
             canvasRef.current.width = originalImage.naturalWidth;
             canvasRef.current.height = originalImage.naturalHeight;
-            drawRect();
+            draw();
         }
     }, [croppedImageSrc]);
+
+    const scaleImageToDefault = (img: HTMLImageElement) => {
+        return new Promise((resolve: (scaledImg: any) => void, reject) => {
+            let width = img.width;
+            let height = img.height;
+
+            if (img.width >= img.height) {
+                const scaleFactor = img.width / defaultImageWidth;
+                width /= scaleFactor;
+                height /= scaleFactor;
+            } else if (img.height >= img.width) {
+                const scaleFactor = img.height / defaultImageHeight;
+                width /= scaleFactor;
+                height /= scaleFactor;
+            }
+
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+            );
+
+            const resizedImage = new Image();
+            const resizedImageSrc = canvas.toDataURL();
+
+            resizedImage.onload = () => {
+                resolve({ scaledImg: resizedImage, scaledImgSrc: resizedImageSrc });
+            };
+
+            resizedImage.src = resizedImageSrc;
+        });
+    }
 
     const onCropClick = () => {
         const canvas = document.createElement("canvas");
@@ -165,7 +186,7 @@ const ImgCropper = (props: ImgCropperProps) => {
             rectCurrentPosition.y = positionInsideCanvas.y - initialMousePositionInRect.y;
 
             ensureRectInsideCanvas();
-            window.requestAnimationFrame(drawRect);
+            window.requestAnimationFrame(draw);
         } else if (isResizing) {
             const bottomRight = getMousePositionInsideCanvas(e);
 
@@ -190,7 +211,7 @@ const ImgCropper = (props: ImgCropperProps) => {
 
             if (isNeedToDraw) {
                 ensureRectInsideCanvas();
-                window.requestAnimationFrame(drawRect);
+                window.requestAnimationFrame(draw);
             }
         }
     }
@@ -199,9 +220,9 @@ const ImgCropper = (props: ImgCropperProps) => {
         onCanvasMouseUp();
     }
 
-    const drawRect = () => {
+    const draw = () => {
         const ctx = canvasRef.current.getContext('2d');
-        ctx.drawImage(originalImage, 0, 0);
+        ctx.drawImage(originalImage, 0, 0, canvasWidth, canvasHeight);
 
         ctx.lineWidth = 3;
         ctx.fillStyle = "red";
