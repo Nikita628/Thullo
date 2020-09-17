@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+
 import Button from '../../common/Button/Button';
 import FilePicker from '../../common/FilePicker/FilePicker';
 import ImgCropper from '../../common/ImgCropper/ImgCropper';
 import Input from '../../common/Input/Input';
 import css from './SignUp.module.css';
+import { actionCreators } from "../../../state/auth";
+import { SignUpData } from '../../../models/auth';
+import { AppState } from '../../../state';
 
 interface SignUpProps {
     className?: string;
@@ -31,6 +36,10 @@ interface FormData {
 }
 
 const SignUp = (props: SignUpProps) => {
+    const dispatch = useDispatch();
+    const authState = useSelector((state: AppState) => state.auth);
+    console.log("auth state - ", authState);
+
     const [profileImg, setProfileImg] = useState<File>();
     const [croppedImg, setCroppedImg] = useState<File>();
     const [firstName, setFirstName] = useState<string>();
@@ -100,9 +109,13 @@ const SignUp = (props: SignUpProps) => {
         const errors = validate(form);
 
         if (!errors.hasErrors) {
-            //model
-            //dispatch
-            //etc...
+            const signUpData = new SignUpData();
+            signUpData.email = email;
+            signUpData.img = croppedImg;
+            signUpData.firstName = firstName;
+            signUpData.lastName = lastName;
+            signUpData.password = password;
+            dispatch(actionCreators.SignUpRequested(signUpData, () => {/* redirect to signin */}));
         } else {
             setValidationErrors(errors);
         }
