@@ -6,7 +6,10 @@ interface ImgCropperProps {
     cropType: "square" | "free";
     minWidth: number;
     minHeight: number;
-    onImgCropped: (croppedImg: File) => void;
+    isInvalid?: boolean;
+    className?: string;
+    style?: any;
+    onCroppedImgChanged: (croppedImg: File) => void;
 }
 
 interface Point {
@@ -61,7 +64,6 @@ const ImgCropper = (props: ImgCropperProps) => {
     cropperRectangleDimensions.width = props.minWidth;
     cropperRectangleDimensions.height = props.minHeight;
 
-    //const [originalImageSrc, setOriginalImageSrc] = useState<string>();
     const [croppedImageSrc, setCroppedImageSrc] = useState<string>();
     const canvasRef = useRef<HTMLCanvasElement>();
 
@@ -76,13 +78,13 @@ const ImgCropper = (props: ImgCropperProps) => {
                 scaleImage(inputImage, defaultImageWidth, defaultImageHeight)
                     .then((img: { scaledImg: HTMLImageElement, scaledImgSrc: string }) => {
                         originalImage = img.scaledImg;
+                        cropperRectanglePosition = { x: 0, y: 0 };
                         canvasDimensions.width = img.scaledImg.naturalWidth;
                         canvasDimensions.height = img.scaledImg.naturalHeight;
                         canvasRef.current.width = img.scaledImg.naturalWidth;
                         canvasRef.current.height = img.scaledImg.naturalHeight;
 
                         draw(canvasRef.current);
-                        //setOriginalImageSrc(img.scaledImgSrc);
                     });
             };
 
@@ -95,6 +97,7 @@ const ImgCropper = (props: ImgCropperProps) => {
 
     useEffect(() => {
         if (!croppedImageSrc && originalImage && canvasRef.current) {
+            cropperRectanglePosition = { x: 0, y: 0 };
             canvasRef.current.width = originalImage.naturalWidth;
             canvasRef.current.height = originalImage.naturalHeight;
             draw(canvasRef.current);
@@ -109,13 +112,14 @@ const ImgCropper = (props: ImgCropperProps) => {
             cropperRectangleDimensions.width,
             cropperRectangleDimensions.height
         ).then((croppedImg) => {
-            props.onImgCropped(croppedImg.file);
+            props.onCroppedImgChanged(croppedImg.file);
             setCroppedImageSrc(croppedImg.src);
         });
     }
 
     const onCropAnotherClick = () => {
         cropperRectanglePosition = { x: 0, y: 0 };
+        props.onCroppedImgChanged(undefined);
         setCroppedImageSrc(undefined);
     }
 
@@ -186,7 +190,9 @@ const ImgCropper = (props: ImgCropperProps) => {
     const renderCroppedImageMenu = () => {
         return (
             <div className={css.croppedImgMenu}>
-                <img src={croppedImageSrc}></img>
+                <div className={css.scroll}>
+                    <img src={croppedImageSrc}></img>
+                </div>
                 <button className={css.button} type="button" onClick={onCropAnotherClick}>Select Another Area</button>
             </div>
         );
@@ -195,20 +201,34 @@ const ImgCropper = (props: ImgCropperProps) => {
     const renderCropperMenu = () => {
         return (
             <div className={css.cropperMenu}>
-                <canvas
-                    onMouseDown={onCanvasMouseDown}
-                    onMouseUp={onCanvasMouseUp}
-                    onMouseMove={onCanvasMouseMove}
-                    onMouseLeave={onCanvasMouseLeave}
-                    ref={canvasRef}
-                ></canvas>
+                <div className={css.scroll}>
+                    <canvas
+                        onMouseDown={onCanvasMouseDown}
+                        onMouseUp={onCanvasMouseUp}
+                        onMouseMove={onCanvasMouseMove}
+                        onMouseLeave={onCanvasMouseLeave}
+                        ref={canvasRef}
+                    ></canvas>
+                </div>
                 <button className={css.button} type="button" onClick={onCropClick}>Crop Selection</button>
             </div>
         );
     }
 
+    let classNameToAppend = "";
+
+    if (props.className) {
+        classNameToAppend += " " + props.className;
+    }
+
+    if (props.isInvalid) {
+        classNameToAppend += " " + css.invalid;
+    }
+
     return (
-        <div className={css.imgCropper}>
+        <div
+            className={css.imgCropper + classNameToAppend}
+            style={{ ...props.style }}>
             {
                 croppedImageSrc ? renderCroppedImageMenu() : renderCropperMenu()
             }

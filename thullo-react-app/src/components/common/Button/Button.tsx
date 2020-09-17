@@ -4,6 +4,7 @@ import css from './Button.module.css';
 interface ButtonProps {
     type: "primary" | "secondary" | "secondary-outline"
         | "light";
+    disabled?: boolean;
     className?: string;
     style?: any;
     children?: any;
@@ -19,6 +20,8 @@ const Button = (props: ButtonProps) => {
 
     return (
         <button
+            disabled={props.disabled}
+            type="button"
             onClick={props.onClick}
             className={css.button + " " + css[props.type] + classToAppend}
             style={{...props.style}}

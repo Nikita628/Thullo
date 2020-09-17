@@ -6,6 +6,7 @@ interface InputProps {
     value?: string;
     className?: string;
     style?: any;
+    isInvalid?: boolean;
     onChange?: (e: any) => void;
 }
 
@@ -14,6 +15,10 @@ const Input = (props: InputProps) => {
 
     if (props.className) {
         classToAppend += " " + props.className;
+    }
+
+    if (props.isInvalid) {
+        classToAppend += " " + css.invalidInput;
     }
 
     return (
