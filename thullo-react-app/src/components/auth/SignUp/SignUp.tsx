@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 
 import Button from '../../common/Button/Button';
 import FilePicker from '../../common/FilePicker/FilePicker';
@@ -8,7 +9,6 @@ import Input from '../../common/Input/Input';
 import css from './SignUp.module.css';
 import { actionCreators } from "../../../state/auth";
 import { SignUpData } from '../../../models/auth';
-import { AppState } from '../../../state';
 
 interface SignUpProps {
     className?: string;
@@ -37,8 +37,7 @@ interface FormData {
 
 const SignUp = (props: SignUpProps) => {
     const dispatch = useDispatch();
-    const authState = useSelector((state: AppState) => state.auth);
-    console.log("auth state - ", authState);
+    const history = useHistory();
 
     const [profileImg, setProfileImg] = useState<File>();
     const [croppedImg, setCroppedImg] = useState<File>();
@@ -115,7 +114,7 @@ const SignUp = (props: SignUpProps) => {
             signUpData.firstName = firstName;
             signUpData.lastName = lastName;
             signUpData.password = password;
-            dispatch(actionCreators.SignUpRequested(signUpData, () => {/* redirect to signin */}));
+            dispatch(actionCreators.SignUpRequested(signUpData, () => history.replace("/signin")));
         } else {
             setValidationErrors(errors);
         }
@@ -149,34 +148,34 @@ const SignUp = (props: SignUpProps) => {
                 }
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>First Name</label>
-                    <Input isInvalid={!!validationErrors?.firstName} value={firstName} onChange={onFirstNameChange} className={css.formInput} />
+                    <Input type="text" isInvalid={!!validationErrors?.firstName} value={firstName} onChange={onFirstNameChange} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.firstName}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Last Name</label>
-                    <Input isInvalid={!!validationErrors?.lastName} value={lastName} onChange={onLastNameChange} className={css.formInput} />
+                    <Input type="text" isInvalid={!!validationErrors?.lastName} value={lastName} onChange={onLastNameChange} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.lastName}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Email</label>
-                    <Input isInvalid={!!validationErrors?.email} value={email} onChange={onEmailChange} className={css.formInput} />
+                    <Input type="email" isInvalid={!!validationErrors?.email} value={email} onChange={onEmailChange} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.email}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Password</label>
-                    <Input isInvalid={!!validationErrors?.password} value={password} onChange={onPasswordChange} className={css.formInput} />
+                    <Input type="password" isInvalid={!!validationErrors?.password} value={password} onChange={onPasswordChange} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.password}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Password Confirmation</label>
-                    <Input isInvalid={!!validationErrors?.passwordConfirmation} value={passwordConfirmation} onChange={onPasswordConfirmationChange} className={css.formInput} />
+                    <Input type="password" isInvalid={!!validationErrors?.passwordConfirmation} value={passwordConfirmation} onChange={onPasswordConfirmationChange} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.passwordConfirmation}</div>
                 </div>
                 <div className={css.signUpButton}>
                     <Button onClick={onSignUpClick} type="primary">Sign Up</Button>
                 </div>
             </form>
-            <p className={css.already}>Already have an account? Sign in <a href="#">here</a></p>
+            <p className={css.already}>Already have an account? Sign in <Link to="/signin">here</Link></p>
         </div>
     );
 }

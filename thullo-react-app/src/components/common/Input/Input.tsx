@@ -2,6 +2,7 @@ import React from 'react';
 import css from './Input.module.css';
 
 interface InputProps {
+    type: "text" | "password" | "email";
     placeHolder?: string;
     value?: string;
     className?: string;
@@ -24,7 +25,7 @@ const Input = (props: InputProps) => {
     return (
         <input
             onChange={props.onChange}
-            type="text"
+            type={props.type}
             placeholder={props.placeHolder}
             value={props.value}
             className={css.input + classToAppend}

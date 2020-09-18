@@ -7,7 +7,7 @@
 		public string Url { get; set; }
 		public string StorageData { get; set; }
 
-		public User User { get; set; }
-		public CardAttachment CardAttachment { get; set; }
+		public virtual User User { get; set; }
+		public virtual CardAttachment CardAttachment { get; set; }
 	}
 }

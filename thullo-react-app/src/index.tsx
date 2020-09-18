@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
 import createSagaMiddleware from 'redux-saga';
 import runSagas from "./sagas";
+import { BrowserRouter } from "react-router-dom";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -21,7 +22,9 @@ runSagas(sagaMiddleware);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

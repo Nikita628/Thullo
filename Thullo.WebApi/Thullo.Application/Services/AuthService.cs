@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -69,9 +70,13 @@ namespace Thullo.Application.Services
 			{
                 var signInResult = new Models.SignInResult
                 {
-                    User = user,
+                    User = await _db.Users.Include(u => u.Img).FirstAsync(u => u.Id == user.Id),
                     Token = GenerateJwtToken(user)
                 };
+
+                if (signInResult.User.Img != null)
+                    signInResult.User.Img.User = null;
+
                 result.Item = signInResult;
 			}
             else
@@ -134,7 +139,7 @@ namespace Thullo.Application.Services
 
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     await transaction.RollbackAsync();
                     throw;

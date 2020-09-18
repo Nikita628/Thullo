@@ -11,6 +11,11 @@ export const actionTypes = {
     SignInRequested: "auth/signInRequested",
     SignInSucceeded: "auth/signInSucceeded",
     SignInFailed: "auth/signInFailed",
+
+    SignInFromLocalStorageRequested: "auth/signInFromLocalStorage",
+    SignInFromLocalStorageFailed: "auth/signInFromLocalStorageFailed",
+
+    SignOutRequested: "auth/signOutRequested",
 };
 
 export const actionCreators = {
@@ -19,9 +24,9 @@ export const actionCreators = {
         callback,
         payload: signUpData
     }),
-    SignUpSucceeded: (isSignedUp: boolean) => ({
+    SignUpSucceeded: () => ({
         type: actionTypes.SignUpSucceeded,
-        payload: isSignedUp,
+        payload: {},
     }),
     SignUpFailed: (errors: string[]) => ({
         type: actionTypes.SignUpFailed,
@@ -40,9 +45,21 @@ export const actionCreators = {
         type: actionTypes.SignInFailed,
         errors: errors,
     }),
+
+    SignInFromLocalStorageRequested: () => ({
+        type: actionTypes.SignInFromLocalStorageRequested,
+    }),
+    SignInFromLocalStorageFailed: () => ({
+        type: actionTypes.SignInFromLocalStorageFailed,
+    }),
+
+    SignOutRequested: () => ({
+        type: actionTypes.SignOutRequested,
+    }),
 };
 
 export interface AuthState {
+    hasFailedToSignInFromLocalStorage: boolean;
     isSignedIn: boolean;
     token: string;
     user: User;
@@ -50,6 +67,7 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
+    hasFailedToSignInFromLocalStorage: false,
     isSignedIn: false,
     token: null,
     user: null,
@@ -66,6 +84,18 @@ export const reducer = (state: AuthState = initialState, action: ISucceededActio
                 token: signInResult.token,
                 user: signInResult.user,
                 signInErrors: null,
+            };
+        }
+        case actionTypes.SignInFromLocalStorageFailed: {
+            return {
+                ...state,
+                hasFailedToSignInFromLocalStorage: true,
+            };
+        }
+        case actionTypes.SignInFailed: {
+            return {
+                ...state,
+                signInErrors: action.errors,
             }
         }
         default:

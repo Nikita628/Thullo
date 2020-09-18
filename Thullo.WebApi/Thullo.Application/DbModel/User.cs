@@ -9,7 +9,7 @@ namespace Thullo.Application.DbModel
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 
-		public File Img { get; set; }
+		public virtual File Img { get; set; }
 		public ICollection<BoardMembership> BoardMemberships { get; set; }
 		public ICollection<CardMembership> CardMemberships { get; set; }
 		public ICollection<Board> Boards { get; set; }

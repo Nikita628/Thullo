@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+
 import './App.css';
 import Auth from './components/auth/Auth/Auth';
-import Button from './components/common/Button/Button';
-import FilePicker from './components/common/FilePicker/FilePicker';
-import Icon from './components/common/Icon/Icon';
-import ImgCropper from './components/common/ImgCropper/ImgCropper';
-import Input from './components/common/Input/Input';
 import Layout from './components/common/Layout/Layout';
+import { AppState } from './state';
+import { actionCreators } from "./state/auth";
 
-function App() {
-  return (
-    <Auth />
-  );
+const App = () => {
+  const dispatch = useDispatch();
+  const authState = useSelector((state: AppState) => state.auth);
+
+  useEffect(() => {
+    dispatch(actionCreators.SignInFromLocalStorageRequested());
+  }, []);
+
+  if (authState.isSignedIn) {
+    return <Layout />
+  } else if (authState.hasFailedToSignInFromLocalStorage) {
+    return <Auth />
+  }
+  
+  return null;
 }
 
 export default App;
