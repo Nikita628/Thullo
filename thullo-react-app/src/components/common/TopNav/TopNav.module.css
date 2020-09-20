@@ -1,0 +1,14 @@
+.topNav {
+    background-color: white;
+}
+
+.navRight {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.inputGroup {
+    min-width: 290px;
+    margin-right: 30px;
+}

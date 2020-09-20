@@ -5,6 +5,8 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "jquery/dist/jquery.slim.js";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './index.css';
 import createSagaMiddleware from 'redux-saga';
 import { BrowserRouter } from "react-router-dom";

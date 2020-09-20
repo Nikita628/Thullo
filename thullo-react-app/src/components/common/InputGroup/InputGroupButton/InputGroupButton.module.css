@@ -1,0 +1,20 @@
+.button {
+    float: left;
+    padding: 10px;
+    background: #2f80ed;
+    color: white;
+    border: none;
+    border-left: none;
+    cursor: pointer;
+    padding: 5px 10px 5px 10px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background: #1977c4;
+}
+
+.button:active {
+    background: #125891;
+}

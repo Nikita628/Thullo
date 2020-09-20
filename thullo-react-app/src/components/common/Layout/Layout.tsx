@@ -1,5 +1,5 @@
 import React from 'react';
-import SignUp from '../../auth/SignUp/SignUp';
+import TopNav from '../TopNav/TopNav';
 import css from './Layout.module.css';
 
 interface LayoutProps {
@@ -12,9 +12,9 @@ const Layout = (props: LayoutProps) => {
     return (
         <div>
             <header>
-                top nav
+                <TopNav />
             </header>
-            <main className="container">
+            <main>
                 main
             </main>
             <footer>

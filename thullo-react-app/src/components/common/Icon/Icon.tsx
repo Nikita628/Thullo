@@ -1,7 +1,8 @@
 import React from 'react';
 
 interface IconProps {
-    type: "chat-left-text" | "three-dots" | "trash" | "x-square";
+    type: "chat-left-text" | "three-dots" | "trash" | "x-square"
+    | "caret-down-fill" | "caret-up-fill";
     className?: string;
     /** width and height in px. default is 1em */
     size?: number;
@@ -37,10 +38,22 @@ const Icon = (props: IconProps) => {
             );
         case "x-square":
             return (
-                <svg width={iconSize} height={iconSize} viewBox="0 0 16 16" className={"bi bi-x-square" + props.className ? " " + props.className : ""} 
-                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <svg width={iconSize} height={iconSize} viewBox="0 0 16 16" className={"bi bi-x-square" + props.className ? " " + props.className : ""}
+                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
                     <path fillRule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+            );
+        case "caret-down-fill":
+            return (
+                <svg width="1em" height="1em" viewBox="0 0 16 16" className={"bi bi-caret-down-fill" + props.className ? " " + props.className : ""} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                </svg>
+            );
+        case "caret-up-fill":
+            return (
+                <svg width="1em" height="1em" viewBox="0 0 16 16" className={"bi bi-caret-up-fill" + props.className ? " " + props.className : ""} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
                 </svg>
             );
         default:
