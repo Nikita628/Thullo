@@ -5,6 +5,7 @@ import { SignInData, SignInResult, SignUpData } from "../models/auth";
 import { AuthApiClient } from "../services/authApiClient";
 import { IRequestedAction } from "../state/common";
 import { actionTypes, actionCreators } from "../state/auth";
+import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiResponse } from "../models/common";
 import { constants } from "../common/data";
 
@@ -12,10 +13,11 @@ function* signUp(action: IRequestedAction<SignUpData>) {
     const res: AxiosResponse<ApiResponse<boolean>> = yield AuthApiClient.signUp(action.payload);
 
     if (res.data.item) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Signed up successfully"], "success"));
         yield put(actionCreators.SignUpSucceeded());
         yield action.callback();
     } else {
-        yield put(actionCreators.SignUpFailed(res.data.errors));
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, "error"));
     }
 }
 
@@ -27,7 +29,7 @@ function* signIn(action: IRequestedAction<SignInData>) {
         yield localStorage.setItem(constants.localStorageUserKey, JSON.stringify(res.data.item.user));
         yield put(actionCreators.SignInSucceeded(res.data.item));
     } else {
-        yield put(actionCreators.SignInFailed(res.data.errors));
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, "error"));
     }
 }
 

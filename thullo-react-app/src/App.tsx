@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import './App.css';
 import Auth from './components/auth/Auth/Auth';
 import Layout from './components/common/Layout/Layout';
+import NotificationQueue from './components/common/NotificationQueue/NotificationQueue';
 import { AppState } from './state';
 import { actionCreators } from "./state/auth";
 
@@ -16,11 +17,17 @@ const App = () => {
   }, []);
 
   if (authState.isSignedIn) {
-    return <Layout />
+    return <>
+      <NotificationQueue />
+      <Layout />
+    </>
   } else if (authState.hasFailedToSignInFromLocalStorage) {
-    return <Auth />
+    return <>
+      <NotificationQueue />
+      <Auth />
+    </>
   }
-  
+
   return null;
 }
 

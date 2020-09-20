@@ -26,23 +26,23 @@ const FilePicker = (props: FilePickerProps) => {
         handleFiles(e.target.files);
     }
 
-    const onFileFormClick = (e: React.MouseEvent<HTMLFormElement>) => {
+    const onFileFormClick = (e: React.MouseEvent<HTMLDivElement>) => {
         fileInputElement.current.click();
     }
 
-    const onFileFormDragEnter = (e: React.MouseEvent<HTMLFormElement>) => {
+    const onFileFormDragEnter = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
         setIsFileFormHighlited(true);
     }
 
-    const onFileFormDragLeave = (e: React.MouseEvent<HTMLFormElement>) => {
+    const onFileFormDragLeave = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
         setIsFileFormHighlited(false);
     }
 
-    const onFileFormDrop = (e: React.DragEvent<HTMLFormElement>) => {
+    const onFileFormDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
         setIsFileFormHighlited(false);
@@ -50,7 +50,7 @@ const FilePicker = (props: FilePickerProps) => {
         handleFiles(dataTransfer.files);
     }
 
-    const onFileFormDragOver = (e: React.MouseEvent<HTMLFormElement>) => {
+    const onFileFormDragOver = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
         setIsFileFormHighlited(true);
@@ -198,27 +198,25 @@ const FilePicker = (props: FilePickerProps) => {
     }
 
     return (
-        <div className={css.filePicker}>
-            <form
-                className={fileFormClassName}
-                onClick={onFileFormClick}
-                onDragEnter={onFileFormDragEnter}
-                onDragLeave={onFileFormDragLeave}
-                onDrop={onFileFormDrop}
-                onDragOver={onFileFormDragOver}
-            >
-                <input ref={fileInputElement} type="file" id={css.fileInput} onChange={onFileInputChange} />
-                {
-                    filePriviews.length
-                        ? renderFilePreviews()
-                        : <p className={css.filePickerMessage}>Drop files here or click to select.</p>
-                }
-                {
-                    props.isUploadEnabled
-                        ? <button className={uploadButtonClassName} onClick={onUploadClick} type="button">Upload Selected Files</button>
-                        : null
-                }
-            </form>
+        <div
+            className={fileFormClassName}
+            onClick={onFileFormClick}
+            onDragEnter={onFileFormDragEnter}
+            onDragLeave={onFileFormDragLeave}
+            onDrop={onFileFormDrop}
+            onDragOver={onFileFormDragOver}
+        >
+            <input ref={fileInputElement} type="file" id={css.fileInput} onChange={onFileInputChange} />
+            {
+                filePriviews.length
+                    ? renderFilePreviews()
+                    : <p className={css.filePickerMessage}>Drop files here or click to select.</p>
+            }
+            {
+                props.isUploadEnabled
+                    ? <button className={uploadButtonClassName} onClick={onUploadClick} type="button">Upload Selected Files</button>
+                    : null
+            }
         </div>
     );
 }

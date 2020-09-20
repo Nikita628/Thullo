@@ -4,6 +4,11 @@ export class File {
     url: string;
 }
 
+export class Notification {
+    type: "error" | "success" | "warning";
+    message: string;
+}
+
 export class BaseApiResponse {
     errors: string[] = [];
 }

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import css from './SignIn.module.css';
-import { AppState } from "../../../state";
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import { SignInData } from "../../../models/auth";
@@ -11,7 +10,6 @@ import { actionCreators } from "../../../state/auth";
 
 const SignIn = () => {
   const dispatch = useDispatch();
-  const authState = useSelector((state: AppState) => state.auth);
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -42,11 +40,6 @@ const SignIn = () => {
           <label className={css.formLabel}>Password</label>
           <Input type="password" value={password} onChange={onPasswordChange} className={css.formInput} />
         </div>
-        {
-          authState.signInErrors
-          ? <p className={css.errorText}>Incorrect email and/or password.</p>
-          : null
-        }
         <div className={css.signInButton}>
           <Button onClick={onSignInClick} type="primary">Sign In</Button>
         </div>

@@ -1,0 +1,26 @@
+.notificationQueue {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 300px;
+}
+
+.notification {
+    opacity: 0.6;
+    margin: 10px;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
+}
+
+.notificationError {
+    background-color: red;
+}
+
+.notificationSuccess {
+    background-color: green;
+}
+
+.notificationWarning {
+    background-color: #d7910a;
+}
