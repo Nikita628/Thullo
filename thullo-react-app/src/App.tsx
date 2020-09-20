@@ -17,15 +17,19 @@ const App = () => {
   }, []);
 
   if (authState.isSignedIn) {
-    return <>
-      <NotificationQueue />
-      <Layout />
-    </>
+    return (
+      <>
+        <NotificationQueue />
+        <Layout />
+      </>
+    );
   } else if (authState.hasFailedToSignInFromLocalStorage) {
-    return <>
-      <NotificationQueue />
-      <Auth />
-    </>
+    return (
+      <>
+        <NotificationQueue />
+        <Auth />
+      </>
+    );
   }
 
   return null;

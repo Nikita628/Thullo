@@ -4,12 +4,18 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "./state";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
 import createSagaMiddleware from 'redux-saga';
-import runSagas from "./sagas";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
+
+import { requestInterceptor, responseErrorInterceptor } from "./services/httpInterceptors";
+import rootReducer from "./state";
+import runSagas from "./sagas";
+
+axios.interceptors.request.use(requestInterceptor);
+axios.interceptors.response.use(null, responseErrorInterceptor);
 
 const sagaMiddleware = createSagaMiddleware();
 

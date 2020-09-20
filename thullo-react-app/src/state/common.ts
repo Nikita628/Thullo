@@ -69,7 +69,7 @@ export const reducer = (state: CommonState = initialState, action: ISucceededAct
         case actionTypes.DequeueNotification: {
             return {
                 ...state,
-                notifications: state.notifications.splice(0, 1),
+                notifications: state.notifications.filter((_, i) => i > 0),
             };
         }
         default:

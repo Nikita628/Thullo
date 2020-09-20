@@ -1,7 +1,9 @@
 import React, { ReactNode, useRef, useState } from 'react';
+import axios from "axios";
 
 import Icon from '../Icon/Icon';
 import css from './FilePicker.module.css';
+import { actionCreators as commonActionCreators } from "../../../state/common";
 
 interface FilePickerProps {
     isUploadEnabled: boolean;
@@ -66,16 +68,9 @@ const FilePicker = (props: FilePickerProps) => {
                 formData.append("file" + i, selectedFiles[i]);
             }
 
-            fetch(props.fileUploadUrl, {
-                method: 'POST',
-                body: formData
-            })
-                .then(() => {
-                    setSelectedFiles([]);
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
+            axios.post(props.fileUploadUrl, formData)
+                .then(() => setSelectedFiles([]))
+                .catch((errors: string[]) => commonActionCreators.CreateNotificationsRequested(errors, "error"));
         }
     }
 
