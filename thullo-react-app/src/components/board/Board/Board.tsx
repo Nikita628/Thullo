@@ -7,6 +7,7 @@ import UserImagesList from '../../user/UserImagesList/UserImagesList';
 interface BoardProps {
     board: BoardModel;
     key?: number;
+    className?: string;
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -14,7 +15,7 @@ const maxNumberOfUsersToDisplay = 3;
 
 const Board = (props: BoardProps) => {
     return (
-        <div className={css.board} onClick={props.onClick}>
+        <div className={css.board + (props.className ? " " + props.className : "")} onClick={props.onClick}>
             <img className={css.boardImg} src={props.board.coverUrl} />
             <h5 className={css.boardTitle}>{props.board.title}</h5>
             <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />

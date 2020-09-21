@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
 import { AppState } from '../../../state';
@@ -12,6 +12,8 @@ interface AllBoardsProps {
 
 }
 
+const numberOfBoardsPerRow = 3;
+
 const AllBoards = (props: AllBoardsProps) => {
     const dispatch = useDispatch();
     const boardsPage = useSelector((state: AppState) => state.board.boardsPage);
@@ -21,6 +23,29 @@ const AllBoards = (props: AllBoardsProps) => {
         dispatch(actionCreators.SearchBoardRequested(searchParam));
     }, []);
 
+    const boards: ReactNode[] = [];
+    let numberOfEmptyBoards = 0;
+
+    if (boardsPage) {
+        const numberOfBoardsOnLastRow = boardsPage.items.length % numberOfBoardsPerRow;
+        
+        if (numberOfBoardsOnLastRow) {
+            numberOfEmptyBoards = numberOfBoardsPerRow - numberOfBoardsOnLastRow;
+        }
+
+        for (let i = 0; i < boardsPage.items.length; i++) {
+            boards.push(
+                <Board className={css.board} key={i} board={boardsPage.items[i]} onClick={() => { /* TODO redirect to board details */ }} />
+            );
+        }
+        
+        for (let i = 0; i < numberOfEmptyBoards; i++) {
+            boards.push(
+                <div className={css.emptyBoard}></div>
+            );      
+        }
+    }
+
     return (
         <div className="container">
             <div className={css.allBoardsMenu}>
@@ -28,13 +53,7 @@ const AllBoards = (props: AllBoardsProps) => {
                 <Button type="primary">+ Add</Button>
             </div>
             <div className={css.boards}>
-                {
-                    boardsPage
-                        ? boardsPage.items.map((b, i) => {
-                            return (<Board key={i} board={b} onClick={() => { /* TODO redirect to board details */ }} />);
-                        })
-                        : null
-                }
+                {boards}
             </div>
         </div>
     );
