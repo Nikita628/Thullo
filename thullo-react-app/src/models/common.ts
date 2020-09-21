@@ -1,3 +1,5 @@
+import { NotificationType, SortDirection } from "../common/data";
+
 export class File {
     id: number;
     name: string;
@@ -5,7 +7,7 @@ export class File {
 }
 
 export class Notification {
-    type: "error" | "success" | "warning";
+    type: NotificationType;
     message: string;
 }
 
@@ -19,5 +21,12 @@ export class ApiResponse<ItemType> extends BaseApiResponse {
 
 export class ApiPageResponse<ItemsType> extends BaseApiResponse {
     items: ItemsType[] = [];
-    totalCount: number;
+    totalCount: number = 0;
+}
+
+export class ApiPageRequest {
+    pageNumber: number = 1;
+    pageSize: number = 10;
+    sortProp: string = "id";
+    sortDirection: SortDirection = SortDirection.asc;
 }

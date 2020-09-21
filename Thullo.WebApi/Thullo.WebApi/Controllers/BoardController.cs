@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
@@ -23,18 +24,25 @@ namespace Thullo.WebApi.Controllers
 			_mapper = m;
 		}
 
-		[HttpPost]
+		[HttpPost("search")]
 		public async Task<IActionResult> Search(BoardSearchParam param)
 		{
 			var res = await _boardService.Search(param);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
+			var response = new PageResponse<Dtos.Board.Board>
+			{
+				Errors = res.Errors,
+				Items = _mapper.Map<List<Dtos.Board.Board>>(res.Items),
+				TotalCount = res.TotalCount
+			};
 
-			return Ok(res);
+			if (response.Errors.Any())
+				return BadRequest(response);
+
+			return Ok(response);
 		}
 
-		[HttpPost]
+		[HttpPost("create")]
 		public async Task<IActionResult> Create(Board board)
 		{
 			var res = await _boardService.Create(board);

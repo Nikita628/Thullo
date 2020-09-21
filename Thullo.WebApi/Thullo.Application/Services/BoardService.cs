@@ -72,7 +72,10 @@ namespace Thullo.Application.Services
 			query = query.Skip((param.PageNumber - 1) * param.PageSize)
 				.Take(param.PageSize);
 
-			query = query.Include(b => b.BoardLists);
+			// query = query.Include(b => b.BoardLists);
+			query = query.Include(b => b.BoardMemberships)
+				.ThenInclude(bm => bm.User)
+				.ThenInclude(u => u.Img);
 
 			var boards = await query.ToListAsync();
 

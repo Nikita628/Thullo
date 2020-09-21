@@ -74,9 +74,6 @@ namespace Thullo.Application.Services
                     Token = GenerateJwtToken(user)
                 };
 
-                if (signInResult.User.Img != null)
-                    signInResult.User.Img.User = null;
-
                 result.Item = signInResult;
 			}
             else

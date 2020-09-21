@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Thullo.Application.DbModel;
-
-namespace Thullo.WebApi.Dtos.CardLabel
+﻿namespace Thullo.WebApi.Dtos.CardLabel
 {
     public class AddLabelOnCard
     {

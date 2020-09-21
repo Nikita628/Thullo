@@ -1,25 +1,16 @@
-import { Action } from "../common/data";
+import { NotificationType } from "../common/data";
 import { Notification } from "../models/common";
 
-export interface IRequestedAction<PayloadType = any, CallbackParamType = any> {
+export interface ITypedAction {
     type: string;
-    payload?: PayloadType;
-    callback?: Action<CallbackParamType>;
 }
 
-export interface ISucceededAction<PayloadType = any>{
-    type: string;
+export interface IPayloadedAction<PayloadType = any> {
     payload: PayloadType;
 }
 
-export interface IFailedAction {
-    type: string;
-    errors: string[];
-}
-
-export interface IChangeStateAction<PayloadType = any> {
-    type: string;
-    payload?: PayloadType;
+export interface ICallbackAction<CallbackParamType = any> {
+    callback: (param?: CallbackParamType) => void;
 }
 
 export const actionTypes = {
@@ -30,21 +21,21 @@ export const actionTypes = {
 };
 
 export const actionCreators = {
-    CreateNotificationsRequested: (messages: string[], type: "error" | "success" | "warning"): IRequestedAction<{messages: string[], type: string}> => ({
+    CreateNotificationsRequested: (messages: string[], type: NotificationType): IPayloadedAction<{ messages: string[], type: NotificationType }> & ITypedAction => ({
         type: actionTypes.CreateNotificationsRequested,
         payload: {
             messages,
             type
         },
     }),
-    DequeueNotificationRequested: (): IRequestedAction => ({
+    DequeueNotificationRequested: (): ITypedAction => ({
         type: actionTypes.DequeueNotificationRequested
     }),
-    EnqueueNotification: (notification: Notification): IChangeStateAction<Notification> => ({
+    EnqueueNotification: (notification: Notification): IPayloadedAction<Notification> & ITypedAction => ({
         type: actionTypes.EnqueueNotification,
         payload: notification
     }),
-    DequeueNotification: (): IChangeStateAction => ({
+    DequeueNotification: (): ITypedAction => ({
         type: actionTypes.DequeueNotification
     }),
 };
@@ -57,7 +48,7 @@ const initialState: CommonState = {
     notifications: [],
 };
 
-export const reducer = (state: CommonState = initialState, action: ISucceededAction & IFailedAction & IChangeStateAction): CommonState => {
+export const reducer = (state: CommonState = initialState, action: ITypedAction & IPayloadedAction): CommonState => {
     switch (action.type) {
         case actionTypes.EnqueueNotification: {
             const newNotification = action.payload as Notification;

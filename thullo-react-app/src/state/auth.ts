@@ -1,7 +1,6 @@
-import { Action } from "../common/data";
 import { SignInData, SignInResult, SignUpData } from "../models/auth";
 import { User } from "../models/user";
-import { IFailedAction, ISucceededAction } from "./common";
+import { ICallbackAction, IPayloadedAction, ITypedAction } from "./common";
 
 export const actionTypes = {
     SignUpRequested: "auth/signUpRequested",
@@ -19,41 +18,40 @@ export const actionTypes = {
 };
 
 export const actionCreators = {
-    SignUpRequested: (signUpData: SignUpData, callback: Action) => ({
+    SignUpRequested: (signUpData: SignUpData, callback: () => void): ITypedAction & ICallbackAction & IPayloadedAction<SignUpData> => ({
         type: actionTypes.SignUpRequested,
         callback,
         payload: signUpData
     }),
-    SignUpSucceeded: () => ({
+    SignUpSucceeded: (): ITypedAction => ({
         type: actionTypes.SignUpSucceeded,
-        payload: {},
     }),
-    SignUpFailed: (errors: string[]) => ({
+    SignUpFailed: (errors: string[]): ITypedAction & IPayloadedAction<string[]> => ({
         type: actionTypes.SignUpFailed,
-        errors: errors,
+        payload: errors,
     }),
 
-    SignInRequested: (signInData: SignInData) => ({
+    SignInRequested: (signInData: SignInData): ITypedAction & IPayloadedAction<SignInData> => ({
         type: actionTypes.SignInRequested,
         payload: signInData,
     }),
-    SignInSucceeded: (signInResult: SignInResult) => ({
+    SignInSucceeded: (signInResult: SignInResult): ITypedAction & IPayloadedAction<SignInResult> => ({
         type: actionTypes.SignInSucceeded,
         payload: signInResult,
     }),
-    SignInFailed: (errors: string[]) => ({
+    SignInFailed: (errors: string[]): ITypedAction & IPayloadedAction<string[]> => ({
         type: actionTypes.SignInFailed,
-        errors: errors,
+        payload: errors,
     }),
 
-    SignInFromLocalStorageRequested: () => ({
+    SignInFromLocalStorageRequested: (): ITypedAction => ({
         type: actionTypes.SignInFromLocalStorageRequested,
     }),
-    SignInFromLocalStorageFailed: () => ({
+    SignInFromLocalStorageFailed: (): ITypedAction => ({
         type: actionTypes.SignInFromLocalStorageFailed,
     }),
 
-    SignOutRequested: () => ({
+    SignOutRequested: (): ITypedAction => ({
         type: actionTypes.SignOutRequested,
     }),
 };
@@ -74,7 +72,7 @@ const initialState: AuthState = {
     signInErrors: null,
 };
 
-export const reducer = (state: AuthState = initialState, action: ISucceededAction & IFailedAction): AuthState => {
+export const reducer = (state: AuthState = initialState, action: ITypedAction & IPayloadedAction): AuthState => {
     switch (action.type) {
         case actionTypes.SignInSucceeded: {
             const signInResult = action.payload as SignInResult;
@@ -95,7 +93,7 @@ export const reducer = (state: AuthState = initialState, action: ISucceededActio
         case actionTypes.SignInFailed: {
             return {
                 ...state,
-                signInErrors: action.errors,
+                signInErrors: action.payload,
             }
         }
         default:

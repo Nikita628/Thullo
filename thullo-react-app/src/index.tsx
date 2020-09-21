@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "jquery/dist/jquery.slim.js";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './index.css';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from 'redux-saga';
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
+import * as serviceWorker from './serviceWorker';
+import App from './App';
 import { requestInterceptor, responseErrorInterceptor } from "./services/httpInterceptors";
 import rootReducer from "./state";
 import runSagas from "./sagas";

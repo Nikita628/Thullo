@@ -1,4 +1,7 @@
 import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+
+import AllBoards from '../../board/AllBoards/AllBoards';
 import TopNav from '../TopNav/TopNav';
 import css from './Layout.module.css';
 
@@ -10,17 +13,20 @@ interface LayoutProps {
 
 const Layout = (props: LayoutProps) => {
     return (
-        <div>
+        <>
             <header>
                 <TopNav />
             </header>
-            <main>
-                main
+            <main className={css.main}>
+                <Switch>
+                    <Route path="/boards" exact component={AllBoards} />
+                    <Redirect from="/" to="boards" />
+                </Switch>
             </main>
-            <footer>
-                footer
+            <footer className={css.footer}>
+                <p className="mb-0 text-center text-muted">&copy; {new Date().getFullYear()} Thullo </p>
             </footer>
-        </div>
+        </>
     );
 }
 

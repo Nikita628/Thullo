@@ -1,3 +1,13 @@
 body {
     background-color: #f8f9fd;
 }
+
+html, body {
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}

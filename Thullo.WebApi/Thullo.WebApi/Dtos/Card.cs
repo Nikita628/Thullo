@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Thullo.WebApi.Dtos.Card
+﻿namespace Thullo.WebApi.Dtos.Card
 {
     public class UpdateDescription
     {

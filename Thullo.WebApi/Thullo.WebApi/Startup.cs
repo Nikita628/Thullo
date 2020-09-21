@@ -66,7 +66,7 @@ namespace Thullo.WebApi
 				.UseSqlServer(Configuration.GetConnectionString("ThulloDb")));
 
 			services.AddCors();
-			services.AddControllers();
+			services.AddControllers().AddNewtonsoftJson();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 			services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));

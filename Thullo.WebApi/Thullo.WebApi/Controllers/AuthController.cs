@@ -26,12 +26,18 @@ namespace Thullo.WebApi.Controllers
 		[HttpPost("signIn")]
 		public async Task<IActionResult> SignIn(Dtos.Auth.SignIn param)
 		{
-			var res = await _authService.SignIn(param.Login, param.Password);
-			
-			if (res.Errors.Any())
-				return BadRequest(res);
+			var result = await _authService.SignIn(param.Login, param.Password);
 
-			return Ok(res);
+			var response = new Response<Dtos.Auth.SignInResult>
+			{
+				Errors = result.Errors,
+				Item = _mapper.Map<Dtos.Auth.SignInResult>(result.Item)
+			};
+
+			if (response.Errors.Any())
+				return BadRequest(response);
+
+			return Ok(response);
 		}
 
 		[HttpPost("signUp")]

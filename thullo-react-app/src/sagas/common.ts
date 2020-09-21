@@ -1,10 +1,11 @@
-import { put, takeLatest, delay, takeEvery } from "redux-saga/effects";
+import { put, delay, takeEvery } from "redux-saga/effects";
 
-import { IRequestedAction } from "../state/common";
+import { IPayloadedAction, ITypedAction } from "../state/common";
 import { actionTypes, actionCreators } from "../state/common";
 import { Notification } from "../models/common";
+import { NotificationType } from "../common/data";
 
-function* createNotifications(action: IRequestedAction<{ messages: string[], type: "error" | "success" | "warning" }>) {
+function* createNotifications(action: IPayloadedAction<{ messages: string[], type: NotificationType }> & ITypedAction) {
     for (let i = 0; i < action.payload.messages.length; i++) {
         const n = new Notification();
         n.type = action.payload.type;
@@ -14,12 +15,12 @@ function* createNotifications(action: IRequestedAction<{ messages: string[], typ
     }
 }
 
-function* dequeueNotification(action: IRequestedAction) {
+function* dequeueNotification(action: ITypedAction) {
     yield delay(4000);
     yield put(actionCreators.DequeueNotification());
 }
 
 export function* watchCommon() {
-    yield takeLatest(actionTypes.CreateNotificationsRequested, createNotifications);
+    yield takeEvery(actionTypes.CreateNotificationsRequested, createNotifications);
     yield takeEvery(actionTypes.DequeueNotificationRequested, dequeueNotification);
 }

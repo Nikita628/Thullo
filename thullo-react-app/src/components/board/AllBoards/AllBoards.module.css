@@ -1,0 +1,11 @@
+.allBoardsMenu {
+    display: flex;
+    margin-top: 50px;
+    justify-content: space-between;
+}
+
+.boards {
+    margin-top: 40px;
+    display: flex;
+    flex-flow: row wrap;
+}

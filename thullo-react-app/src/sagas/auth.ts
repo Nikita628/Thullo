@@ -3,25 +3,25 @@ import { AxiosResponse } from "axios";
 
 import { SignInData, SignInResult, SignUpData } from "../models/auth";
 import { AuthApiClient } from "../services/authApiClient";
-import { IRequestedAction } from "../state/common";
+import { IPayloadedAction, ITypedAction, ICallbackAction } from "../state/common";
 import { actionTypes, actionCreators } from "../state/auth";
 import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiResponse } from "../models/common";
-import { constants } from "../common/data";
+import { constants, NotificationType } from "../common/data";
 
-function* signUp(action: IRequestedAction<SignUpData>) {
+function* signUp(action: IPayloadedAction<SignUpData> & ICallbackAction & ITypedAction) {
     const res: AxiosResponse<ApiResponse<boolean>> = yield AuthApiClient.signUp(action.payload);
 
     if (res.data.item) {
-        yield put(commonActionCreators.CreateNotificationsRequested(["Signed up successfully"], "success"));
+        yield put(commonActionCreators.CreateNotificationsRequested(["Signed up successfully"], NotificationType.success));
         yield put(actionCreators.SignUpSucceeded());
         yield action.callback();
     } else {
-        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, "error"));
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
     }
 }
 
-function* signIn(action: IRequestedAction<SignInData>) {
+function* signIn(action: IPayloadedAction<SignInData> & ITypedAction) {
     const res: AxiosResponse<ApiResponse<SignInResult>> = yield AuthApiClient.signIn(action.payload);
 
     if (res.data.item) {
@@ -29,11 +29,11 @@ function* signIn(action: IRequestedAction<SignInData>) {
         yield localStorage.setItem(constants.localStorageUserKey, JSON.stringify(res.data.item.user));
         yield put(actionCreators.SignInSucceeded(res.data.item));
     } else {
-        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, "error"));
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
     }
 }
 
-function* signInFromLocalStorage(action: IRequestedAction) {
+function* signInFromLocalStorage(action: ITypedAction) {
     const token = localStorage.getItem(constants.localStorageTokenKey);
     const user = localStorage.getItem(constants.localStorageUserKey);
     
@@ -47,7 +47,7 @@ function* signInFromLocalStorage(action: IRequestedAction) {
     }
 }
 
-function* signOut(action: IRequestedAction) {
+function* signOut(action: ITypedAction) {
     localStorage.removeItem(constants.localStorageTokenKey);
     localStorage.removeItem(constants.localStorageUserKey);
     window.location.reload();

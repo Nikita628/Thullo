@@ -4,6 +4,7 @@ import axios from "axios";
 import Icon from '../Icon/Icon';
 import css from './FilePicker.module.css';
 import { actionCreators as commonActionCreators } from "../../../state/common";
+import { NotificationType } from '../../../common/data';
 
 interface FilePickerProps {
     isUploadEnabled: boolean;
@@ -70,7 +71,7 @@ const FilePicker = (props: FilePickerProps) => {
 
             axios.post(props.fileUploadUrl, formData)
                 .then(() => setSelectedFiles([]))
-                .catch((errors: string[]) => commonActionCreators.CreateNotificationsRequested(errors, "error"));
+                .catch((errors: string[]) => commonActionCreators.CreateNotificationsRequested(errors, NotificationType.error));
         }
     }
 

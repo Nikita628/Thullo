@@ -9,12 +9,12 @@ export function requestInterceptor (req: AxiosRequestConfig) {
         req.headers["Authorization"] = "Bearer " + token;
     }
 
-    console.log("sending request to ", req.url);
+    //console.log("sending request to ", req.url);
     return req;
 }
 
 export function responseInterceptor (res: AxiosResponse<any>) {
-    console.log("response from " + res.request.responseURL + " with status " + res.status);
+    //console.log("response from " + res.request.responseURL + " with status " + res.status);
     return res;
 }
 
