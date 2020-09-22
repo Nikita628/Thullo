@@ -6,12 +6,12 @@ export const constants = {
 };
 
 export enum NotificationType {
-    "success",
-    "error",
-    "warning"
+    "success" = "Success",
+    "error" = "Error",
+    "warning" = "Warning"
 }
 
 export enum SortDirection {
-    "asc",
-    "desc"
+    "asc" = "asc",
+    "desc" = "desc"
 }

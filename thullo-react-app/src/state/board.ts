@@ -23,7 +23,7 @@ export interface BoardState {
 }
 
 const initialState: BoardState = {
-    boardsPage: null,
+    boardsPage: new ApiPageResponse<Board>(),
 };
 
 export const reducer = (state: BoardState = initialState, action: ITypedAction & IPayloadedAction): BoardState => {
@@ -31,7 +31,11 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
         case actionTypes.searchBoardSucceeded: {
             return {
                 ...state,
-                boardsPage: action.payload
+                boardsPage: {
+                    ...state.boardsPage,
+                    items: [...state.boardsPage.items, ...action.payload.items],
+                    totalCount: action.payload.totalCount,
+                }
             };
         }
         default:

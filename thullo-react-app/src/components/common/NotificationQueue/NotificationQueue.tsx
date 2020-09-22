@@ -18,7 +18,7 @@ const NotificationQueue = (props: NotificationQueueProps) => {
                 notifications.map((n, i) => {
                     return (
                         <div key={i} className={css.notification + " " + getNotificationClassName(n.type)}>
-                            <h4>{getHeader(n.type)}</h4>
+                            <h4>{n.type}</h4>
                             <p className="mb-0">{n.message}</p>
                         </div>
                     )
@@ -33,15 +33,6 @@ const getNotificationClassName = (type: NotificationType) => {
         case NotificationType.error: return css.notificationError;
         case NotificationType.success: return css.notificationSuccess;
         case NotificationType.warning: return css.notificationWarning;
-        default: return "";
-    }
-}
-
-const getHeader = (type: NotificationType) => {
-    switch (type) {
-        case NotificationType.error: return "Error";
-        case NotificationType.success: return "Success";
-        case NotificationType.warning: return "Warning";
         default: return "";
     }
 }
