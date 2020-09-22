@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type IActionFunction<T = any> = (param?: T) => void;
 
 export const constants = {
@@ -14,4 +16,11 @@ export enum NotificationType {
 export enum SortDirection {
     "asc" = "asc",
     "desc" = "desc"
+}
+
+export interface BaseProps {
+    style?: any;
+    className?: string;
+    children?: ReactNode;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }

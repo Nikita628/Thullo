@@ -30,3 +30,23 @@ export class ApiPageRequest {
     sortProp: string = "id";
     sortDirection: SortDirection = SortDirection.asc;
 }
+
+export class PexelsSearchParam {
+    query: string = "nature";
+    locale: string = "en-US";
+    page: number = 1;
+    perPage: number = 15;
+}
+
+export class PexelsPhoto {
+    id: number;
+    width: number;
+    height: number;
+    url: string;
+    src: {
+        original: string;
+        medium: string;
+        small: string;
+        tiny: string;
+    }
+}

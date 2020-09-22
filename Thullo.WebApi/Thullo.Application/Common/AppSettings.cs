@@ -4,7 +4,8 @@
 	{
 		public string TokenSecret { get; set; }
 		public string ClientApiUrl { get; set; }
-	}
+        public string PexelsAPIkey { get; set; }
+    }
 
 	public class CloudinarySettings
 	{

@@ -81,6 +81,7 @@ namespace Thullo.WebApi
 			services.AddScoped<ICardService, CardService>();
 			services.AddScoped<ICloudService, CloudService>();
 			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<IPexelsService, PexelsService>();
 			services.AddScoped(typeof(CurrentUserAccessor));
 		}
 

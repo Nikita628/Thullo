@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { concatCssClasses } from '../../../common/functionality';
 import css from './ImgCropper.module.css';
 
 interface ImgCropperProps {
@@ -215,19 +216,9 @@ const ImgCropper = (props: ImgCropperProps) => {
         );
     }
 
-    let classNameToAppend = "";
-
-    if (props.className) {
-        classNameToAppend += " " + props.className;
-    }
-
-    if (props.isInvalid) {
-        classNameToAppend += " " + css.invalid;
-    }
-
     return (
         <div
-            className={css.imgCropper + classNameToAppend}
+            className={concatCssClasses(css.imgCropper, props.className, props.isInvalid ? css.invalid : "")}
             style={{ ...props.style }}>
             {
                 croppedImageSrc ? renderCroppedImageMenu() : renderCropperMenu()

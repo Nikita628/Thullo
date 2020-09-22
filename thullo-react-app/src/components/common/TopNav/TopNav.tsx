@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import InputGroup from '../InputGroup/InputGroup';
 import InputGroupButton from '../InputGroup/InputGroupButton/InputGroupButton';
+import InputGroupInput from '../InputGroup/InputGroupInput/InputGroupInput';
 
 import css from './TopNav.module.css';
 import UserDropdown from './UserDropdown/UserDropdown';
@@ -23,6 +24,7 @@ const TopNav = (props: TopNavProps) => {
 
             <div className={css.navRight}>
                 <InputGroup className={css.inputGroup}>
+                    <InputGroupInput />
                     <InputGroupButton>Search</InputGroupButton>
                 </InputGroup>
                 

@@ -1,15 +1,16 @@
 import React, { ReactNode } from 'react';
+import { BaseProps } from '../../../../common/data';
+import { concatCssClasses } from '../../../../common/functionality';
 
 import css from './InputGroupButton.module.css';
 
-interface InputGroupButtonProps {
+interface InputGroupButtonProps extends BaseProps {
     children?: ReactNode;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const InputGroupButton = (props: InputGroupButtonProps) => {
     return (
-        <button onClick={props.onClick} className={css.button}>
+        <button onClick={props.onClick} className={concatCssClasses(css.button, props.className)}>
             {props.children}
         </button>
     );

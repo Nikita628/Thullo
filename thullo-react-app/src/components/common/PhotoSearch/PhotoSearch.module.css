@@ -1,0 +1,41 @@
+.photos {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.photo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 1px solid transparent;
+    margin: 1px;
+}
+
+.photo:hover {
+    cursor: pointer;
+    border: 1px solid rgb(88, 174, 255);
+}
+
+.photoSearch {
+    max-width: 350px;
+    background-color: white;
+    box-shadow: 0px 0px 10px #ccc;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.searchInputGroup {
+    margin-bottom: 20px;
+}
+
+.searchInput {
+    width: 80%;
+}
+
+.searchButton {
+    width: 20%;
+}

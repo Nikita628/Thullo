@@ -1,4 +1,5 @@
 import React from 'react';
+import { concatCssClasses } from '../../../common/functionality';
 import css from './Input.module.css';
 
 interface InputProps {
@@ -12,23 +13,13 @@ interface InputProps {
 }
 
 const Input = (props: InputProps) => {
-    let classToAppend = "";
-
-    if (props.className) {
-        classToAppend += " " + props.className;
-    }
-
-    if (props.isInvalid) {
-        classToAppend += " " + css.invalidInput;
-    }
-
     return (
         <input
             onChange={props.onChange}
             type={props.type}
             placeholder={props.placeHolder}
             value={props.value}
-            className={css.input + classToAppend}
+            className={concatCssClasses(css.input, props.className, props.isInvalid ? css.invalidInput : "")}
             style={{...props.style}}
         />
     );

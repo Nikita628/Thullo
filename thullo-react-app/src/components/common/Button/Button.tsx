@@ -1,4 +1,5 @@
 import React from 'react';
+import { concatCssClasses } from '../../../common/functionality';
 import css from './Button.module.css';
 
 interface ButtonProps {
@@ -12,18 +13,12 @@ interface ButtonProps {
 }
 
 const Button = (props: ButtonProps) => {
-    let classToAppend = "";
-
-    if (props.className) {
-        classToAppend += " " + props.className;
-    }
-
     return (
         <button
             disabled={props.disabled}
             type="button"
             onClick={props.onClick}
-            className={css.button + " " + css[props.type] + classToAppend}
+            className={concatCssClasses(css.button, css[props.type], props.className)}
             style={{...props.style}}
         >
             {props.children}

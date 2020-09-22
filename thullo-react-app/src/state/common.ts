@@ -1,5 +1,5 @@
 import { NotificationType } from "../common/data";
-import { Notification } from "../models/common";
+import { ApiPageResponse, ApiResponse, Notification, PexelsPhoto, PexelsSearchParam } from "../models/common";
 
 export interface ITypedAction {
     type: string;
@@ -18,6 +18,8 @@ export const actionTypes = {
     DequeueNotificationRequested: "common/dequeueNotificationRequested",
     EnqueueNotification: "common/enqueueNotification",
     DequeueNotification: "common/dequeueNotification",
+    SearchPexelsRequested: "common/searchPexelsRequested",
+    SearchPexelsSucceeded: "common/searchPexelsSucceeded",
 };
 
 export const actionCreators = {
@@ -38,14 +40,24 @@ export const actionCreators = {
     DequeueNotification: (): ITypedAction => ({
         type: actionTypes.DequeueNotification
     }),
+    SearchPexelsRequested: (param: PexelsSearchParam): ITypedAction & IPayloadedAction<PexelsSearchParam> => ({
+        type: actionTypes.SearchPexelsRequested,
+        payload: param,
+    }),
+    SearchPexelsSucceeded: (page: ApiPageResponse<PexelsPhoto>): ITypedAction & IPayloadedAction<ApiPageResponse<PexelsPhoto>> => ({
+        type: actionTypes.SearchPexelsSucceeded,
+        payload: page,
+    }),
 };
 
 export interface CommonState {
     notifications: Notification[];
+    pexelsPhotosPage: ApiPageResponse<PexelsPhoto>;
 }
 
 const initialState: CommonState = {
     notifications: [],
+    pexelsPhotosPage: null,
 };
 
 export const reducer = (state: CommonState = initialState, action: ITypedAction & IPayloadedAction): CommonState => {
@@ -62,6 +74,12 @@ export const reducer = (state: CommonState = initialState, action: ITypedAction 
                 ...state,
                 notifications: state.notifications.filter((_, i) => i > 0),
             };
+        }
+        case actionTypes.SearchPexelsSucceeded: {
+            return {
+                ...state,
+                pexelsPhotosPage: action.payload,
+            }
         }
         default:
             return state;

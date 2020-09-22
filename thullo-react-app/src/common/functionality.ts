@@ -7,3 +7,13 @@ export const guid = () => {
 
     return s4() + '-' + s4();
 }
+
+export const concatCssClasses = (...classes: string[]) => {
+    const filtered = classes.filter(c => !!c);
+
+    if (filtered.length) {
+        return filtered.join(" ");
+    }
+
+    return "";
+}

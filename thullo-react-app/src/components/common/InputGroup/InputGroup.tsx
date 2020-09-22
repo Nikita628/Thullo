@@ -1,19 +1,15 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { BaseProps } from '../../../common/data';
+import { concatCssClasses } from '../../../common/functionality';
 
 import css from './InputGroup.module.css';
 
-interface InputGroupProps {
-    placeHolder?: string;
-    name?: string;
-    type?: string;
-    className?: string;
-    children?: ReactNode;
+interface InputGroupProps extends BaseProps {
 }
 
 const InputGroup = (props: InputGroupProps) => {
     return (
-        <div className={css.inputGroup + props.className ? " " + props.className : ""}>
-            <input className={css.input} type={props.type} placeholder={props.placeHolder} name={props.name} />
+        <div className={concatCssClasses(css.inputGroup, props.className)}>
             {props.children}
         </div>
     );

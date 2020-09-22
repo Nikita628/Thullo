@@ -7,6 +7,9 @@ import css from './AllBoards.module.css';
 import { actionCreators } from "../../../state/board";
 import { BoardSearchParam } from '../../../models/board';
 import Board from '../Board/Board';
+import Modal from '../../common/Modal/Modal';
+import PhotoSearch from '../../common/PhotoSearch/PhotoSearch';
+import { PexelsPhoto } from '../../../models/common';
 
 interface AllBoardsProps {
 
@@ -30,6 +33,7 @@ const AllBoards = (props: AllBoardsProps) => {
     const dispatch = useDispatch();
     const boardsPage = useSelector((state: AppState) => state.board.boardsPage);
     const [searchParam, setSearchParam] = useState(new BoardSearchParam());
+    const [isModalDisplayed, setIsModalDisplayed] = useState(false);
 
     updatePagingState(boardsPage.totalCount, searchParam.pageNumber, searchParam.pageSize);
 
@@ -47,6 +51,14 @@ const AllBoards = (props: AllBoardsProps) => {
             setSearchParam(param);
         }
     }, []);
+
+    const onAddButtonClick = () => {
+        setIsModalDisplayed(true);
+    }
+
+    const onModalClose = () => {
+        setIsModalDisplayed(false);
+    }
 
     useEffect(() => {
         window.addEventListener("scroll", onPageScroll);
@@ -85,13 +97,25 @@ const AllBoards = (props: AllBoardsProps) => {
 
     return (
         <div className="container">
+
+            <Modal
+                isDisplayed={isModalDisplayed}
+                onClose={onModalClose}
+            >
+                <p>contsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsddfgfsdfent</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipi</p>
+            </Modal>
+
+            <PhotoSearch onPhotoSelected={(photo: PexelsPhoto) => { /* TODO use selected photo */ }} />
+
             <div className={css.allBoardsMenu}>
                 <h4>All Boards</h4>
-                <Button type="primary">+ Add</Button>
+                <Button onClick={onAddButtonClick} type="primary">+ Add</Button>
             </div>
             <div className={css.boards}>
                 {boards}
             </div>
+
         </div>
     );
 }
