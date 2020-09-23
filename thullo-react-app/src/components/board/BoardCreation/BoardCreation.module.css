@@ -1,0 +1,38 @@
+.coverImg {
+    width: 400px;
+    height: 150px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.coverPlaceholder {
+    width: 400px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3e3e3;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.boardMenu {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.creationButtons {
+    text-align: end;
+}
+
+.titleError {
+    color: red;
+    font-size: small;
+}
+
+.invalidCover {
+    border: 1px solid red;
+}
+

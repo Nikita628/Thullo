@@ -10,13 +10,17 @@ interface UserImagesListProps {
 }
 
 const UserImagesList = (props: UserImagesListProps) => {
+    if (!props.users || !props.users.length) return null;
+
     const usersToDisplay: ReactNode[] = [];
-    const usersCount = props.amountOfUsersToDisplay ? props.amountOfUsersToDisplay : props.users.length;
+    const usersCount = props.amountOfUsersToDisplay && props.users.length >= props.amountOfUsersToDisplay
+        ? props.amountOfUsersToDisplay
+        : props.users.length;
 
     for (let i = 0; i < usersCount; i++) {
         usersToDisplay.push(
             // <Link key={i} to={`/user-profile/${props.users[i].id}`}>
-                <img className={css.userImg} src={props.users[i].img.url} />
+            <img className={css.userImg} src={props.users[i].img.url} />
             // </Link>
         );
     }

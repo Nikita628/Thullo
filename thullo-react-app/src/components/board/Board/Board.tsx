@@ -17,14 +17,23 @@ const maxNumberOfUsersToDisplay = 3;
 const Board = (props: BoardProps) => {
     return (
         <div className={concatCssClasses(css.board, props.className)} onClick={props.onClick}>
+
             <img className={css.boardImg} src={props.board.coverUrl} />
+            
             <h5 className={css.boardTitle}>{props.board.title}</h5>
-            <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />
+
+            {
+                props.board.users
+                ? <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />
+                : null
+            }
+
             {
                 props.board.users.length > maxNumberOfUsersToDisplay
                     ? <span className="text-muted">+ {props.board.users.length - maxNumberOfUsersToDisplay} others</span>
                     : null
             }
+
         </div>
     );
 }

@@ -1,157 +1,150 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
 using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-	public class BoardService : IBoardService
-	{
-		private readonly CurrentUserAccessor _userAccessor;
-		private readonly ThulloDbContext _db;
+    public class BoardService : IBoardService
+    {
+        private readonly CurrentUserAccessor _userAccessor;
+        private readonly ThulloDbContext _db;
 
-		public BoardService(CurrentUserAccessor cua, ThulloDbContext db)
-		{
-			_userAccessor = cua;
-			_db = db;
-		}
+        public BoardService(CurrentUserAccessor cua, ThulloDbContext db)
+        {
+            _userAccessor = cua;
+            _db = db;
+        }
 
-		public async Task<Response<int>> Create(Board board)
-		{
-			var result = new Response<int>();
+        public async Task<Response<int>> Create(Board board)
+        {
+            var result = new Response<int>();
 
-			if (string.IsNullOrWhiteSpace(board.Title))
-			{
-				result.Errors.Add("Title is empty");
-				return result;
-			}
+            if (string.IsNullOrWhiteSpace(board.Title))
+                result.Errors.Add("Title is empty");
 
-			board.CreatedById = _userAccessor.CurrentUserId;
-			board.CreatedDate = DateTime.UtcNow;
+            if (string.IsNullOrWhiteSpace(board.CoverUrl))
+                result.Errors.Add("CoverUrl is empty");
 
-			await _db.Boards.AddAsync(board);
-			await _db.SaveChangesAsync();
+            if (result.Errors.Any()) return result;
 
-			return result;
-		}
+            await _db.Boards.AddAsync(board);
+            await _db.SaveChangesAsync();
 
-		public async Task<Response<Board>> Get(int boardId)
-		{
-			var result = new Response<Board>();
+            result.Item = board.Id;
 
-			var board = await _db.Boards.AsNoTracking().FirstOrDefaultAsync(b => b.Id == boardId);
+            return result;
+        }
 
-			if (board is null)
-			{
-				result.Errors.Add($"Board with id {boardId} was not found");
-				return result;
-			}
+        public async Task<Response<Board>> Get(int boardId)
+        {
+            var result = new Response<Board>();
 
-			result.Item = board;
+            var board = await _db.Boards.AsNoTracking().FirstOrDefaultAsync(b => b.Id == boardId);
 
-			return result;
-		}
+            if (board is null)
+            {
+                result.Errors.Add($"Board with id {boardId} was not found");
+                return result;
+            }
 
-		public async Task<PageResponse<Board>> Search(BoardSearchParam param)
-		{
-			var result = new PageResponse<Board>();
+            result.Item = board;
 
-			var query = _db.Boards.AsNoTracking();
+            return result;
+        }
 
-			if (!string.IsNullOrEmpty(param.TitleContains))
-				query = query.Where(b => b.Title.Contains(param.TitleContains));
+        public async Task<PageResponse<Board>> Search(BoardSearchParam param)
+        {
+            var result = new PageResponse<Board>();
 
-			int totalCount = await query.CountAsync();
+            var query = _db.Boards.AsNoTracking();
 
-			query = query.OrderBy(b => b.Id);
+            if (!string.IsNullOrEmpty(param.TitleContains))
+                query = query.Where(b => b.Title.Contains(param.TitleContains));
 
-			query = query.Skip((param.PageNumber - 1) * param.PageSize)
-				.Take(param.PageSize);
+            int totalCount = await query.CountAsync();
 
-			// query = query.Include(b => b.BoardLists);
-			query = query.Include(b => b.BoardMemberships)
-				.ThenInclude(bm => bm.User)
-				.ThenInclude(u => u.Img);
+            query = query.OrderBy(b => b.Id);
 
-			var boards = await query.ToListAsync();
+            query = query.Skip((param.PageNumber - 1) * param.PageSize)
+                .Take(param.PageSize);
 
-			result.Items = boards;
-			result.TotalCount = totalCount;
+            // query = query.Include(b => b.BoardLists);
+            query = query.Include(b => b.BoardMemberships)
+                .ThenInclude(bm => bm.User)
+                .ThenInclude(u => u.Img);
 
-			return result;
-		}
+            var boards = await query.ToListAsync();
 
-		public async Task<Response<bool>> UpdateDescription(string description, int boardId)
-		{
-			var result = new Response<bool>();
+            result.Items = boards;
+            result.TotalCount = totalCount;
 
-			var board = await _db.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
+            return result;
+        }
 
-			if (board is null)
-			{
-				result.Errors.Add($"Board with id {boardId} was not found");
-				return result;
-			}
+        public async Task<Response<bool>> UpdateDescription(string description, int boardId)
+        {
+            var result = new Response<bool>();
 
-			board.UpdatedById = _userAccessor.CurrentUserId;
-			board.UpdatedDate = DateTime.UtcNow;
-			board.Description = description;
+            var board = await _db.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
 
-			await _db.SaveChangesAsync();
+            if (board is null)
+            {
+                result.Errors.Add($"Board with id {boardId} was not found");
+                return result;
+            }
 
-			result.Item = true;
+            board.Description = description;
 
-			return result;
-		}
+            await _db.SaveChangesAsync();
 
-		public async Task<Response<bool>> UpdateTitle(string title, int boardId)
-		{
-			var result = new Response<bool>();
+            result.Item = true;
 
-			var board = await _db.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
+            return result;
+        }
 
-			if (board is null)
-			{
-				result.Errors.Add($"Board with id {boardId} was not found");
-				return result;
-			}
+        public async Task<Response<bool>> UpdateTitle(string title, int boardId)
+        {
+            var result = new Response<bool>();
 
-			board.UpdatedById = _userAccessor.CurrentUserId;
-			board.UpdatedDate = DateTime.UtcNow;
-			board.Title = title;
+            var board = await _db.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
 
-			await _db.SaveChangesAsync();
+            if (board is null)
+            {
+                result.Errors.Add($"Board with id {boardId} was not found");
+                return result;
+            }
 
-			result.Item = true;
+            board.Title = title;
 
-			return result;
-		}
+            await _db.SaveChangesAsync();
 
-		public async Task<Response<bool>> UpdateVisibility(bool isPrivate, int boardId)
-		{
-			var result = new Response<bool>();
+            result.Item = true;
 
-			var board = await _db.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
+            return result;
+        }
 
-			if (board is null)
-			{
-				result.Errors.Add($"Board with id {boardId} was not found");
-				return result;
-			}
+        public async Task<Response<bool>> UpdateVisibility(bool isPrivate, int boardId)
+        {
+            var result = new Response<bool>();
 
-			board.UpdatedById = _userAccessor.CurrentUserId;
-			board.UpdatedDate = DateTime.UtcNow;
-			board.IsPrivate = isPrivate;
+            var board = await _db.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
 
-			await _db.SaveChangesAsync();
+            if (board is null)
+            {
+                result.Errors.Add($"Board with id {boardId} was not found");
+                return result;
+            }
 
-			result.Item = true;
+            board.IsPrivate = isPrivate;
 
-			return result;
-		}
-	}
+            await _db.SaveChangesAsync();
+
+            result.Item = true;
+
+            return result;
+        }
+    }
 }

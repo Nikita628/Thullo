@@ -18,6 +18,11 @@ export enum SortDirection {
     "desc" = "desc"
 }
 
+export enum BoardVisibility {
+    private = "Private",
+    public = "Public",
+}
+
 export interface BaseProps {
     style?: CSSProperties;
     className?: string;

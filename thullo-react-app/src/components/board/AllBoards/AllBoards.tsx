@@ -8,85 +8,77 @@ import { actionCreators } from "../../../state/board";
 import { BoardSearchParam } from '../../../models/board';
 import Board from '../Board/Board';
 import Modal from '../../common/Modal/Modal';
-import PhotoSearch from '../../common/PhotoSearch/PhotoSearch';
-import { PexelsPhoto } from '../../../models/common';
-import Dropdown from '../../common/Dropdown/Dropdown';
-import DropdownButton from '../../common/Dropdown/DropdownButton/DropdownButton';
-import DropdownContent from '../../common/Dropdown/DropdownContent/DropdownContent';
-import Icon from '../../common/Icon/Icon';
 import { BaseProps } from '../../../common/data';
-import BoardVisibilityMenu from '../BoardVisibilityMenu/BoardVisibilityMenu';
+import BoardCreation from '../BoardCreation/BoardCreation';
 
 interface AllBoardsProps extends BaseProps {
 
 }
 
+const defaultPageSize = 10;
 const numberOfBoardsPerRow = 3;
 const pagingState = {
     responseItemsTotalCount: 0,
-    pageSize: 0,
-    pageNumber: 0,
+    searchParam: new BoardSearchParam(),
 };
 
-// hack to access freshest paging state inside of "onPageScroll" closure
-const updatePagingState = (responseItemsTotalCount: number, pageNumber: number, pageSize: number) => {
+const updatePagingState = (responseItemsTotalCount: number, searchParam: BoardSearchParam) => {
     pagingState.responseItemsTotalCount = responseItemsTotalCount;
-    pagingState.pageNumber = pageNumber;
-    pagingState.pageSize = pageSize;
+    pagingState.searchParam = searchParam;
 }
 
 const AllBoards = (props: AllBoardsProps) => {
     const dispatch = useDispatch();
     const boardsPage = useSelector((state: AppState) => state.board.boardsPage);
-    const [searchParam, setSearchParam] = useState(new BoardSearchParam());
+    const [searchParam, setSearchParam] = useState({ param: new BoardSearchParam(), appendToExistingBoardPage: false });
     const [isModalDisplayed, setIsModalDisplayed] = useState(false);
-    const [isCoverDropdownOpened, setIsCoverDropdownOpened] = useState(false);
-    const [isVisibilityDropdownOpened, setIsVisibilityDropdownOpened] = useState(false);
 
-    updatePagingState(boardsPage.totalCount, searchParam.pageNumber, searchParam.pageSize);
+    updatePagingState(boardsPage.totalCount, searchParam.param);
 
     const onPageScroll = useCallback(() => {
         const totalPageHeight = document.body.scrollHeight;
         const scrollPoint = window.scrollY + window.innerHeight;
         const isScrolledToBottom = scrollPoint >= totalPageHeight;
-        const totalPages = Math.ceil(pagingState.responseItemsTotalCount / pagingState.pageSize);
-        const hasMorePagesToRequest = pagingState.pageNumber < totalPages;
+        const totalPages = Math.ceil(pagingState.responseItemsTotalCount / defaultPageSize);
+        const hasMorePagesToRequest = pagingState.searchParam.pageNumber < totalPages;
 
         if (isScrolledToBottom && hasMorePagesToRequest) {
-            const param = new BoardSearchParam();
-            pagingState.pageNumber++;
-            param.pageNumber = pagingState.pageNumber;
-            setSearchParam(param);
+            const newSearchParam: BoardSearchParam = {
+                ...pagingState.searchParam,
+                pageNumber: pagingState.searchParam.pageNumber + 1
+            };
+            setSearchParam({ param: newSearchParam, appendToExistingBoardPage: true });
         }
     }, []);
 
-    const onAddButtonClick = () => {
+    const displayBoardCreationModal = () => {
         setIsModalDisplayed(true);
     }
 
-    const onModalClose = () => {
+    const closeBoardCreationModal = () => {
         setIsModalDisplayed(false);
     }
 
-    const onCoverDropdownClick = () => {
-        setIsCoverDropdownOpened(!isCoverDropdownOpened);
+    const handleBoardCreation = () => {
+        const param = new BoardSearchParam();
+        setSearchParam({ param: param, appendToExistingBoardPage: false });
+        closeBoardCreationModal();
     }
 
-    const onVisibilityDropdownClick = () => {
-        setIsVisibilityDropdownOpened(!isVisibilityDropdownOpened);
+    const searchBoards = () => {
+        dispatch(
+            actionCreators.SearchBoardRequested(searchParam.param, searchParam.appendToExistingBoardPage)
+        );
     }
 
     useEffect(() => {
         window.addEventListener("scroll", onPageScroll);
-        dispatch(actionCreators.SearchBoardRequested(searchParam));
         return () => {
             window.removeEventListener("scroll", onPageScroll);
         }
     }, []);
 
-    useEffect(() => {
-        dispatch(actionCreators.SearchBoardRequested(searchParam));
-    }, [searchParam]);
+    useEffect(searchBoards, [searchParam]);
 
     const boards: ReactNode[] = [];
     let numberOfEmptyBoards = 0;
@@ -114,35 +106,20 @@ const AllBoards = (props: AllBoardsProps) => {
     return (
         <div className="container">
 
-            <Modal
-                isDisplayed={isModalDisplayed}
-                onClose={onModalClose}
-            >
-                <p>contsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsddfgfsdfent</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipi</p>
-            </Modal>
-
-            <Dropdown>
-                <DropdownButton onClick={onCoverDropdownClick} type="secondary">
-                    <Icon style={{marginBottom: "5px", marginRight: "10px"}} type="file-image" /> Cover
-                </DropdownButton>
-                <DropdownContent isDisplayed={isCoverDropdownOpened} offsetY={10}>
-                    <PhotoSearch onPhotoSelected={(photo: PexelsPhoto) => { /* TODO use selected photo */ }} />
-                </DropdownContent>
-            </Dropdown>
-
-            <Dropdown>
-                <DropdownButton onClick={onVisibilityDropdownClick} type="secondary">
-                    <Icon style={{marginBottom: "5px", marginRight: "10px"}} type="lock" /> Private
-                </DropdownButton>
-                <DropdownContent isDisplayed={isVisibilityDropdownOpened} offsetY={10}>
-                    <BoardVisibilityMenu onVisibilityLevelChange={(visibility: string) => {}} />
-                </DropdownContent>
-            </Dropdown>
+            {
+                isModalDisplayed
+                    ? <Modal
+                        isDisplayed={isModalDisplayed}
+                        onClose={closeBoardCreationModal}
+                    >
+                        <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
+                    </Modal>
+                    : null
+            }
 
             <div className={css.allBoardsMenu}>
                 <h4>All Boards</h4>
-                <Button onClick={onAddButtonClick} type="primary">+ Add</Button>
+                <Button onClick={displayBoardCreationModal} type="primary">+ Add</Button>
             </div>
             <div className={css.boards}>
                 {boards}

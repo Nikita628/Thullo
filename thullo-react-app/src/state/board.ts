@@ -1,20 +1,34 @@
 import { Board, BoardSearchParam } from "../models/board";
 import { ApiPageResponse } from "../models/common";
-import { IPayloadedAction, ITypedAction } from "./common";
+import { ICallbackAction, IPayloadedAction, ITypedAction } from "./common";
 
 export const actionTypes = {
     searchBoardRequested: "board/searchBoardRequested",
     searchBoardSucceeded: "board/searchBoardSucceeded",
+    createBoardRequested: "board/createBoardRequested",
 };
 
 export const actionCreators = {
-    SearchBoardRequested: (param: BoardSearchParam): IPayloadedAction<BoardSearchParam> & ITypedAction => ({
-        type: actionTypes.searchBoardRequested,
-        payload: param,
-    }),
-    SearchBoardSucceeded: (boards: ApiPageResponse<Board>): IPayloadedAction<ApiPageResponse<Board>> & ITypedAction => ({
-        type: actionTypes.searchBoardSucceeded,
-        payload: boards,
+    SearchBoardRequested: (param: BoardSearchParam, appendToExistingBoardPage: boolean)
+        : IPayloadedAction<{ param: BoardSearchParam, appendToExistingBoardPage: boolean }> & ITypedAction => ({
+            type: actionTypes.searchBoardRequested,
+            payload: {
+                param: param,
+                appendToExistingBoardPage: appendToExistingBoardPage,
+            },
+        }),
+    SearchBoardSucceeded: (boards: ApiPageResponse<Board>, appendToExistingBoardPage: boolean)
+        : IPayloadedAction<{ boards: ApiPageResponse<Board>, appendToExistingBoardPage: boolean }> & ITypedAction => ({
+            type: actionTypes.searchBoardSucceeded,
+            payload: {
+                boards: boards,
+                appendToExistingBoardPage: appendToExistingBoardPage,
+            },
+        }),
+    CreateBoardRequested: (board: Board, callback: () => void): ITypedAction & IPayloadedAction<Board> & ICallbackAction => ({
+        type: actionTypes.createBoardRequested,
+        payload: board,
+        callback: callback
     }),
 };
 
@@ -33,8 +47,10 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
                 ...state,
                 boardsPage: {
                     ...state.boardsPage,
-                    items: [...state.boardsPage.items, ...action.payload.items],
-                    totalCount: action.payload.totalCount,
+                    items: action.payload.appendToExistingBoardPage
+                        ? [...state.boardsPage.items, ...action.payload.boards.items]
+                        : action.payload.boards.items,
+                    totalCount: action.payload.boards.totalCount,
                 }
             };
         }
