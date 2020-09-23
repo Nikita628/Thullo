@@ -94,7 +94,7 @@ const SignUp = (props: SignUpProps) => {
         setCroppedImg(file);
     }
 
-    const onSignUpClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const onSignUpClick = (e: React.MouseEvent<HTMLElement>) => {
         const form: FormData = {
             img: profileImg,
             croppedImg: croppedImg,

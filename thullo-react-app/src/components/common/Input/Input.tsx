@@ -1,15 +1,15 @@
 import React from 'react';
+
+import { BaseProps } from '../../../common/data';
 import { concatCssClasses } from '../../../common/functionality';
 import css from './Input.module.css';
 
-interface InputProps {
+interface InputProps extends BaseProps {
     type: "text" | "password" | "email";
     placeHolder?: string;
     value?: string;
-    className?: string;
-    style?: any;
     isInvalid?: boolean;
-    onChange?: (e: any) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = (props: InputProps) => {

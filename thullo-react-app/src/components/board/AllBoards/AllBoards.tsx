@@ -10,8 +10,14 @@ import Board from '../Board/Board';
 import Modal from '../../common/Modal/Modal';
 import PhotoSearch from '../../common/PhotoSearch/PhotoSearch';
 import { PexelsPhoto } from '../../../models/common';
+import Dropdown from '../../common/Dropdown/Dropdown';
+import DropdownButton from '../../common/Dropdown/DropdownButton/DropdownButton';
+import DropdownContent from '../../common/Dropdown/DropdownContent/DropdownContent';
+import Icon from '../../common/Icon/Icon';
+import { BaseProps } from '../../../common/data';
+import BoardVisibilityMenu from '../BoardVisibilityMenu/BoardVisibilityMenu';
 
-interface AllBoardsProps {
+interface AllBoardsProps extends BaseProps {
 
 }
 
@@ -34,6 +40,8 @@ const AllBoards = (props: AllBoardsProps) => {
     const boardsPage = useSelector((state: AppState) => state.board.boardsPage);
     const [searchParam, setSearchParam] = useState(new BoardSearchParam());
     const [isModalDisplayed, setIsModalDisplayed] = useState(false);
+    const [isCoverDropdownOpened, setIsCoverDropdownOpened] = useState(false);
+    const [isVisibilityDropdownOpened, setIsVisibilityDropdownOpened] = useState(false);
 
     updatePagingState(boardsPage.totalCount, searchParam.pageNumber, searchParam.pageSize);
 
@@ -58,6 +66,14 @@ const AllBoards = (props: AllBoardsProps) => {
 
     const onModalClose = () => {
         setIsModalDisplayed(false);
+    }
+
+    const onCoverDropdownClick = () => {
+        setIsCoverDropdownOpened(!isCoverDropdownOpened);
+    }
+
+    const onVisibilityDropdownClick = () => {
+        setIsVisibilityDropdownOpened(!isVisibilityDropdownOpened);
     }
 
     useEffect(() => {
@@ -106,7 +122,23 @@ const AllBoards = (props: AllBoardsProps) => {
                 <p>Lorem ipsum dolor, sit amet consectetur adipi</p>
             </Modal>
 
-            <PhotoSearch onPhotoSelected={(photo: PexelsPhoto) => { /* TODO use selected photo */ }} />
+            <Dropdown>
+                <DropdownButton onClick={onCoverDropdownClick} type="secondary">
+                    <Icon style={{marginBottom: "5px", marginRight: "10px"}} type="file-image" /> Cover
+                </DropdownButton>
+                <DropdownContent isDisplayed={isCoverDropdownOpened} offsetY={10}>
+                    <PhotoSearch onPhotoSelected={(photo: PexelsPhoto) => { /* TODO use selected photo */ }} />
+                </DropdownContent>
+            </Dropdown>
+
+            <Dropdown>
+                <DropdownButton onClick={onVisibilityDropdownClick} type="secondary">
+                    <Icon style={{marginBottom: "5px", marginRight: "10px"}} type="lock" /> Private
+                </DropdownButton>
+                <DropdownContent isDisplayed={isVisibilityDropdownOpened} offsetY={10}>
+                    <BoardVisibilityMenu onVisibilityLevelChange={(visibility: string) => {}} />
+                </DropdownContent>
+            </Dropdown>
 
             <div className={css.allBoardsMenu}>
                 <h4>All Boards</h4>

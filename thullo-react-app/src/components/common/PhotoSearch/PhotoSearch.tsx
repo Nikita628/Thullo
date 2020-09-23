@@ -38,13 +38,12 @@ const PhotoSearch = (props: PhotoSearchProps) => {
         }
     }
 
-    const photos: React.ReactNode[] = [];
+    const photosToRender: React.ReactNode[] = [];
 
     if (pexelsPage) {
-        console.log(pexelsPage);
         pexelsPage.items.forEach(p => {
-            photos.push(
-                <img onClick={() => props.onPhotoSelected(p)} className={css.photo} src={p.src.small} />
+            photosToRender.push(
+                <img onClick={() => props.onPhotoSelected(p)} className={css.photo} src={p.src.tiny} />
             );
         });
     }
@@ -60,7 +59,7 @@ const PhotoSearch = (props: PhotoSearchProps) => {
             </InputGroup>
 
             <div className={css.photos}>
-                {photos}
+                {photosToRender}
             </div>
         </div>
     );

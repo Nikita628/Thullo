@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export type IActionFunction<T = any> = (param?: T) => void;
 
@@ -19,7 +19,7 @@ export enum SortDirection {
 }
 
 export interface BaseProps {
-    style?: any;
+    style?: CSSProperties;
     className?: string;
     children?: ReactNode;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;

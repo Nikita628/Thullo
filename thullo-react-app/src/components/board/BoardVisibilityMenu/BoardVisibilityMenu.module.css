@@ -1,0 +1,17 @@
+.boardVisibilityMenu {
+    background-color: white;
+    border-radius: 10px;
+    width: 350px;
+    padding: 10px;
+    box-shadow: 2px 2px 10px #d7d7d7;
+}
+
+.visibilityOption {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.visibilityOption:hover {
+    cursor: pointer;
+    background-color: #e7e7e7;
+}

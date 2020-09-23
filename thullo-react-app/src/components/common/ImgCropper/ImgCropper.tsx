@@ -9,7 +9,7 @@ interface ImgCropperProps {
     minHeight: number;
     isInvalid?: boolean;
     className?: string;
-    style?: any;
+    style?: Record<string, string>;
     onCroppedImgChanged: (croppedImg: File) => void;
 }
 

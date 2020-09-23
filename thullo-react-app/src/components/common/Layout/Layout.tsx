@@ -1,14 +1,12 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { BaseProps } from '../../../common/data';
 
 import AllBoards from '../../board/AllBoards/AllBoards';
 import TopNav from '../TopNav/TopNav';
 import css from './Layout.module.css';
 
-interface LayoutProps {
-    className?: string;
-    style?: any;
-    children?: React.ReactNode;
+interface LayoutProps extends BaseProps {
 }
 
 const Layout = (props: LayoutProps) => {

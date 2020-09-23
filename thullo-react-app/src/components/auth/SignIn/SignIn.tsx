@@ -21,7 +21,7 @@ const SignIn = () => {
     setPassword(e.target.value);
   }
 
-  const onSignInClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onSignInClick = (e: React.MouseEvent<HTMLElement>) => {
     const signInData = new SignInData();
     signInData.login = email;
     signInData.password = password;
