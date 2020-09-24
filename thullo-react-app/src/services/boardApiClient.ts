@@ -12,4 +12,8 @@ export class BoardApiClient {
     static create(board: Board) {
         return axios.post<ApiResponse<number>>(`${config.apiUrl}/board/create`, board);
     }
+
+    static get(boardId: number) {
+        return axios.get<ApiResponse<Board>>(`${config.apiUrl}/board/get/${boardId}`);
+    }
 }

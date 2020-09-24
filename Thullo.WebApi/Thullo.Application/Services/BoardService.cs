@@ -42,7 +42,10 @@ namespace Thullo.Application.Services
         {
             var result = new Response<Board>();
 
-            var board = await _db.Boards.AsNoTracking().FirstOrDefaultAsync(b => b.Id == boardId);
+            var board = await _db.Boards.AsNoTracking()
+                .Include(b => b.BoardLists)
+                .ThenInclude(bl => bl.Cards)
+                .FirstOrDefaultAsync(b => b.Id == boardId);
 
             if (board is null)
             {

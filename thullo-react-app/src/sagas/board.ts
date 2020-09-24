@@ -19,7 +19,7 @@ function* searchBoards(action: IPayloadedAction<{ param: BoardSearchParam, appen
     }
 }
 
-function * createBoard(action: ITypedAction & IPayloadedAction<Board> & ICallbackAction) {
+function* createBoard(action: ITypedAction & IPayloadedAction<Board> & ICallbackAction) {
     const res: AxiosResponse<ApiResponse<number>> = yield BoardApiClient.create(action.payload);
 
     if (!res.data.errors.length) {
@@ -30,7 +30,18 @@ function * createBoard(action: ITypedAction & IPayloadedAction<Board> & ICallbac
     }
 }
 
+function* getBoard(action: ITypedAction & IPayloadedAction<number>) {
+    const res: AxiosResponse<ApiResponse<Board>> = yield BoardApiClient.get(action.payload);
+
+    if (!res.data.errors.length) {
+        yield put(actionCreators.GetBoardSucceeded(res.data.item));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchBoard() {
     yield takeLatest(actionTypes.searchBoardRequested, searchBoards);
     yield takeLatest(actionTypes.createBoardRequested, createBoard);
+    yield takeLatest(actionTypes.getBoardRequested, getBoard);
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { BaseProps } from '../../../common/data';
 
+import { BaseProps } from '../../../common/data';
 import AllBoards from '../../board/AllBoards/AllBoards';
+import BoardDetails from '../../board/BoardDetails/BoardDetails';
 import TopNav from '../TopNav/TopNav';
 import css from './Layout.module.css';
 
@@ -18,6 +19,7 @@ const Layout = (props: LayoutProps) => {
             <main className={css.main}>
                 <Switch>
                     <Route path="/boards" exact component={AllBoards} />
+                    <Route path="/board/:id" exact component={BoardDetails} />
                     <Redirect from="/" to="boards" />
                 </Switch>
             </main>

@@ -91,10 +91,16 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _boardService.Get(boardId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
+			var response = new Response<Dtos.Board.Board>
+			{
+				Errors = res.Errors,
+				Item = _mapper.Map<Dtos.Board.Board>(res.Item)
+			};
 
-			return Ok(res);
+			if (response.Errors.Any())
+				return BadRequest(response);
+
+			return Ok(response);
 		}
 	}
 }

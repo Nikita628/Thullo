@@ -20,6 +20,7 @@ export const actionTypes = {
     DequeueNotification: "common/dequeueNotification",
     SearchPexelsRequested: "common/searchPexelsRequested",
     SearchPexelsSucceeded: "common/searchPexelsSucceeded",
+    SetAppContext: "common/setAppContext",
 };
 
 export const actionCreators = {
@@ -48,16 +49,22 @@ export const actionCreators = {
         type: actionTypes.SearchPexelsSucceeded,
         payload: page,
     }),
+    SetAppContext: (context: "allBoards" | "boardDetails"): ITypedAction & IPayloadedAction<"allBoards" | "boardDetails"> => ({
+        type: actionTypes.SetAppContext,
+        payload: context,
+    }),
 };
 
 export interface CommonState {
     notifications: Notification[];
     pexelsPhotosPage: ApiPageResponse<PexelsPhoto>;
+    appContext: "allBoards" | "boardDetails";
 }
 
 const initialState: CommonState = {
     notifications: [],
     pexelsPhotosPage: null,
+    appContext: null,
 };
 
 export const reducer = (state: CommonState = initialState, action: ITypedAction & IPayloadedAction): CommonState => {
@@ -79,6 +86,12 @@ export const reducer = (state: CommonState = initialState, action: ITypedAction 
             return {
                 ...state,
                 pexelsPhotosPage: action.payload,
+            }
+        }
+        case actionTypes.SetAppContext: {
+            return {
+                ...state,
+                appContext: action.payload
             }
         }
         default:

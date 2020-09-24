@@ -3,6 +3,10 @@
     border-bottom: 1px solid #eaeaea;
 }
 
+.logo {
+    margin-right: 50px;
+}
+
 .navRight {
     display: flex;
     align-items: center;
@@ -12,4 +16,23 @@
 .inputGroup {
     min-width: 290px;
     margin-right: 30px;
+}
+
+.navLeft {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.boardMenu {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.boardTitle {
+    margin-right: 30px;
+    padding-right: 30px;
+    border-right: 1px solid gray;
+    padding-top: 5px;
+    font-weight: bold;
 }

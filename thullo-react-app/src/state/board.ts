@@ -6,6 +6,8 @@ export const actionTypes = {
     searchBoardRequested: "board/searchBoardRequested",
     searchBoardSucceeded: "board/searchBoardSucceeded",
     createBoardRequested: "board/createBoardRequested",
+    getBoardRequested: "board/getBoardRequested",
+    getBoardSucceeded: "board/getBoardSucceeded",
 };
 
 export const actionCreators = {
@@ -30,14 +32,24 @@ export const actionCreators = {
         payload: board,
         callback: callback
     }),
+    GetBoardRequested: (boardId: number): ITypedAction & IPayloadedAction<number> => ({
+        type: actionTypes.getBoardRequested,
+        payload: boardId,
+    }),
+    GetBoardSucceeded: (board: Board): ITypedAction & IPayloadedAction<Board> => ({
+        type: actionTypes.getBoardSucceeded,
+        payload: board,
+    }),
 };
 
 export interface BoardState {
     boardsPage: ApiPageResponse<Board>;
+    board: Board;
 }
 
 const initialState: BoardState = {
     boardsPage: new ApiPageResponse<Board>(),
+    board: null,
 };
 
 export const reducer = (state: BoardState = initialState, action: ITypedAction & IPayloadedAction): BoardState => {
@@ -53,6 +65,12 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
                     totalCount: action.payload.boards.totalCount,
                 }
             };
+        }
+        case actionTypes.getBoardSucceeded: {
+            return {
+                ...state,
+                board: action.payload,
+            }
         }
         default:
             return state;

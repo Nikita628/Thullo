@@ -6,7 +6,7 @@ import { concatCssClasses } from '../../../common/functionality';
 interface IconProps extends BaseProps {
     type: "chat-left-text" | "three-dots" | "trash" | "x-square"
     | "caret-down-fill" | "caret-up-fill" | "search" | "file-image"
-    | "unlock" | "lock" | "eyeglasses";
+    | "unlock" | "lock" | "eyeglasses" | "columns";
     /** width and height in px. default is 1em */
     size?: number;
 }
@@ -90,6 +90,13 @@ const Icon = (props: IconProps) => {
             return (
                 <svg style={{ ...props.style }} width={iconSize} height={iconSize} viewBox="0 0 16 16" className={concatCssClasses("bi bi-eyeglasses", props.className)} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" d="M4 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 0-4 0 2 2 0 0 0 4 0z" />
+                </svg>
+            );
+        case "columns":
+            return (
+                <svg style={{ ...props.style }} width={iconSize} height={iconSize} viewBox="0 0 16 16" className={concatCssClasses("bi bi-columns", props.className)} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" d="M15 2H1v12h14V2zM1 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H1z" />
+                    <path fillRule="evenodd" d="M7.5 14V2h1v12h-1zm0-8H1V5h6.5v1zm7.5 5H8.5v-1H15v1z" />
                 </svg>
             );
         default:

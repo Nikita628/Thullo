@@ -1,10 +1,12 @@
 import React, { ReactNode, useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { AppState } from '../../../state';
 import Button from '../../common/Button/Button';
 import css from './AllBoards.module.css';
 import { actionCreators } from "../../../state/board";
+import { actionCreators as commonActionCreators } from "../../../state/common";
 import { BoardSearchParam } from '../../../models/board';
 import Board from '../Board/Board';
 import Modal from '../../common/Modal/Modal';
@@ -27,6 +29,7 @@ const updatePagingState = (responseItemsTotalCount: number, searchParam: BoardSe
 }
 
 const AllBoards = (props: AllBoardsProps) => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const boardsPage = useSelector((state: AppState) => state.board.boardsPage);
     const [searchParam, setSearchParam] = useState({ param: new BoardSearchParam(), appendToExistingBoardPage: false });
@@ -70,8 +73,13 @@ const AllBoards = (props: AllBoardsProps) => {
         );
     }
 
+    const handleBoardClick = (boardId: number) => {
+        history.push(`/board/${boardId}`);
+    }
+
     useEffect(() => {
         window.addEventListener("scroll", onPageScroll);
+        dispatch(commonActionCreators.SetAppContext("allBoards"));
         return () => {
             window.removeEventListener("scroll", onPageScroll);
         }
@@ -89,7 +97,7 @@ const AllBoards = (props: AllBoardsProps) => {
                         className={css.board}
                         key={i}
                         board={boardsPage.items[i]}
-                        onClick={() => { /* TODO redirect to board details */ }}
+                        onClick={() => handleBoardClick(boardsPage.items[i].id)}
                     />
                 </div>
             );

@@ -1,3 +1,4 @@
+import { BoardList } from "./boardList";
 import { ApiPageRequest } from "./common";
 import { User } from "./user";
 
@@ -8,6 +9,7 @@ export class Board {
     isPrivate: boolean;
     description: string;
     users: User[];
+    boardLists: BoardList[];
 }
 
 export class BoardSearchParam extends ApiPageRequest {
