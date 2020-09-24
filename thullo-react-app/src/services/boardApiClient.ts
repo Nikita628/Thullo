@@ -16,4 +16,11 @@ export class BoardApiClient {
     static get(boardId: number) {
         return axios.get<ApiResponse<Board>>(`${config.apiUrl}/board/get/${boardId}`);
     }
+
+    static updateVisibility(boardId: number, isPrivate: boolean) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/board/updateVisibility`, {
+            boardId: boardId,
+            isPrivate: isPrivate
+        });
+    }
 }

@@ -8,6 +8,7 @@ import { BaseProps } from '../../../common/data';
 import { concatCssClasses } from '../../../common/functionality';
 import { AppState } from '../../../state';
 import css from './BoardDetails.module.css';
+import BoardTopMenu from '../BoardTopMenu/BoardTopMenu';
 
 interface BoardDetailsProps extends BaseProps {
     
@@ -23,11 +24,12 @@ const BoardDetails = (props: BoardDetailsProps) => {
         dispatch(boardActionCreators.GetBoardRequested(Number(id)));
     }, [])
 
-    if (!board) return null;
+    if (!board) return null; //TODO display spinner while loading
 
     return (
         <div className={concatCssClasses(css.boardDetails, props.className)}>
-            {board.title}
+            <BoardTopMenu board={board} />
+            <div>board content</div>
         </div>
     );
 }

@@ -92,10 +92,9 @@ const AllBoards = (props: AllBoardsProps) => {
     if (boardsPage) {
         for (let i = 0; i < boardsPage.items.length; i++) {
             boards.push(
-                <div className={css.boardContainer}>
+                <div key={i} className={css.boardContainer}>
                     <Board
                         className={css.board}
-                        key={i}
                         board={boardsPage.items[i]}
                         onClick={() => handleBoardClick(boardsPage.items[i].id)}
                     />

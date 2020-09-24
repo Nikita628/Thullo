@@ -8,6 +8,8 @@ export const actionTypes = {
     createBoardRequested: "board/createBoardRequested",
     getBoardRequested: "board/getBoardRequested",
     getBoardSucceeded: "board/getBoardSucceeded",
+    updateBoardVisibilityRequested: "board/updateBoardVisibilityRequested",
+    updateBoardVisibilitySucceeded: "board/updateBoardVisibilitySucceeded",
 };
 
 export const actionCreators = {
@@ -40,6 +42,18 @@ export const actionCreators = {
         type: actionTypes.getBoardSucceeded,
         payload: board,
     }),
+    UpdateBoardVisibilityRequested: (boardId: number, isPrivate: boolean)
+        : ITypedAction & IPayloadedAction<{ boardId: number, isPrivate: boolean }> => ({
+            type: actionTypes.updateBoardVisibilityRequested,
+            payload: {
+                boardId,
+                isPrivate,
+            }
+        }),
+    UpdateBoardVisibilitySucceeded: (isPrivate: boolean): ITypedAction & IPayloadedAction<boolean> => ({
+        type: actionTypes.updateBoardVisibilitySucceeded,
+        payload: isPrivate
+    }),
 };
 
 export interface BoardState {
@@ -70,7 +84,16 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
             return {
                 ...state,
                 board: action.payload,
-            }
+            };
+        }
+        case actionTypes.updateBoardVisibilitySucceeded: {
+            return {
+                ...state,
+                board: {
+                    ...state.board,
+                    isPrivate: action.payload
+                }
+            };
         }
         default:
             return state;

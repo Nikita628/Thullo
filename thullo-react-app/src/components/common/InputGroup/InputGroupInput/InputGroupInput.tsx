@@ -19,6 +19,7 @@ const InputGroupInput = (props: InputGroupInputProps) => {
             type={props.type}
             placeholder={props.placeHolder}
             name={props.name}
+            style={{...props.style}}
         />
     );
 }

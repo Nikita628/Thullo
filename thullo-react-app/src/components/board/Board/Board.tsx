@@ -22,17 +22,19 @@ const Board = (props: BoardProps) => {
 
             <h5 className={css.boardTitle}>{props.board.title}</h5>
 
-            {
-                props.board.users
-                    ? <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />
-                    : null
-            }
+            <div className={css.usersList}>
+                {
+                    props.board.users
+                        ? <div style={{ display: "inline-block" }}><UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} /></div>
+                        : null
+                }
 
-            {
-                props.board.users.length > maxNumberOfUsersToDisplay
-                    ? <span className="text-muted">+ {props.board.users.length - maxNumberOfUsersToDisplay} others</span>
-                    : null
-            }
+                {
+                    props.board.users.length > maxNumberOfUsersToDisplay
+                        ? <span className="text-muted">+ {props.board.users.length - maxNumberOfUsersToDisplay} others</span>
+                        : null
+                }
+            </div>
 
         </div>
     );

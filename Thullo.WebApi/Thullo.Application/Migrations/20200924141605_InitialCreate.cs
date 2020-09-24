@@ -78,7 +78,7 @@ namespace Thullo.Application.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    ImgId = table.Column<int>(nullable: false),
+                    ImgId = table.Column<int>(nullable: true),
                     FirstName = table.Column<string>(maxLength: 100, nullable: false),
                     LastName = table.Column<string>(maxLength: 100, nullable: false)
                 },
@@ -90,7 +90,7 @@ namespace Thullo.Application.Migrations
                         column: x => x.ImgId,
                         principalTable: "Files",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -502,7 +502,8 @@ namespace Thullo.Application.Migrations
                 name: "IX_AspNetUsers_ImgId",
                 table: "AspNetUsers",
                 column: "ImgId",
-                unique: true);
+                unique: true,
+                filter: "[ImgId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",

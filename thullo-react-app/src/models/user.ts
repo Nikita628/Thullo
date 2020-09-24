@@ -1,4 +1,4 @@
-import { File } from "./common";
+import { ApiPageRequest, File } from "./common";
 
 export class User {
     id: number;
@@ -6,4 +6,8 @@ export class User {
     firstName: string;
     lastName: string;
     img: File;
+}
+
+export class UserSearchParam extends ApiPageRequest {
+    nameOrEmailContains: string;
 }

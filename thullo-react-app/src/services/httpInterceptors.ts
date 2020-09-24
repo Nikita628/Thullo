@@ -14,7 +14,7 @@ export function requestInterceptor (req: AxiosRequestConfig) {
 }
 
 export function responseInterceptor (res: AxiosResponse<any>) {
-    //console.log("response from " + res.request.responseURL + " with status " + res.status);
+    console.log("response from " + res.request.responseURL + " with status " + res.status);
     return res;
 }
 

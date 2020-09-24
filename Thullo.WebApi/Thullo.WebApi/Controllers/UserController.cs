@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
@@ -42,10 +43,17 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _userService.Search(param);
 
-			if (res.Errors.Any())
+			var response = new PageResponse<Dtos.User.User>
+			{
+				Errors = res.Errors,
+				Items = _mapper.Map<List<Dtos.User.User>>(res.Items),
+				TotalCount = res.TotalCount
+			};
+
+			if (response.Errors.Any())
 				return BadRequest(res);
 
-			return Ok(res);
+			return Ok(response);
 		}
 
 		[HttpPut("update")]

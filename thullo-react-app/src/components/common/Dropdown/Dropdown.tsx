@@ -11,6 +11,8 @@ const Dropdown = (props: DropdownProps) => {
     return (
         <div
             className={concatCssClasses(css.dropdown, props.className)}
+            style={{...props.style}}
+            onBlur={props.onBlur}
         >
             {props.children}
         </div>

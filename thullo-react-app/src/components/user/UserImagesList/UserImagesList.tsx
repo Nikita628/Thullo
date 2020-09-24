@@ -18,11 +18,13 @@ const UserImagesList = (props: UserImagesListProps) => {
         : props.users.length;
 
     for (let i = 0; i < usersCount; i++) {
-        usersToDisplay.push(
-            // <Link key={i} to={`/user-profile/${props.users[i].id}`}>
-            <img className={css.userImg} src={props.users[i].img.url} />
-            // </Link>
-        );
+        const userImg = props.users[i].img
+            ? <img key={i} className={css.userImg} src={props.users[i].img.url} />
+            : <div key={i} className={css.userImgPlaceholder}>
+                {props.users[i].firstName[0].toUpperCase() + props.users[i].lastName[0].toUpperCase()}
+            </div>
+
+        usersToDisplay.push(userImg);
     }
 
     return (

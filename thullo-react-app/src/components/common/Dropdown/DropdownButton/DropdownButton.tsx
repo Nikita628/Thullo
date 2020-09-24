@@ -5,7 +5,7 @@ import { concatCssClasses } from '../../../../common/functionality';
 import css from './DropdownButton.module.css';
 
 interface DropdownButtonProps extends BaseProps {
-    type: "secondary";
+    type: "secondary" | "primary";
 }
 
 const DropdownButton = (props: DropdownButtonProps) => {

@@ -10,7 +10,11 @@ interface InputGroupButtonProps extends BaseProps {
 
 const InputGroupButton = (props: InputGroupButtonProps) => {
     return (
-        <button onClick={props.onClick} className={concatCssClasses(css.button, props.className)}>
+        <button
+            onClick={props.onClick}
+            className={concatCssClasses(css.button, props.className)}
+            style={{ ...props.style }}
+        >
             {props.children}
         </button>
     );

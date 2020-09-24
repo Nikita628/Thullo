@@ -13,8 +13,11 @@ interface DropdownContentProps extends BaseProps {
 const DropdownContent = (props: DropdownContentProps) => {
     return (
         <div
+            tabIndex={0}
+            onBlur={props.onBlur}
             className={concatCssClasses(css.dropdownContent, props.className, props.isDisplayed ? css.displayed : css.notDisplayed)}
             style={{
+                ...props.style,
                 marginTop: props.offsetY ? `${props.offsetY}px` : undefined,
                 marginLeft: props.offsetX ? `${props.offsetX}px` : undefined,
             }}

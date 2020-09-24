@@ -61,7 +61,7 @@ namespace Thullo.WebApi.Controllers
             if (res.Errors.Any())
                 return BadRequest(res);
 
-            return Ok();
+            return Ok(res);
 		}
 
 		[HttpPut("updateTitle")]

@@ -40,8 +40,21 @@ function* getBoard(action: ITypedAction & IPayloadedAction<number>) {
     }
 }
 
+function* updateVisibility(action: ITypedAction & IPayloadedAction<{ boardId: number, isPrivate: boolean }>) {
+    const res: AxiosResponse<ApiResponse<Board>>
+        = yield BoardApiClient.updateVisibility(action.payload.boardId, action.payload.isPrivate);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Board visibility has been updated"], NotificationType.success));
+        yield put(actionCreators.UpdateBoardVisibilitySucceeded(action.payload.isPrivate));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchBoard() {
     yield takeLatest(actionTypes.searchBoardRequested, searchBoards);
     yield takeLatest(actionTypes.createBoardRequested, createBoard);
     yield takeLatest(actionTypes.getBoardRequested, getBoard);
+    yield takeLatest(actionTypes.updateBoardVisibilityRequested, updateVisibility);
 }

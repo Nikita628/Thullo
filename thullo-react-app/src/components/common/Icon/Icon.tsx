@@ -6,7 +6,8 @@ import { concatCssClasses } from '../../../common/functionality';
 interface IconProps extends BaseProps {
     type: "chat-left-text" | "three-dots" | "trash" | "x-square"
     | "caret-down-fill" | "caret-up-fill" | "search" | "file-image"
-    | "unlock" | "lock" | "eyeglasses" | "columns";
+    | "unlock" | "lock" | "eyeglasses" | "columns" | "person-plus"
+    | "three-dots";
     /** width and height in px. default is 1em */
     size?: number;
 }
@@ -82,8 +83,8 @@ const Icon = (props: IconProps) => {
         case "lock":
             return (
                 <svg style={{ ...props.style }} width={iconSize} height={iconSize} viewBox="0 0 16 16" className={concatCssClasses("bi bi-file-lock2", props.className)} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z" />
-                    <path fill-rule="evenodd" d="M8 5a1 1 0 0 0-1 1v1h2V6a1 1 0 0 0-1-1zm2 2.076V6a2 2 0 1 0-4 0v1.076c-.54.166-1 .597-1 1.224v2.4c0 .816.781 1.3 1.5 1.3h3c.719 0 1.5-.484 1.5-1.3V8.3c0-.627-.46-1.058-1-1.224z" />
+                    <path fillRule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z" />
+                    <path fillRule="evenodd" d="M8 5a1 1 0 0 0-1 1v1h2V6a1 1 0 0 0-1-1zm2 2.076V6a2 2 0 1 0-4 0v1.076c-.54.166-1 .597-1 1.224v2.4c0 .816.781 1.3 1.5 1.3h3c.719 0 1.5-.484 1.5-1.3V8.3c0-.627-.46-1.058-1-1.224z" />
                 </svg>
             );
         case "eyeglasses":
@@ -99,6 +100,18 @@ const Icon = (props: IconProps) => {
                     <path fillRule="evenodd" d="M7.5 14V2h1v12h-1zm0-8H1V5h6.5v1zm7.5 5H8.5v-1H15v1z" />
                 </svg>
             );
+        case "person-plus":
+            return (
+                <svg style={{ ...props.style }} width={iconSize} height={iconSize} viewBox="0 0 16 16" className={concatCssClasses("bi bi-person-plus", props.className)} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zM13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                </svg>
+            );
+        case "three-dots":
+            return (
+                <svg style={{ ...props.style }} width={iconSize} height={iconSize} viewBox="0 0 16 16" className={concatCssClasses("bi bi-three-dots", props.className)} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                </svg>
+            )
         default:
             return null;
     }

@@ -21,3 +21,8 @@
 .board:hover {
     border: 1px solid #c3d9f7;
 }
+
+.usersList {
+    display: flex;
+    align-items: center;
+}

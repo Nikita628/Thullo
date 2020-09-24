@@ -121,7 +121,9 @@ namespace Thullo.Application.Services
 			query = query.Skip((param.PageNumber - 1) * param.PageSize)
 				.Take(param.PageSize);
 
-			var users = await query.ToListAsync();
+			var users = await query
+				.Include(u => u.Img)
+				.ToListAsync();
 
 			result.Items = users;
 			result.TotalCount = totalCount;

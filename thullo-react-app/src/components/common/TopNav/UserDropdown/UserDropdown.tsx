@@ -27,7 +27,9 @@ const UserDropdown = (props: UserDropdownProps) => {
 
     return (
         <div className={css.userDropdown}>
+            
             <img className={css.userImg} src={currentUser.img.url} />
+
             <button
                 onClick={onDropClick}
                 className={css.dropButton}>{currentUser.firstName + " " + currentUser.lastName}
@@ -37,6 +39,7 @@ const UserDropdown = (props: UserDropdownProps) => {
                         : <Icon className={css.dropIcon} type="caret-down-fill" />
                 }
             </button>
+
             {
                 isDropdownOpened
                     ? <div className={css.dropContent}>

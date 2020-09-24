@@ -489,7 +489,7 @@ namespace Thullo.Application.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("ImgId")
+                    b.Property<int?>("ImgId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -533,7 +533,8 @@ namespace Thullo.Application.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImgId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImgId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -760,9 +761,7 @@ namespace Thullo.Application.Migrations
                 {
                     b.HasOne("Thullo.Application.DbModel.File", "Img")
                         .WithOne("User")
-                        .HasForeignKey("Thullo.Application.DbModel.User", "ImgId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Thullo.Application.DbModel.User", "ImgId");
                 });
 #pragma warning restore 612, 618
         }
