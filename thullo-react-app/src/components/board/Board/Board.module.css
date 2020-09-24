@@ -3,13 +3,11 @@
     background-color: white;
     box-shadow: 1px 1px 5px #bdbdbd;
     border-radius: 10px;
-    margin: 20px;
     cursor: pointer;
     border: 1px solid transparent;
 }
 
 .boardImg {
-    width: 350px;
     height: 200px;
     width: 100%;
     object-fit: cover;

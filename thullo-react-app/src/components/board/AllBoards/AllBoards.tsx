@@ -16,7 +16,6 @@ interface AllBoardsProps extends BaseProps {
 }
 
 const defaultPageSize = 10;
-const numberOfBoardsPerRow = 3;
 const pagingState = {
     responseItemsTotalCount: 0,
     searchParam: new BoardSearchParam(),
@@ -81,24 +80,18 @@ const AllBoards = (props: AllBoardsProps) => {
     useEffect(searchBoards, [searchParam]);
 
     const boards: ReactNode[] = [];
-    let numberOfEmptyBoards = 0;
 
     if (boardsPage) {
-        const numberOfBoardsOnLastRow = boardsPage.items.length % numberOfBoardsPerRow;
-
-        if (numberOfBoardsOnLastRow) {
-            numberOfEmptyBoards = numberOfBoardsPerRow - numberOfBoardsOnLastRow;
-        }
-
         for (let i = 0; i < boardsPage.items.length; i++) {
             boards.push(
-                <Board className={css.board} key={i} board={boardsPage.items[i]} onClick={() => { /* TODO redirect to board details */ }} />
-            );
-        }
-
-        for (let i = 0; i < numberOfEmptyBoards; i++) {
-            boards.push(
-                <div className={css.emptyBoard}></div>
+                <div className={css.boardContainer}>
+                    <Board
+                        className={css.board}
+                        key={i}
+                        board={boardsPage.items[i]}
+                        onClick={() => { /* TODO redirect to board details */ }}
+                    />
+                </div>
             );
         }
     }

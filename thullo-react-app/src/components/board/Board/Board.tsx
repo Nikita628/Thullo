@@ -19,13 +19,13 @@ const Board = (props: BoardProps) => {
         <div className={concatCssClasses(css.board, props.className)} onClick={props.onClick}>
 
             <img className={css.boardImg} src={props.board.coverUrl} />
-            
+
             <h5 className={css.boardTitle}>{props.board.title}</h5>
 
             {
                 props.board.users
-                ? <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />
-                : null
+                    ? <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />
+                    : null
             }
 
             {

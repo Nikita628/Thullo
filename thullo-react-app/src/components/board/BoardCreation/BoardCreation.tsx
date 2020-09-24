@@ -32,10 +32,12 @@ const BoardCreation = (props: BoardCreationProps) => {
     const [coverError, setCoverErrror] = useState<string>();
 
     const onCoverDropdownClick = () => {
+        setIsVisibilityDropdownOpened(false);
         setIsCoverDropdownOpened(!isCoverDropdownOpened);
     }
 
     const onVisibilityDropdownClick = () => {
+        setIsCoverDropdownOpened(false);
         setIsVisibilityDropdownOpened(!isVisibilityDropdownOpened);
     }
 
