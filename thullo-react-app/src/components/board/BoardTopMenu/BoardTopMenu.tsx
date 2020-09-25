@@ -26,12 +26,10 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
     const [isUserSearchDropdownOpened, setIsUserSearchDropdownOpened] = useState(false);
 
     const toggleVisibilityDropdown = () => {
-        setIsUserSearchDropdownOpened(false);
         setIsVisibilityDropdownOpened(!isVisibilityDropdownOpened);
     }
 
     const toggleUserSearchDropdown = () => {
-        setIsVisibilityDropdownOpened(false);
         setIsUserSearchDropdownOpened(!isUserSearchDropdownOpened);
     }
 
@@ -48,33 +46,50 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
         }
     }
 
+    const handleUserInvited = (user: User) => {
+        
+        setIsUserSearchDropdownOpened(false);
+    }
+
+    const renderUsersMenu = () => {
+        return (
+            <div className={css.usersMenu}>
+                <UserImagesList users={props.board.users} />
+
+                <Dropdown onClickOutside={() => setIsUserSearchDropdownOpened(false)}>
+                    <DropdownButton style={{ width: "40px", height: "40px" }} onClick={toggleUserSearchDropdown} type="primary">
+                        <Icon type="person-plus" />
+                    </DropdownButton>
+                    <DropdownContent isDisplayed={isUserSearchDropdownOpened} offsetY={10}>
+                        <UserSearch onUserInvited={handleUserInvited} />
+                    </DropdownContent>
+                </Dropdown>
+            </div>
+        );
+    }
+
+    const renderVisibilityMenu = () => {
+        return (
+            <Dropdown onClickOutside={() => setIsVisibilityDropdownOpened(false)} style={{ marginRight: "30px" }}>
+                <DropdownButton onClick={toggleVisibilityDropdown} type="secondary">
+                    {
+                        !props.board.isPrivate
+                            ? <><Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="unlock" />Public</>
+                            : <><Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="lock" />Private</>
+                    }
+                </DropdownButton>
+                <DropdownContent isDisplayed={isVisibilityDropdownOpened} offsetY={10}>
+                    <BoardVisibilityMenu onVisibilityChange={onVisibilityChange} />
+                </DropdownContent>
+            </Dropdown>
+        );
+    }
+
     return (
         <div className={concatCssClasses(css.boardTopMenu, props.className, "container-fluid")}>
             <div className={css.menuLeft}>
-                <Dropdown style={{ marginRight: "30px" }}>
-                    <DropdownButton onClick={toggleVisibilityDropdown} type="secondary">
-                        {
-                            !props.board.isPrivate
-                                ? <><Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="unlock" />Public</>
-                                : <><Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="lock" />Private</>
-                        }
-                    </DropdownButton>
-                    <DropdownContent isDisplayed={isVisibilityDropdownOpened} offsetY={10}>
-                        <BoardVisibilityMenu onVisibilityChange={onVisibilityChange} />
-                    </DropdownContent>
-                </Dropdown>
-
-                <div className={css.usersMenu}>
-                    <UserImagesList users={props.board.users} />
-                    <Dropdown>
-                        <DropdownButton style={{ width: "40px", height: "40px" }} onClick={toggleUserSearchDropdown} type="primary">
-                            <Icon type="person-plus" />
-                        </DropdownButton>
-                        <DropdownContent isDisplayed={isUserSearchDropdownOpened} offsetY={10}>
-                            <UserSearch onUserInvited={(user: User) => toggleUserSearchDropdown()} />
-                        </DropdownContent>
-                    </Dropdown>
-                </div>
+                {renderVisibilityMenu()}
+                {renderUsersMenu()}
             </div>
 
             <div className={css.menuRight}>

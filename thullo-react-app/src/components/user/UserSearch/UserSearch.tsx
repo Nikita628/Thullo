@@ -25,6 +25,7 @@ const defaultSearchParam = {
 const UserSearch = (props: UserSearchProps) => {
     const dispatch = useDispatch();
     const usersPage = useSelector((state: AppState) => state.user.usersPage);
+    const currentBoard = useSelector((state: AppState) => state.board.board);
     const [selectedUser, setSelectedUser] = useState<User>();
     const [searchText, setSearchText] = useState<string>();
     const [searchParam, setSearchParam] = useState<{ param: UserSearchParam, appendToExistingPage: boolean }>(defaultSearchParam);
@@ -43,16 +44,20 @@ const UserSearch = (props: UserSearchProps) => {
         setSearchParam({ param: newSearchParam, appendToExistingPage: false });
     }
 
-    const handleUserListScroll = () => {
-        const totalPages = Math.ceil(usersPage.totalCount / searchParam.param.pageSize);
-        const hasMorePagesToFetch = totalPages < searchParam.param.pageNumber;
+    const handleUserListScroll = (e: any) => {
+        const isScrolledToBottom = (e.target.offsetHeight + e.target.scrollTop == e.target.scrollHeight);
 
-        if (hasMorePagesToFetch) {
-            const newSearchParam: UserSearchParam = {
-                ...searchParam.param,
-                pageNumber: searchParam.param.pageNumber + 1
-            };
-            setSearchParam({ param: newSearchParam, appendToExistingPage: true });
+        if (isScrolledToBottom) {
+            const totalPages = Math.ceil(usersPage.totalCount / searchParam.param.pageSize);
+            const hasMorePagesToFetch = totalPages > searchParam.param.pageNumber;
+
+            if (hasMorePagesToFetch) {
+                const newSearchParam: UserSearchParam = {
+                    ...searchParam.param,
+                    pageNumber: searchParam.param.pageNumber + 1
+                };
+                setSearchParam({ param: newSearchParam, appendToExistingPage: true });
+            }
         }
     }
 
@@ -61,15 +66,17 @@ const UserSearch = (props: UserSearchProps) => {
     }
 
     const handleInviteButtonClick = () => {
-        // TODO make member
-        if (selectedUser) {
+        const isUserAlreadyMember = currentBoard.users.some(u => u.id === selectedUser.id);
+        
+        if (selectedUser && !isUserAlreadyMember) {
+            dispatch(userActionCreators.InviteToBoardRequested(selectedUser.id, currentBoard.id));
             props.onUserInvited(selectedUser);
         }
     }
 
     const renderUserList = () => {
         return (
-            <div className={css.usersList}>
+            <div onScroll={handleUserListScroll} className={css.usersList}>
                 {
                     usersPage.items.map((u: User, i: number) => {
                         return (
@@ -106,7 +113,7 @@ const UserSearch = (props: UserSearchProps) => {
                 {renderUserList()}
 
                 <div style={{ textAlign: "center" }}>
-                    <Button onClick={handleInviteButtonClick} type="primary">Invite</Button>
+                    <Button disabled={!selectedUser} onClick={handleInviteButtonClick} type="primary">Invite</Button>
                 </div>
             </div>
             : null

@@ -15,12 +15,14 @@ const Modal = (props: ModalProps) => {
     }
 
     return (
-        <div onClick={props.onClose} className={concatCssClasses(css.modal, props.isDisplayed ? css.modalOpened : css.modalClosed)}>
-            <div onClick={onModalContentClick} className={css.modalContent}>
-                <span onClick={props.onClose} className={css.closeButton}>&times;</span>
-                {props.children}
+        props.isDisplayed
+            ? <div onClick={props.onClose} className={concatCssClasses(css.modal)}>
+                <div onClick={onModalContentClick} className={css.modalContent}>
+                    <span onClick={props.onClose} className={css.closeButton}>&times;</span>
+                    {props.children}
+                </div>
             </div>
-        </div>
+            : null
     );
 }
 

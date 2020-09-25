@@ -6,24 +6,24 @@ import css from './DropdownContent.module.css';
 
 interface DropdownContentProps extends BaseProps {
     isDisplayed: boolean;
-    offsetY?: number; 
+    offsetY?: number;
     offsetX?: number;
 }
 
 const DropdownContent = (props: DropdownContentProps) => {
     return (
-        <div
-            tabIndex={0}
-            onBlur={props.onBlur}
-            className={concatCssClasses(css.dropdownContent, props.className, props.isDisplayed ? css.displayed : css.notDisplayed)}
-            style={{
-                ...props.style,
-                marginTop: props.offsetY ? `${props.offsetY}px` : undefined,
-                marginLeft: props.offsetX ? `${props.offsetX}px` : undefined,
-            }}
-        >
-            {props.children}
-        </div>
+        props.isDisplayed
+            ? <div
+                className={concatCssClasses(css.dropdownContent, props.className)}
+                style={{
+                    ...props.style,
+                    marginTop: props.offsetY ? `${props.offsetY}px` : undefined,
+                    marginLeft: props.offsetX ? `${props.offsetX}px` : undefined,
+                }}
+            >
+                {props.children}
+            </div>
+            : null
     );
 }
 

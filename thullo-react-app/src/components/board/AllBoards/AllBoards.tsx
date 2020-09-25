@@ -106,16 +106,12 @@ const AllBoards = (props: AllBoardsProps) => {
     return (
         <div className="container">
 
-            {
-                isModalDisplayed
-                    ? <Modal
-                        isDisplayed={isModalDisplayed}
-                        onClose={closeBoardCreationModal}
-                    >
-                        <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
-                    </Modal>
-                    : null
-            }
+            <Modal
+                isDisplayed={isModalDisplayed}
+                onClose={closeBoardCreationModal}
+            >
+                <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
+            </Modal>
 
             <div className={css.allBoardsMenu}>
                 <h4>All Boards</h4>

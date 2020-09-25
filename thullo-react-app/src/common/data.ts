@@ -28,5 +28,4 @@ export interface BaseProps {
     className?: string;
     children?: ReactNode;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-    onBlur?: (e: React.FocusEvent<HTMLElement>) => void;
 }

@@ -16,7 +16,7 @@ const Button = (props: ButtonProps) => {
             disabled={props.disabled}
             type="button"
             onClick={props.onClick}
-            className={concatCssClasses(css.button, css[props.type], props.className)}
+            className={concatCssClasses(css.button, css[props.type], props.className, props.disabled ? css.disabled : "")}
             style={{...props.style}}
         >
             {props.children}

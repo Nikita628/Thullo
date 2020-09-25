@@ -20,7 +20,7 @@ const Layout = (props: LayoutProps) => {
                 <Switch>
                     <Route path="/boards" exact component={AllBoards} />
                     <Route path="/board/:id" exact component={BoardDetails} />
-                    <Redirect from="/" to="boards" />
+                    <Redirect from="/" to="/boards" />
                 </Switch>
             </main>
             <footer className={css.footer}>

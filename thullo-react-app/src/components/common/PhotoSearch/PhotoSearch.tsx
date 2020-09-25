@@ -41,9 +41,9 @@ const PhotoSearch = (props: PhotoSearchProps) => {
     const photosToRender: React.ReactNode[] = [];
 
     if (pexelsPage) {
-        pexelsPage.items.forEach(p => {
+        pexelsPage.items.forEach((p: PexelsPhoto, i: number) => {
             photosToRender.push(
-                <img onClick={() => props.onPhotoSelected(p)} className={css.photo} src={p.src.tiny} />
+                <img key={i} onClick={() => props.onPhotoSelected(p)} className={css.photo} src={p.src.tiny} />
             );
         });
     }

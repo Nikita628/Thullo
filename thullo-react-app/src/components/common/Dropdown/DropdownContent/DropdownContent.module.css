@@ -1,12 +1,5 @@
 .dropdownContent {
     position: absolute;
     z-index: 1;
-}
-
-.displayed {
     display: block;
-}
-
-.notDisplayed {
-    display: none;
 }

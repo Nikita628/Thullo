@@ -32,12 +32,10 @@ const BoardCreation = (props: BoardCreationProps) => {
     const [coverError, setCoverErrror] = useState<string>();
 
     const onCoverDropdownClick = () => {
-        setIsVisibilityDropdownOpened(false);
         setIsCoverDropdownOpened(!isCoverDropdownOpened);
     }
 
     const onVisibilityDropdownClick = () => {
-        setIsCoverDropdownOpened(false);
         setIsVisibilityDropdownOpened(!isVisibilityDropdownOpened);
     }
 
@@ -97,7 +95,7 @@ const BoardCreation = (props: BoardCreationProps) => {
             </div>
 
             <div className={css.boardMenu}>
-                <Dropdown>
+                <Dropdown onClickOutside={() => setIsCoverDropdownOpened(false)}>
                     <DropdownButton onClick={onCoverDropdownClick} type="secondary">
                         <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="file-image" /> Cover
                 </DropdownButton>
@@ -106,7 +104,7 @@ const BoardCreation = (props: BoardCreationProps) => {
                     </DropdownContent>
                 </Dropdown>
 
-                <Dropdown>
+                <Dropdown onClickOutside={() => setIsVisibilityDropdownOpened(false)}>
                     <DropdownButton onClick={onVisibilityDropdownClick} type="secondary">
                         {
                             visibility == BoardVisibility.public

@@ -5,6 +5,7 @@ import { IPayloadedAction, ITypedAction } from "./common";
 export const actionTypes = {
     UserSearchRequested: "user/userSearchRequested",
     UserSearchSucceeded: "user/userSearchSucceeded",
+    InviteToBoardRequested: "user/inviteToBoardRequested",
 };
 
 export const actionCreators = {
@@ -24,6 +25,13 @@ export const actionCreators = {
                 appendToExistingPage,
             },
         }),
+    InviteToBoardRequested: (userId: number, boardId: number): ITypedAction & IPayloadedAction<{ userId: number, boardId: number }> => ({
+        type: actionTypes.InviteToBoardRequested,
+        payload: {
+            userId,
+            boardId,
+        }
+    })
 };
 
 export interface UserState {

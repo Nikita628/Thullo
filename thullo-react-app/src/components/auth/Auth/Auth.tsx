@@ -13,7 +13,7 @@ const Auth = () => {
                     <Switch>
                         <Route path="/signin" exact component={SignIn} />
                         <Route path="/signup" exact component={SignUp} />
-                        <Redirect from="/" to="signin" />
+                        <Redirect from="/" to="/signin" />
                     </Switch>
                 </div>
             </div>
