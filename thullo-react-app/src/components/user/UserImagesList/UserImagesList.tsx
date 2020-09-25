@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { Link } from "react-router-dom";
 
 import { User } from '../../../models/user';
 import css from './UserImagesList.module.css';
@@ -20,9 +19,7 @@ const UserImagesList = (props: UserImagesListProps) => {
     for (let i = 0; i < usersCount; i++) {
         const userImg = props.users[i].img
             ? <img key={i} className={css.userImg} src={props.users[i].img.url} />
-            : <div key={i} className={css.userImgPlaceholder}>
-                {props.users[i].firstName[0].toUpperCase() + props.users[i].lastName[0].toUpperCase()}
-            </div>
+            : <div key={i} className={css.userImgPlaceholder}>{User.getInitials(props.users[i])}</div>
 
         usersToDisplay.push(userImg);
     }

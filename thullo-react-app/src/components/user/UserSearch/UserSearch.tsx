@@ -14,7 +14,8 @@ import Icon from '../../common/Icon/Icon';
 import Button from '../../common/Button/Button';
 
 interface UserSearchProps extends BaseProps {
-    onUserInvited: (user: User) => void;
+    searchType: "Board" | "Card";
+    onUserConfirmationClick: (user: User) => void;
 }
 
 const defaultSearchParam = {
@@ -25,7 +26,6 @@ const defaultSearchParam = {
 const UserSearch = (props: UserSearchProps) => {
     const dispatch = useDispatch();
     const usersPage = useSelector((state: AppState) => state.user.usersPage);
-    const currentBoard = useSelector((state: AppState) => state.board.board);
     const [selectedUser, setSelectedUser] = useState<User>();
     const [searchText, setSearchText] = useState<string>();
     const [searchParam, setSearchParam] = useState<{ param: UserSearchParam, appendToExistingPage: boolean }>(defaultSearchParam);
@@ -66,12 +66,7 @@ const UserSearch = (props: UserSearchProps) => {
     }
 
     const handleInviteButtonClick = () => {
-        const isUserAlreadyMember = currentBoard.users.some(u => u.id === selectedUser.id);
-        
-        if (selectedUser && !isUserAlreadyMember) {
-            dispatch(userActionCreators.InviteToBoardRequested(selectedUser.id, currentBoard.id));
-            props.onUserInvited(selectedUser);
-        }
+        props.onUserConfirmationClick(selectedUser);
     }
 
     const renderUserList = () => {
@@ -79,18 +74,19 @@ const UserSearch = (props: UserSearchProps) => {
             <div onScroll={handleUserListScroll} className={css.usersList}>
                 {
                     usersPage.items.map((u: User, i: number) => {
+                        const isUserSelected = selectedUser && u.id === selectedUser.id;
                         return (
                             <div
                                 onClick={() => handleUserClick(u)}
                                 key={i}
-                                className={concatCssClasses(css.userRow, selectedUser && u.id === selectedUser.id ? css.selectedUserRow : "")}
+                                className={concatCssClasses(css.userRow, isUserSelected ? css.selectedUserRow : "")}
                             >
                                 {
                                     u.img
                                         ? <img className={css.userImg} src={u.img.url} />
-                                        : <div className={css.userImgPlaceholder}>{u.firstName[0].toUpperCase() + u.lastName[0].toUpperCase()}</div>
+                                        : <div className={css.userImgPlaceholder}>{User.getInitials(u)}</div>
                                 }
-                                <span>{u.firstName + " " + u.lastName}</span>
+                                <span>{User.getFullName(u)}</span>
                             </div>
                         );
                     })
@@ -102,7 +98,7 @@ const UserSearch = (props: UserSearchProps) => {
     return (
         usersPage
             ? <div className={concatCssClasses(css.userSearch, props.className)}>
-                <h6>Invite to Board</h6>
+                <h6>Invite to {props.searchType}</h6>
                 <p className="text-muted">Search users you want to invite</p>
 
                 <InputGroup>

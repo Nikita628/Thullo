@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 
+import { actionCreators as userActionCreators } from "../../../state/user";
 import { actionCreators as boardActionCreators } from "../../../state/board";
 import { BaseProps, BoardVisibility } from '../../../common/data';
 import { concatCssClasses } from '../../../common/functionality';
@@ -33,7 +34,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
         setIsUserSearchDropdownOpened(!isUserSearchDropdownOpened);
     }
 
-    const onVisibilityChange = (visibility: BoardVisibility) => {
+    const handleBoardVisibilityChange = (visibility: BoardVisibility) => {
         const currentBoardVisibility = props.board.isPrivate
             ? BoardVisibility.private
             : BoardVisibility.public;
@@ -47,8 +48,12 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
     }
 
     const handleUserInvited = (user: User) => {
-        
-        setIsUserSearchDropdownOpened(false);
+        const isAlreadyMember = props.board.users.some(u => u.id === user.id);
+
+        if (!isAlreadyMember) {
+            dispatch(userActionCreators.InviteToBoardRequested(user.id, props.board.id));
+            setIsUserSearchDropdownOpened(false);
+        }
     }
 
     const renderUsersMenu = () => {
@@ -61,7 +66,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
                         <Icon type="person-plus" />
                     </DropdownButton>
                     <DropdownContent isDisplayed={isUserSearchDropdownOpened} offsetY={10}>
-                        <UserSearch onUserInvited={handleUserInvited} />
+                        <UserSearch searchType="Board" onUserConfirmationClick={handleUserInvited} />
                     </DropdownContent>
                 </Dropdown>
             </div>
@@ -79,7 +84,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
                     }
                 </DropdownButton>
                 <DropdownContent isDisplayed={isVisibilityDropdownOpened} offsetY={10}>
-                    <BoardVisibilityMenu onVisibilityChange={onVisibilityChange} />
+                    <BoardVisibilityMenu onVisibilityChange={handleBoardVisibilityChange} />
                 </DropdownContent>
             </Dropdown>
         );
