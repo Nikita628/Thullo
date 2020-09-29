@@ -27,9 +27,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _cardService.Get(cardId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -37,9 +34,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> Create(Card card)
 		{
 			var res = await _cardService.Create(card);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}
@@ -49,9 +43,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _cardService.UpdateDescription(param.Description, param.CardId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -59,9 +50,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> UpdateTitle(Dtos.Card.UpdateTitle param)
 		{
 			var res = await _cardService.UpdateTitle(param.Title, param.CardId);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}
@@ -71,9 +59,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _cardService.UpdateCoverUrl(param.CoverUrl, param.CardId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -81,9 +66,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> MoveCardToList(Dtos.Card.MoveCardToList param)
 		{
 			var res = await _cardService.MoveCardToList(param.CardId, param.ListId);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}

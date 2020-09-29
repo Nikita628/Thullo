@@ -27,9 +27,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _commentService.Create(comment);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -38,9 +35,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _commentService.UpdateText(param.Text, param.CardCommentId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -48,9 +42,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> Delete([FromRoute]int id)
 		{
 			var res = await _commentService.Delete(id);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}

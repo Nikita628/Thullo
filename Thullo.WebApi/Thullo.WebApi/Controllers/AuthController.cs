@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Linq;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.Models;
@@ -10,7 +9,7 @@ using Thullo.WebApi.Extensions;
 
 namespace Thullo.WebApi.Controllers
 {
-    [ApiController]
+	[ApiController]
 	[Route("api/[controller]")]
 	public class AuthController : ControllerBase
 	{
@@ -28,14 +27,7 @@ namespace Thullo.WebApi.Controllers
 		{
 			var result = await _authService.SignIn(param.Login, param.Password);
 
-			var response = new Response<Dtos.Auth.SignInResult>
-			{
-				Errors = result.Errors,
-				Item = _mapper.Map<Dtos.Auth.SignInResult>(result.Item)
-			};
-
-			if (response.Errors.Any())
-				return BadRequest(response);
+			var response = _mapper.Map<Response<Dtos.Auth.SignInResult>>(result);
 
 			return Ok(response);
 		}
@@ -54,9 +46,6 @@ namespace Thullo.WebApi.Controllers
 			signUpData.Img = file;
 
 			var res = await _authService.SignUp(signUpData);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
         }

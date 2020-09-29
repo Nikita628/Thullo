@@ -1,0 +1,24 @@
+import React from 'react';
+
+import css from './CardLabel.module.css';
+import { concatCssClasses } from '../../../common/functionality';
+import { BaseProps } from '../../../common/data';
+import { CardLabel as CardLabelModel } from '../../../models/card';
+
+interface CardLabelProps extends BaseProps {
+    cardlabel: CardLabelModel;
+}
+
+const CardLabel = (props: CardLabelProps) => {
+    return (
+        <div
+            key={props.key}
+            style={{ ...props.style, backgroundColor: props.cardlabel.color }}
+            className={concatCssClasses(css.cardLabel, props.className)}
+        >
+            {props.cardlabel.name}
+        </div>
+    );
+}
+
+export default CardLabel;

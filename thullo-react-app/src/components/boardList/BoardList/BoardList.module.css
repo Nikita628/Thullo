@@ -1,0 +1,27 @@
+.boardList {
+    padding: 0 10px;
+}
+
+.boardListMenu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.menuContent {
+    background-color: white;
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px #e1e1e1;
+}
+
+.menuContent p {
+    margin-bottom: 0;
+}
+
+.cards {
+    display: flex;
+    flex-flow: column;
+}

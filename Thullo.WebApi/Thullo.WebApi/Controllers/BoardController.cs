@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
@@ -10,7 +8,7 @@ using Thullo.Application.Models;
 
 namespace Thullo.WebApi.Controllers
 {
-    [Authorize]
+	[Authorize]
 	[ApiController]
 	[Route("api/[controller]")]
 	public class BoardController : ControllerBase
@@ -29,15 +27,7 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _boardService.Search(param);
 
-			var response = new PageResponse<Dtos.Board.Board>
-			{
-				Errors = res.Errors,
-				Items = _mapper.Map<List<Dtos.Board.Board>>(res.Items),
-				TotalCount = res.TotalCount
-			};
-
-			if (response.Errors.Any())
-				return BadRequest(response);
+			var response = _mapper.Map<PageResponse<Dtos.Board.Board>>(res);
 
 			return Ok(response);
 		}
@@ -47,9 +37,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _boardService.Create(board);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -57,9 +44,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> UpdateVisibility(Dtos.Board.UpdateVisibility param)
 		{
             var res = await _boardService.UpdateVisibility(param.IsPrivate, param.BoardId);
-
-            if (res.Errors.Any())
-                return BadRequest(res);
 
             return Ok(res);
 		}
@@ -69,9 +53,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _boardService.UpdateTitle(param.Title, param.BoardId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -79,9 +60,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> UpdateDescription(Dtos.Board.UpdateDescription param)
 		{
 			var res = await _boardService.UpdateDescription(param.Description, param.BoardId);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}
@@ -91,14 +69,7 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _boardService.Get(boardId);
 
-			var response = new Response<Dtos.Board.Board>
-			{
-				Errors = res.Errors,
-				Item = _mapper.Map<Dtos.Board.Board>(res.Item)
-			};
-
-			if (response.Errors.Any())
-				return BadRequest(response);
+			var response = _mapper.Map<Response<Dtos.Board.Board>>(res);
 
 			return Ok(response);
 		}

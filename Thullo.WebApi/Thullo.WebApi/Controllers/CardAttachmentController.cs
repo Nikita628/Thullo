@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.Models;
@@ -10,7 +9,7 @@ using Thullo.WebApi.Extensions;
 
 namespace Thullo.WebApi.Controllers
 {
-    [Authorize]
+	[Authorize]
 	[ApiController]
 	[Route("api/[controller]")]
 	public class CardAttachmentController : ControllerBase
@@ -35,9 +34,6 @@ namespace Thullo.WebApi.Controllers
 
 			var res = await _attachmentService.Create(file, cardId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -45,9 +41,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> Delete(int id)
 		{
 			var res = await _attachmentService.Delete(id);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}

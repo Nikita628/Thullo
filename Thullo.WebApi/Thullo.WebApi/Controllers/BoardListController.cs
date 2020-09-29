@@ -27,9 +27,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _listService.Create(boardList);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -37,9 +34,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> UpdateTitle(Dtos.BoardList.UpdateTitle param)
 		{
 			var res = await _listService.UpdateTitle(param.Title, param.BoardListId);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}
@@ -49,9 +43,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _listService.Delete(id);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -59,9 +50,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> Get(int id)
 		{
 			var res = await _listService.Get(id);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}

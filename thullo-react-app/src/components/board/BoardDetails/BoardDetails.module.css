@@ -1,0 +1,9 @@
+.boardLists {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 20px 20px;
+}
+
+.boardList {
+    flex: 0 0 20%;
+}

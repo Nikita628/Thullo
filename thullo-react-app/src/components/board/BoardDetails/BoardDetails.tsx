@@ -9,6 +9,7 @@ import { concatCssClasses } from '../../../common/functionality';
 import { AppState } from '../../../state';
 import css from './BoardDetails.module.css';
 import BoardTopMenu from '../BoardTopMenu/BoardTopMenu';
+import BoardList from '../../boardList/BoardList/BoardList';
 
 interface BoardDetailsProps extends BaseProps {
     
@@ -29,7 +30,13 @@ const BoardDetails = (props: BoardDetailsProps) => {
     return (
         <div className={concatCssClasses(css.boardDetails, props.className)}>
             <BoardTopMenu board={board} />
-            <div>board content</div>
+            <div className={css.boardLists}>
+                {
+                    board.boardLists.map(bl => (
+                        <BoardList className={css.boardList} boardList={bl} />
+                    ))
+                }
+            </div>
         </div>
     );
 }

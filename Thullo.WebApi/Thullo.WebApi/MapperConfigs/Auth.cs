@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Thullo.Application.Models;
 
 namespace Thullo.WebApi.MapperConfigs
 {
@@ -7,6 +8,7 @@ namespace Thullo.WebApi.MapperConfigs
 		public AuthProfile()
 		{
 			CreateMap<Application.Models.SignInResult, Dtos.Auth.SignInResult>();
+			CreateMap<Response<Application.Models.SignInResult>, Response<Dtos.Auth.SignInResult>>();
 		}
 	}
 }

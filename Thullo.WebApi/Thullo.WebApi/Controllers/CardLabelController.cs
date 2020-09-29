@@ -27,9 +27,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _labelService.Search(param);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -38,9 +35,6 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _labelService.AddLabelOnCard(param.LabelId, param.CardId);
 
-			if (res.Errors.Any())
-				return BadRequest(res);
-
 			return Ok(res);
 		}
 
@@ -48,9 +42,6 @@ namespace Thullo.WebApi.Controllers
 		public async Task<IActionResult> CreateLabelAndAddOnCard(Dtos.CardLabel.CreateLabelAndAddOnCard param)
 		{
 			var res = await _labelService.CreateLabelAndAddOnCard(param.Label, param.CardId);
-
-			if (res.Errors.Any())
-				return BadRequest(res);
 
 			return Ok(res);
 		}

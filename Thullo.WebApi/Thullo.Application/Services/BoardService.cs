@@ -46,8 +46,17 @@ namespace Thullo.Application.Services
                 .Include(b => b.BoardMemberships)
                 .ThenInclude(bm => bm.User)
                 .ThenInclude(u => u.Img)
+
                 .Include(b => b.BoardLists)
                 .ThenInclude(bl => bl.Cards)
+                .ThenInclude(c => c.CardMemberships)
+                .ThenInclude(cm => cm.User)
+
+                .Include(b => b.BoardLists)
+                .ThenInclude(bl => bl.Cards)
+                .ThenInclude(c => c.LabelToCardRelations)
+                .ThenInclude(lc => lc.CardLabel)
+
                 .FirstOrDefaultAsync(b => b.Id == boardId);
 
             if (board is null)
