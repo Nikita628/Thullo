@@ -16,6 +16,7 @@ import UserImagesList from '../../user/UserImagesList/UserImagesList';
 import Button from '../../common/Button/Button';
 import UserSearch from '../../user/UserSearch/UserSearch';
 import { User } from '../../../models/user';
+import BoardSideMenu from '../BoardSideMenu/BoardSideMenu';
 
 interface BoardTopMenuProps extends BaseProps {
     board: Board;
@@ -25,6 +26,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
     const dispatch = useDispatch();
     const [isVisibilityDropdownOpened, setIsVisibilityDropdownOpened] = useState(false);
     const [isUserSearchDropdownOpened, setIsUserSearchDropdownOpened] = useState(false);
+    const [isSideMenuDisplayed, setIsSideMenuDisplayed] = useState(false);
 
     const toggleVisibilityDropdown = () => {
         setIsVisibilityDropdownOpened(!isVisibilityDropdownOpened);
@@ -98,8 +100,10 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
             </div>
 
             <div className={css.menuRight}>
-                <Button type="secondary"><Icon type="three-dots" style={{ marginRight: "10px" }} />Show Menu</Button>
+                <Button onClick={() => setIsSideMenuDisplayed(true)} type="secondary"><Icon type="three-dots" style={{ marginRight: "10px" }} />Show Menu</Button>
             </div>
+
+            {isSideMenuDisplayed && <BoardSideMenu onClose={() => setIsSideMenuDisplayed(false)} />}
         </div>
     );
 }

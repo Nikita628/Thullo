@@ -1,0 +1,60 @@
+.boardSideMenu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    background-color: white;
+    border-left: 2px solid #efefef;
+    border-bottom: 2px solid #efefef;
+    padding: 20px 10px;
+    min-height: 100vh;
+}
+
+.menuHeader {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menuHeader form {
+    flex-basis: 80%;
+}
+
+.menuHeader input {
+    border: none;
+    font-weight: bold;
+    width: 100%;
+    padding: 0;
+}
+
+.menuHeader span {
+    font-size: 25px;
+    padding-bottom: 5px;
+    flex-basis: 20%;
+    max-width: 20px;
+    cursor: pointer;
+}
+
+.boardSideMenu hr {
+    margin: 0;
+}
+
+.description {
+    margin-top: 20px;
+}
+
+.description textarea {
+    border: 1px solid transparent;
+    width: 100%;
+    margin-top: 10px;
+    resize: none;
+    padding: 5px;
+    font-size: large;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.description .editedDescription {
+    border: 1px solid #bdbdbd;
+}

@@ -36,6 +36,11 @@
     background-color: #eaeaea;
 }
 
+.secondary-outline {
+    background-color: transparent;
+    border: 1px solid #828282;
+}
+
 .light {
     background: none;
     color: #828282;

@@ -5,5 +5,31 @@
 }
 
 .boardList {
-    flex: 0 0 20%;
+    flex-basis: 100%;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .boardList {
+        flex-basis: 50%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .boardList {
+        flex-basis: 33.33%;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    .boardList {
+        flex-basis: 20%;
+    }
 }
