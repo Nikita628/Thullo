@@ -1,0 +1,45 @@
+.media {
+    display: inline-block;
+}
+
+.media > div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.img, .imgPlaceholder {
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.img {
+    object-fit: cover;
+}
+
+.imgPlaceholder {
+    color: black;
+    background-color: #cecece;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.info h6,p {
+    margin: 0;
+}
+
+.info h6 {
+    font-weight: bold;
+}
+
+.info p {
+    margin-top: 5px;
+    color: #a3a3a3;
+}

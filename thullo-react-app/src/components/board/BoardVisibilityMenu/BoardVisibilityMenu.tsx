@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BaseProps, BoardVisibility } from '../../../common/data';
 import { concatCssClasses } from '../../../common/functionality';
-import Icon from '../../common/Icon/Icon';
+import Icon from '../../common/ui/Icon/Icon';
 import css from './BoardVisibilityMenu.module.css';
 
 interface BoardVisibilityMenuProps extends BaseProps {

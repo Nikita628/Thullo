@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { BaseProps } from '../../../../common/data';
-import { concatCssClasses } from '../../../../common/functionality';
+import { BaseProps } from '../../../../../common/data';
+import { concatCssClasses } from '../../../../../common/functionality';
 import css from './DropdownButton.module.css';
 
 interface DropdownButtonProps extends BaseProps {

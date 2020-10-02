@@ -2,12 +2,12 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 30%;
+    width: 100%;
     background-color: white;
     border-left: 2px solid #efefef;
     border-bottom: 2px solid #efefef;
     padding: 20px 10px;
-    min-height: 100vh;
+    z-index: 1;
 }
 
 .menuHeader {
@@ -57,4 +57,40 @@
 
 .description .editedDescription {
     border: 1px solid #bdbdbd;
+}
+
+.team {
+    margin-top: 20px;
+}
+
+.teamMember {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .boardSideMenu {
+        width: 50%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    .boardSideMenu {
+        width: 30%;
+    }
 }

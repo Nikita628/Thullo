@@ -236,11 +236,20 @@ const draw = (canvas: HTMLCanvasElement) => {
     ctx.strokeStyle = defaultCropperColor;
 
     ctx.beginPath();
-    ctx.arc(cropperRectanglePosition.x + cropperRectangleDimensions.width, cropperRectanglePosition.y + cropperRectangleDimensions.height, defaultResizerButtonRadius, 0, 2 * Math.PI);
+    ctx.arc(
+        cropperRectanglePosition.x + cropperRectangleDimensions.width,
+        cropperRectanglePosition.y + cropperRectangleDimensions.height,
+        defaultResizerButtonRadius, 0, 2 * Math.PI
+    );
     ctx.fill();
 
     ctx.setLineDash([5, 5]);
-    ctx.strokeRect(cropperRectanglePosition.x, cropperRectanglePosition.y, cropperRectangleDimensions.width, cropperRectangleDimensions.height);
+    ctx.strokeRect(
+        cropperRectanglePosition.x,
+        cropperRectanglePosition.y,
+        cropperRectangleDimensions.width,
+        cropperRectangleDimensions.height
+    );
 }
 
 const isInsideCropperRect = (point: Point) => {

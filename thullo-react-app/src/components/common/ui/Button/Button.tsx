@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { BaseProps } from '../../../common/data';
-import { concatCssClasses } from '../../../common/functionality';
+import { BaseProps } from '../../../../common/data';
+import { concatCssClasses } from '../../../../common/functionality';
 import css from './Button.module.css';
 
 interface ButtonProps extends BaseProps {
     type: "primary" | "secondary" | "secondary-outline"
-        | "light";
+        | "light" | "success" | "danger-outline";
     disabled?: boolean;
 }
 

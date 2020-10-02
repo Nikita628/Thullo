@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { BaseProps } from '../../../common/data';
-import { concatCssClasses } from '../../../common/functionality';
+import { BaseProps } from '../../../../common/data';
+import { concatCssClasses } from '../../../../common/functionality';
 
 interface IconProps extends BaseProps {
     type: string | "chat-left-text" | "three-dots" | "trash" | "x-square"

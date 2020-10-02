@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { BaseProps } from '../../../../common/data';
-import { concatCssClasses } from '../../../../common/functionality';
+import { BaseProps } from '../../../../../common/data';
+import { concatCssClasses } from '../../../../../common/functionality';
 
 import css from './InputGroupButton.module.css';
 

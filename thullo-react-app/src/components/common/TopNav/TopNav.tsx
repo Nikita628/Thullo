@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import InputGroup from '../InputGroup/InputGroup';
-import InputGroupButton from '../InputGroup/InputGroupButton/InputGroupButton';
-import InputGroupInput from '../InputGroup/InputGroupInput/InputGroupInput';
+import InputGroup from '../ui/InputGroup/InputGroup';
+import InputGroupButton from '../ui/InputGroup/InputGroupButton/InputGroupButton';
+import InputGroupInput from '../ui/InputGroup/InputGroupInput/InputGroupInput';
 import css from './TopNav.module.css';
 import UserDropdown from './UserDropdown/UserDropdown';
 import { AppState } from '../../../state';
-import Button from '../Button/Button';
-import Icon from '../Icon/Icon';
+import Button from '../ui/Button/Button';
+import Icon from '../ui/Icon/Icon';
 import { concatCssClasses } from '../../../common/functionality';
 
 interface TopNavProps {

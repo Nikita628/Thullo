@@ -4,10 +4,10 @@ import css from './BoardList.module.css';
 import { concatCssClasses } from '../../../common/functionality';
 import { BaseProps } from '../../../common/data';
 import { BoardList as BoardListModel } from '../../../models/boardList';
-import Dropdown from '../../common/Dropdown/Dropdown';
-import DropdownButton from '../../common/Dropdown/DropdownButton/DropdownButton';
-import Icon from '../../common/Icon/Icon';
-import DropdownContent from '../../common/Dropdown/DropdownContent/DropdownContent';
+import Dropdown from '../../common/ui/Dropdown/Dropdown';
+import DropdownButton from '../../common/ui/Dropdown/DropdownButton/DropdownButton';
+import Icon from '../../common/ui/Icon/Icon';
+import DropdownContent from '../../common/ui/Dropdown/DropdownContent/DropdownContent';
 import Card from '../../card/Card/Card';
 
 interface BoardListProps extends BaseProps {

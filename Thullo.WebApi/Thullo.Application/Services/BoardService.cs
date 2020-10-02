@@ -57,6 +57,9 @@ namespace Thullo.Application.Services
                 .ThenInclude(c => c.LabelToCardRelations)
                 .ThenInclude(lc => lc.CardLabel)
 
+                .Include(b => b.CreatedBy)
+                .ThenInclude(u => u.Img)
+
                 .FirstOrDefaultAsync(b => b.Id == boardId);
 
             if (board is null)

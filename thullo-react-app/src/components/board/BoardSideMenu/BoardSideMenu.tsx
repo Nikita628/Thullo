@@ -4,12 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as commonActionCreators } from "../../../state/common";
 import { actionCreators as boardActionCreators } from "../../../state/board";
 import { BaseProps } from '../../../common/data';
-import { concatCssClasses } from '../../../common/functionality';
+import { concatCssClasses, formatDate } from '../../../common/functionality';
 import { AppState } from '../../../state';
 import css from './BoardSideMenu.module.css';
-import Icon from '../../common/Icon/Icon';
+import Icon from '../../common/ui/Icon/Icon';
 import IconBadge from '../../common/IconBadge/IconBadge';
-import Button from '../../common/Button/Button';
+import Button from '../../common/ui/Button/Button';
+import Media from '../../common/ui/Media/Media';
+import { User } from '../../../models/user';
 
 interface BoardSideMenuProps extends BaseProps {
     onClose: () => void;
@@ -17,7 +19,8 @@ interface BoardSideMenuProps extends BaseProps {
 
 const BoardSideMenu = (props: BoardSideMenuProps) => {
     const board = useSelector((state: AppState) => state.board.board);
-    const isCurrentUserAdmin = true;
+    const currentUser = useSelector((state: AppState) => state.auth.user);
+    const isCurrentUserAdmin = true;//board.createdBy.id === currentUser.id;
 
     const dispatch = useDispatch();
     const descriptionRef = useRef<HTMLTextAreaElement>();
@@ -64,7 +67,16 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
             <hr />
 
             <div className={css.madeBy}>
-
+                <div style={{ margin: "10px 0" }}>
+                    <IconBadge icon="person-circle" text="Made by" />
+                </div>
+                <Media
+                    imgSource={board.createdBy.img.url}
+                    imgWidth="50px"
+                    imgHeight="50px"
+                    header={User.getFullName(board.createdBy)}
+                    text={`on ${formatDate(new Date(board.createdDate))}`}
+                />
             </div>
 
             <div className={css.description}>
@@ -85,13 +97,52 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
                     readOnly={!isCurrentUserAdmin || !isEditingDescription}
                     value={descriptionText}
                 />
-                <div>
-                    {/* save cancel buttons */}
-                </div>
+                {
+                    isEditingDescription
+                    && <div style={{ margin: "10px 0" }}>
+                        <Button
+                            style={{ padding: "2px 7px" }}
+                            onClick={() => { }}
+                            type="success"
+                        >Save
+                        </Button>
+                        {" "}
+                        <Button
+                            style={{ padding: "2px 7px" }}
+                            onClick={() => { }}
+                            type="light"
+                        >Cancel
+                        </Button>
+                    </div>
+                }
             </div>
 
             <div className={css.team}>
-
+                <div style={{ marginBottom: "10px" }}>
+                    <IconBadge icon="list-ul" text="Team" />
+                </div>
+                <div className={css.teamMember}>
+                    <Media
+                        imgSource={board.createdBy.img.url}
+                        imgWidth="40px"
+                        imgHeight="40px"
+                        header={User.getFullName(board.createdBy)}
+                    />
+                    <span>Admin</span>
+                </div>
+                {
+                    board.users.map((u, i) => (
+                        <div className={css.teamMember}>
+                            <Media
+                                imgSource={u.img.url}
+                                imgWidth="40px"
+                                imgHeight="40px"
+                                header={User.getFullName(u)}
+                            />
+                            {isCurrentUserAdmin && <Button style={{ padding: "2px 7px" }} type="danger-outline">Remove</Button>}
+                        </div>
+                    ))
+                }
             </div>
         </div>
     );

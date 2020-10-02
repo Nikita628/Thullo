@@ -6,10 +6,10 @@ import { BaseProps } from '../../../common/data';
 import css from './PhotoSearch.module.css';
 import { AppState } from '../../../state';
 import { PexelsPhoto, PexelsSearchParam } from '../../../models/common';
-import InputGroup from '../InputGroup/InputGroup';
-import InputGroupButton from '../InputGroup/InputGroupButton/InputGroupButton';
-import Icon from '../Icon/Icon';
-import InputGroupInput from '../InputGroup/InputGroupInput/InputGroupInput';
+import InputGroup from '../ui/InputGroup/InputGroup';
+import InputGroupButton from '../ui/InputGroup/InputGroupButton/InputGroupButton';
+import Icon from '../ui/Icon/Icon';
+import InputGroupInput from '../ui/InputGroup/InputGroupInput/InputGroupInput';
 import { concatCssClasses } from '../../../common/functionality';
 
 interface PhotoSearchProps extends BaseProps {

@@ -6,10 +6,10 @@ import { BaseProps } from '../../../common/data';
 import { Card as CardModel } from '../../../models/card';
 import CardLabel from '../CardLabel/CardLabel';
 import UserImagesList from '../../user/UserImagesList/UserImagesList';
-import Dropdown from '../../common/Dropdown/Dropdown';
-import DropdownButton from '../../common/Dropdown/DropdownButton/DropdownButton';
-import Icon from '../../common/Icon/Icon';
-import DropdownContent from '../../common/Dropdown/DropdownContent/DropdownContent';
+import Dropdown from '../../common/ui/Dropdown/Dropdown';
+import DropdownButton from '../../common/ui/Dropdown/DropdownButton/DropdownButton';
+import Icon from '../../common/ui/Icon/Icon';
+import DropdownContent from '../../common/ui/Dropdown/DropdownContent/DropdownContent';
 import UserSearch from '../../user/UserSearch/UserSearch';
 import { User } from '../../../models/user';
 

@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { AppState } from '../../../state';
-import Button from '../../common/Button/Button';
+import Button from '../../common/ui/Button/Button';
 import css from './AllBoards.module.css';
 import { actionCreators } from "../../../state/board";
 import { actionCreators as commonActionCreators } from "../../../state/common";
 import { BoardSearchParam } from '../../../models/board';
 import Board from '../Board/Board';
-import Modal from '../../common/Modal/Modal';
+import Modal from '../../common/ui/Modal/Modal';
 import { BaseProps } from '../../../common/data';
 import BoardCreation from '../BoardCreation/BoardCreation';
 

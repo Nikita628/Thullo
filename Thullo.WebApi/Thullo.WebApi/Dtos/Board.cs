@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Thullo.WebApi.Dtos.Board
 {
@@ -27,6 +28,8 @@ namespace Thullo.WebApi.Dtos.Board
         public string CoverUrl { get; set; }
         public bool IsPrivate { get; set; }
         public string Description { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public Dtos.User.User CreatedBy { get; set; }
         public List<Dtos.BoardList.BoardList> BoardLists { get; set; }
         public List<Dtos.User.User> Users { get; set; }
     }

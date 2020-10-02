@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import css from './SignIn.module.css';
-import Input from "../../common/Input/Input";
-import Button from "../../common/Button/Button";
+import Input from "../../common/ui/Input/Input";
+import Button from "../../common/ui/Button/Button";
 import { SignInData } from "../../../models/auth";
 import { actionCreators } from "../../../state/auth";
 

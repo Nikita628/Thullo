@@ -1,7 +1,7 @@
 import React, { ReactNode, useRef, useState } from 'react';
 import axios from "axios";
 
-import Icon from '../Icon/Icon';
+import Icon from '../ui/Icon/Icon';
 import css from './FilePicker.module.css';
 import { actionCreators as commonActionCreators } from "../../../state/common";
 import { NotificationType } from '../../../common/data';

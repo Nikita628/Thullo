@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
-import Button from '../../common/Button/Button';
+import Button from '../../common/ui/Button/Button';
 import FilePicker from '../../common/FilePicker/FilePicker';
 import ImgCropper from '../../common/ImgCropper/ImgCropper';
-import Input from '../../common/Input/Input';
+import Input from '../../common/ui/Input/Input';
 import css from './SignUp.module.css';
 import { actionCreators } from "../../../state/auth";
 import { SignUpData } from '../../../models/auth';

@@ -7,11 +7,11 @@ import { concatCssClasses } from '../../../common/functionality';
 import { User, UserSearchParam } from '../../../models/user';
 import { AppState } from '../../../state';
 import css from './UserSearch.module.css';
-import InputGroup from '../../common/InputGroup/InputGroup';
-import InputGroupInput from '../../common/InputGroup/InputGroupInput/InputGroupInput';
-import InputGroupButton from '../../common/InputGroup/InputGroupButton/InputGroupButton';
-import Icon from '../../common/Icon/Icon';
-import Button from '../../common/Button/Button';
+import InputGroup from '../../common/ui/InputGroup/InputGroup';
+import InputGroupInput from '../../common/ui/InputGroup/InputGroupInput/InputGroupInput';
+import InputGroupButton from '../../common/ui/InputGroup/InputGroupButton/InputGroupButton';
+import Icon from '../../common/ui/Icon/Icon';
+import Button from '../../common/ui/Button/Button';
 
 interface UserSearchProps extends BaseProps {
     searchType: "Board" | "Card";

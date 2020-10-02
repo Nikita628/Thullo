@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BaseProps } from '../../../common/data';
 import { concatCssClasses } from '../../../common/functionality';
-import Icon from '../Icon/Icon';
+import Icon from '../ui/Icon/Icon';
 import css from './IconBadge.module.css';
 
 interface IconBadgeProps extends BaseProps {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { BaseProps } from '../../../common/data';
-import { concatCssClasses } from '../../../common/functionality';
+import { BaseProps } from '../../../../common/data';
+import { concatCssClasses } from '../../../../common/functionality';
 import css from './Dropdown.module.css';
 
 interface DropdownProps extends BaseProps {

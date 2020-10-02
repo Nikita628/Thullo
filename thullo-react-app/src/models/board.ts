@@ -8,6 +8,8 @@ export class Board {
     coverUrl: string;
     isPrivate: boolean;
     description: string;
+    createdBy: User;
+    createdDate: Date;
     users: User[];
     boardLists: BoardList[];
 }

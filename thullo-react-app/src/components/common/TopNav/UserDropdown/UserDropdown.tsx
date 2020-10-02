@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import css from './UserDropdown.module.css';
 import { AppState } from '../../../../state';
-import Icon from '../../Icon/Icon';
+import Icon from '../../ui/Icon/Icon';
 import { actionCreators as authActionCreators } from "../../../../state/auth";
 
 interface UserDropdownProps {
