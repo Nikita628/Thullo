@@ -12,7 +12,7 @@ import BoardTopMenu from '../BoardTopMenu/BoardTopMenu';
 import BoardList from '../../boardList/BoardList/BoardList';
 
 interface BoardDetailsProps extends BaseProps {
-    
+
 }
 
 const BoardDetails = (props: BoardDetailsProps) => {
@@ -25,15 +25,21 @@ const BoardDetails = (props: BoardDetailsProps) => {
         dispatch(boardActionCreators.GetBoardRequested(Number(id)));
     }, [])
 
-    if (!board) return null; //TODO display spinner while loading
+    if (!board) return (
+        <div className={css.spinner}>
+            <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        </div>
+    );
 
     return (
         <div className={concatCssClasses(css.boardDetails, props.className)}>
             <BoardTopMenu board={board} />
             <div className={css.boardLists}>
                 {
-                    board.boardLists.map(bl => (
-                        <BoardList className={css.boardList} boardList={bl} />
+                    board.boardLists.map((bl, i) => (
+                        <BoardList key={i} className={css.boardList} boardList={bl} />
                     ))
                 }
             </div>

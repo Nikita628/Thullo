@@ -40,8 +40,8 @@ const BoardList = (props: BoardListProps) => {
 
             <div className={css.cards}>
                 {
-                    props.boardList.cards.map(c => (
-                        <Card card={c} />
+                    props.boardList.cards.map((c, i) => (
+                        <Card key={i} card={c} />
                     ))
                 }
             </div>

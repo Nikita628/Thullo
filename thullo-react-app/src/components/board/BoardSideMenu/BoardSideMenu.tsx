@@ -8,30 +8,22 @@ import { concatCssClasses, formatDate } from '../../../common/functionality';
 import { AppState } from '../../../state';
 import css from './BoardSideMenu.module.css';
 import Icon from '../../common/ui/Icon/Icon';
-import IconBadge from '../../common/IconBadge/IconBadge';
+import IconBadge from '../../common/ui/IconBadge/IconBadge';
 import Button from '../../common/ui/Button/Button';
 import Media from '../../common/ui/Media/Media';
 import { User } from '../../../models/user';
+import Description from '../../common/Description/Description';
 
 interface BoardSideMenuProps extends BaseProps {
     onClose: () => void;
 }
 
 const BoardSideMenu = (props: BoardSideMenuProps) => {
+    const dispatch = useDispatch();
     const board = useSelector((state: AppState) => state.board.board);
     const currentUser = useSelector((state: AppState) => state.auth.user);
     const isCurrentUserAdmin = true;//board.createdBy.id === currentUser.id;
-
-    const dispatch = useDispatch();
-    const descriptionRef = useRef<HTMLTextAreaElement>();
-
     const [boardTitle, setBoardTitle] = useState(board.title);
-    const [descriptionText, setDescriptionText] = useState(board.description);
-    const [isEditingDescription, setIsEditingDescription] = useState(false);
-
-    useEffect(() => {
-        descriptionRef.current.style.height = descriptionRef.current.scrollHeight + "px";
-    }, [descriptionText])
 
     const saveTitle = () => {
         if (boardTitle) {
@@ -41,24 +33,64 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
         }
     }
 
-    const editDescription = () => {
-        setIsEditingDescription(true);
-        descriptionRef.current.focus();
+    const saveDescription = (description: string) => {
+        // dispatch action to save
+    }
+
+    const removeUserFromBoard = (userId: number) => {
+        // dispatch action to remove
+    }
+
+    const renderTeam = () => {
+        return (
+            <div className={css.team}>
+                <div style={{ marginBottom: "10px" }}>
+                    <IconBadge icon="list-ul" text="Team" />
+                </div>
+                <div className={css.teamMember}>
+                    <Media
+                        imgSource={board.createdBy.img.url}
+                        imgWidth="40px"
+                        imgHeight="40px"
+                        header={User.getFullName(board.createdBy)}
+                    />
+                    <span>Admin</span>
+                </div>
+                {
+                    board.users.map((u, i) => (
+                        <div key={i} className={css.teamMember}>
+                            <Media
+                                imgSource={u.img.url}
+                                imgWidth="40px"
+                                imgHeight="40px"
+                                header={User.getFullName(u)}
+                            />
+                            {
+                                isCurrentUserAdmin
+                                && <Button
+                                    style={{ padding: "2px 7px" }}
+                                    type="danger-outline"
+                                    onClick={() => removeUserFromBoard(u.id)}
+                                >Remove
+                                </Button>
+                            }
+                        </div>
+                    ))
+                }
+            </div>
+        );
     }
 
     return (
         <div className={concatCssClasses(css.boardSideMenu, props.className)}>
-
             <div className={css.menuHeader}>
-                <form>
-                    <input
-                        onBlur={saveTitle}
-                        onChange={(e) => setBoardTitle(e.target.value)}
-                        type="text"
-                        value={boardTitle}
-                        readOnly={!isCurrentUserAdmin}
-                    />
-                </form>
+                <input
+                    onBlur={saveTitle}
+                    onChange={(e) => setBoardTitle(e.target.value)}
+                    type="text"
+                    value={boardTitle}
+                    readOnly={!isCurrentUserAdmin}
+                />
                 <span onClick={props.onClose}>
                     <Icon type="x" />
                 </span>
@@ -79,71 +111,13 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
                 />
             </div>
 
-            <div className={css.description}>
-                <div>
-                    <IconBadge style={{ marginRight: "15px" }} icon="list-ul" text="Description" />
-                    {
-                        isCurrentUserAdmin
-                        && <Button onClick={editDescription} style={{ padding: "2px 7px" }} type="secondary-outline">
-                            <IconBadge icon="pencil-fill" text="Edit" />
-                        </Button>
-                    }
-                </div>
-                <textarea
-                    onBlur={() => setIsEditingDescription(false)}
-                    className={isEditingDescription ? css.editedDescription : ""}
-                    onChange={e => setDescriptionText(e.target.value)}
-                    ref={descriptionRef}
-                    readOnly={!isCurrentUserAdmin || !isEditingDescription}
-                    value={descriptionText}
-                />
-                {
-                    isEditingDescription
-                    && <div style={{ margin: "10px 0" }}>
-                        <Button
-                            style={{ padding: "2px 7px" }}
-                            onClick={() => { }}
-                            type="success"
-                        >Save
-                        </Button>
-                        {" "}
-                        <Button
-                            style={{ padding: "2px 7px" }}
-                            onClick={() => { }}
-                            type="light"
-                        >Cancel
-                        </Button>
-                    </div>
-                }
-            </div>
+            <Description
+                onSave={saveDescription}
+                descriptionText={board.description}
+                canEdit={isCurrentUserAdmin}
+            />
 
-            <div className={css.team}>
-                <div style={{ marginBottom: "10px" }}>
-                    <IconBadge icon="list-ul" text="Team" />
-                </div>
-                <div className={css.teamMember}>
-                    <Media
-                        imgSource={board.createdBy.img.url}
-                        imgWidth="40px"
-                        imgHeight="40px"
-                        header={User.getFullName(board.createdBy)}
-                    />
-                    <span>Admin</span>
-                </div>
-                {
-                    board.users.map((u, i) => (
-                        <div className={css.teamMember}>
-                            <Media
-                                imgSource={u.img.url}
-                                imgWidth="40px"
-                                imgHeight="40px"
-                                header={User.getFullName(u)}
-                            />
-                            {isCurrentUserAdmin && <Button style={{ padding: "2px 7px" }} type="danger-outline">Remove</Button>}
-                        </div>
-                    ))
-                }
-            </div>
+            {renderTeam()}
         </div>
     );
 }

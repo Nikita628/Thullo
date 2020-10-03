@@ -1,0 +1,18 @@
+.description {
+    margin-top: 20px;
+}
+
+.description textarea {
+    border: 1px solid transparent;
+    width: 100%;
+    margin-top: 10px;
+    resize: none;
+    padding: 5px;
+    font-size: large;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.description .editedDescription {
+    border: 1px solid #bdbdbd;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { concatCssClasses } from '../../../common/functionality';
+import { concatCssClasses } from '../../../../common/functionality';
 import css from './ImgCropper.module.css';
 
 interface ImgCropperProps {

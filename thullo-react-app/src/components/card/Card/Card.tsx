@@ -37,7 +37,7 @@ const Card = (props: CardProps) => {
             <h6 className={css.cardTitle}>{props.card.title}</h6>
 
             <div className={css.labels}>
-                {props.card.labels.map(cl => (<CardLabel cardlabel={cl} />))}
+                {props.card.labels.map((cl, i) => (<CardLabel key={i} cardlabel={cl} />))}
             </div>
 
             <div className={css.usersMenu}>
