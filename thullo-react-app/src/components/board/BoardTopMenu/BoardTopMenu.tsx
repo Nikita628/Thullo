@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { useDispatch } from "react-redux";
 
 import { actionCreators as userActionCreators } from "../../../state/user";
@@ -17,6 +17,7 @@ import Button from '../../common/ui/Button/Button';
 import UserSearch from '../../user/UserSearch/UserSearch';
 import { User } from '../../../models/user';
 import BoardSideMenu from '../BoardSideMenu/BoardSideMenu';
+import Transition, { AnimationState } from '../../common/ui/Transition/Transition';
 
 interface BoardTopMenuProps extends BaseProps {
     board: Board;
@@ -103,7 +104,33 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
                 <Button onClick={() => setIsSideMenuDisplayed(true)} type="secondary"><Icon type="three-dots" style={{ marginRight: "10px" }} />Show Menu</Button>
             </div>
 
-            {isSideMenuDisplayed && <BoardSideMenu onClose={() => setIsSideMenuDisplayed(false)} />}
+            {
+                <Transition isIn={isSideMenuDisplayed} timeoutMs={300}>
+                    {
+                        (animationState) => {
+                            const animationStyles: CSSProperties = {};
+                            if (animationState === AnimationState.exiting) {
+                                animationStyles.left = "auto";
+                                animationStyles.right = "0";
+                                animationStyles.transform = "translateX(100%)";
+                                animationStyles.transition = "all 300ms ease-out";
+                            } else if (animationState === AnimationState.entering) {
+                                animationStyles.transform = "translateX(-100%)";
+                                animationStyles.transition = "all 300ms ease-out";
+                            } else if (animationState === AnimationState.entered) {
+                                animationStyles.left = "auto";
+                                animationStyles.right = "0";
+                            }
+                            return (
+                                <BoardSideMenu
+                                    style={animationStyles}
+                                    onClose={() => setIsSideMenuDisplayed(false)}
+                                />
+                            );
+                        }
+                    }
+                </Transition>
+            }
         </div>
     );
 }

@@ -85,10 +85,10 @@ namespace Thullo.WebApi.Controllers
 			return Ok(res);
 		}
 
-		[HttpDelete("deleteFromCard")]
-		public async Task<IActionResult> DeleteFromCard(Dtos.User.InviteOrDeleteCard param)
+		[HttpDelete("{userId}/deleteFromCard/{cardId}")]
+		public async Task<IActionResult> DeleteFromCard([FromRoute]int userId, [FromRoute]int cardId)
 		{
-			var res = await _userService.DeleteFromCard(param.UserId, param.CardId);
+			var res = await _userService.DeleteFromCard(userId, cardId);
 
 			return Ok(res);
 		}

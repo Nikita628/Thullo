@@ -26,7 +26,7 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
     const [boardTitle, setBoardTitle] = useState(board.title);
 
     const saveTitle = () => {
-        if (boardTitle) {
+        if (boardTitle !== board.title) {
             dispatch(boardActionCreators.UpdateBoardTitleRequested(board.id, boardTitle));
         } else {
             setBoardTitle(board.title);
@@ -49,7 +49,8 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
                 </div>
                 <div className={css.teamMember}>
                     <Media
-                        imgSource={board.createdBy.img.url}
+                        imgSource={board.createdBy.img ? board.createdBy.img.url : null}
+                        imgPlaceholder={User.getInitials(board.createdBy)}
                         imgWidth="40px"
                         imgHeight="40px"
                         header={User.getFullName(board.createdBy)}
@@ -60,7 +61,8 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
                     board.users.map((u, i) => (
                         <div key={i} className={css.teamMember}>
                             <Media
-                                imgSource={u.img.url}
+                                imgSource={u.img ? u.img.url : null}
+                                imgPlaceholder={User.getInitials(u)}
                                 imgWidth="40px"
                                 imgHeight="40px"
                                 header={User.getFullName(u)}
@@ -82,7 +84,7 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
     }
 
     return (
-        <div className={concatCssClasses(css.boardSideMenu, props.className)}>
+        <div style={{...props.style}} className={concatCssClasses(css.boardSideMenu, props.className)}>
             <div className={css.menuHeader}>
                 <input
                     onBlur={saveTitle}
