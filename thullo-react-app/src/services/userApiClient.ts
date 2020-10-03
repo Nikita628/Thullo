@@ -15,4 +15,8 @@ export class UserApiClient {
             boardId: boardId
         });
     }
+
+    static removeFromBoard(userId: number, boardId: number) {
+        return axios.delete<ApiResponse<boolean>>(`${config.apiUrl}/user/${userId}/deleteFromBoard/${boardId}`);
+    }
 }

@@ -1,6 +1,7 @@
 import { Board, BoardSearchParam } from "../models/board";
 import { ApiPageResponse } from "../models/common";
 import { ICallbackAction, IPayloadedAction, ITypedAction } from "./common";
+import { actionTypes as userActionTypes } from "./user";
 
 export const actionTypes = {
     searchBoardRequested: "board/searchBoardRequested",
@@ -10,6 +11,10 @@ export const actionTypes = {
     getBoardSucceeded: "board/getBoardSucceeded",
     updateBoardVisibilityRequested: "board/updateBoardVisibilityRequested",
     updateBoardVisibilitySucceeded: "board/updateBoardVisibilitySucceeded",
+    updateBoardTitleRequested: "board/updateBoardTitleRequested",
+    updateBoardTitleSucceeded: "board/updateBoardTitleSucceeded",
+    updateBoardDescriptionRequested: "board/updateBoardDescriptionRequested",
+    updateBoardDescriptionSucceeded: "board/updateBoardDescriptionSucceeded",
 };
 
 export const actionCreators = {
@@ -54,6 +59,30 @@ export const actionCreators = {
         type: actionTypes.updateBoardVisibilitySucceeded,
         payload: isPrivate
     }),
+    UpdateBoardTitleRequested: (boardId: number, title: string)
+        : ITypedAction & IPayloadedAction<{ boardId: number, title: string }> => ({
+            type: actionTypes.updateBoardTitleRequested,
+            payload: {
+                boardId,
+                title,
+            }
+        }),
+    UpdateBoardTitleSucceeded: (title: string): ITypedAction & IPayloadedAction<string> => ({
+        type: actionTypes.updateBoardTitleSucceeded,
+        payload: title
+    }),
+    UpdateBoardDescriptionRequested: (boardId: number, description: string)
+        : ITypedAction & IPayloadedAction<{ boardId: number, description: string }> => ({
+            type: actionTypes.updateBoardDescriptionRequested,
+            payload: {
+                boardId,
+                description,
+            }
+        }),
+    UpdateBoardDescriptionSucceeded: (description: string): ITypedAction & IPayloadedAction<string> => ({
+        type: actionTypes.updateBoardDescriptionSucceeded,
+        payload: description
+    }),
 };
 
 export interface BoardState {
@@ -92,6 +121,33 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
                 board: {
                     ...state.board,
                     isPrivate: action.payload
+                }
+            };
+        }
+        case actionTypes.updateBoardTitleSucceeded: {
+            return {
+                ...state,
+                board: {
+                    ...state.board,
+                    title: action.payload
+                }
+            };
+        }
+        case actionTypes.updateBoardDescriptionSucceeded: {
+            return {
+                ...state,
+                board: {
+                    ...state.board,
+                    description: action.payload
+                }
+            };
+        }
+        case userActionTypes.RemoveFromBoardSucceeded: {
+            return {
+                ...state,
+                board: {
+                    ...state.board,
+                    users: state.board.users.filter(u => u.id !== action.payload.userId),
                 }
             };
         }

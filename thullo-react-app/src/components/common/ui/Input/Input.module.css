@@ -8,6 +8,7 @@
 
 .input:focus {
     border: 1px solid #dbdbdb;
+    outline: none;
 }
 
 .invalidInput {
@@ -16,4 +17,5 @@
 
 .invalidInput:focus {
     border: 1px solid red;
+    outline: none;
 }

@@ -41,7 +41,7 @@ function* getBoard(action: ITypedAction & IPayloadedAction<number>) {
 }
 
 function* updateVisibility(action: ITypedAction & IPayloadedAction<{ boardId: number, isPrivate: boolean }>) {
-    const res: AxiosResponse<ApiResponse<Board>>
+    const res: AxiosResponse<ApiResponse<boolean>>
         = yield BoardApiClient.updateVisibility(action.payload.boardId, action.payload.isPrivate);
 
     if (!res.data.errors.length) {
@@ -52,9 +52,35 @@ function* updateVisibility(action: ITypedAction & IPayloadedAction<{ boardId: nu
     }
 }
 
+function* updateTitle(action: ITypedAction & IPayloadedAction<{ boardId: number, title: string }>) {
+    const res: AxiosResponse<ApiResponse<boolean>>
+        = yield BoardApiClient.updateTitle(action.payload.boardId, action.payload.title);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Board title has been updated"], NotificationType.success));
+        yield put(actionCreators.UpdateBoardTitleSucceeded(action.payload.title));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
+function* updateDescription(action: ITypedAction & IPayloadedAction<{ boardId: number, description: string }>) {
+    const res: AxiosResponse<ApiResponse<boolean>>
+        = yield BoardApiClient.updateDescription(action.payload.boardId, action.payload.description);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Board description has been updated"], NotificationType.success));
+        yield put(actionCreators.UpdateBoardDescriptionSucceeded(action.payload.description));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchBoard() {
     yield takeLatest(actionTypes.searchBoardRequested, searchBoards);
     yield takeLatest(actionTypes.createBoardRequested, createBoard);
     yield takeLatest(actionTypes.getBoardRequested, getBoard);
     yield takeLatest(actionTypes.updateBoardVisibilityRequested, updateVisibility);
+    yield takeLatest(actionTypes.updateBoardTitleRequested, updateTitle);
+    yield takeLatest(actionTypes.updateBoardDescriptionRequested, updateDescription);
 }

@@ -6,6 +6,8 @@ export const actionTypes = {
     UserSearchRequested: "user/userSearchRequested",
     UserSearchSucceeded: "user/userSearchSucceeded",
     InviteToBoardRequested: "user/inviteToBoardRequested",
+    RemoveFromBoardRequested: "user/removeFromBoardRequested",
+    RemoveFromBoardSucceeded: "user/removeFromBoardSucceeded",
 };
 
 export const actionCreators = {
@@ -31,7 +33,21 @@ export const actionCreators = {
             userId,
             boardId,
         }
-    })
+    }),
+    RemoveFromBoardRequested: (userId: number, boardId: number): ITypedAction & IPayloadedAction<{ userId: number, boardId: number }> => ({
+        type: actionTypes.RemoveFromBoardRequested,
+        payload: {
+            userId,
+            boardId,
+        }
+    }),
+    RemoveFromBoardSucceeded: (userId: number, boardId: number): ITypedAction & IPayloadedAction<{ userId: number, boardId: number }> => ({
+        type: actionTypes.RemoveFromBoardSucceeded,
+        payload: {
+            userId,
+            boardId,
+        }
+    }),
 };
 
 export interface UserState {

@@ -17,15 +17,16 @@
     align-items: center;
 }
 
-.menuHeader form {
-    flex-basis: 80%;
-}
-
 .menuHeader input {
+    flex-basis: 80%;
     border: none;
     font-weight: bold;
     width: 100%;
     padding: 0;
+}
+
+.menuHeader input:focus {
+    outline: none;
 }
 
 .menuHeader span {

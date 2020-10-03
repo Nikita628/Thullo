@@ -23,4 +23,18 @@ export class BoardApiClient {
             isPrivate: isPrivate
         });
     }
+
+    static updateTitle(boardId: number, title: string) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/board/updateTitle`, {
+            boardId: boardId,
+            title: title
+        });
+    }
+
+    static updateDescription(boardId: number, description: string) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/board/updateDescription`, {
+            boardId: boardId,
+            description: description
+        });
+    }
 }

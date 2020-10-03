@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
-import { actionCreators as commonActionCreators } from "../../../state/common";
 import { actionCreators as boardActionCreators } from "../../../state/board";
+import { actionCreators as userActionCreators } from "../../../state/user";
 import { BaseProps } from '../../../common/data';
 import { concatCssClasses, formatDate } from '../../../common/functionality';
 import { AppState } from '../../../state';
@@ -27,18 +27,18 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
 
     const saveTitle = () => {
         if (boardTitle) {
-            // dispatch action to save
+            dispatch(boardActionCreators.UpdateBoardTitleRequested(board.id, boardTitle));
         } else {
             setBoardTitle(board.title);
         }
     }
 
     const saveDescription = (description: string) => {
-        // dispatch action to save
+        dispatch(boardActionCreators.UpdateBoardDescriptionRequested(board.id, description));
     }
 
     const removeUserFromBoard = (userId: number) => {
-        // dispatch action to remove
+        dispatch(userActionCreators.RemoveFromBoardRequested(userId, board.id));
     }
 
     const renderTeam = () => {

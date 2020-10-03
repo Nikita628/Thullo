@@ -34,7 +34,19 @@ function* inviteToBoard(action: ITypedAction & IPayloadedAction<{userId: number,
     }
 }
 
+function* removeFromBoard(action: ITypedAction & IPayloadedAction<{userId: number, boardId: number}>) {
+    const res: AxiosResponse<ApiResponse<boolean>> = yield UserApiClient.removeFromBoard(action.payload.userId, action.payload.boardId);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["User has been removed from board"], NotificationType.success));
+        yield put(actionCreators.RemoveFromBoardSucceeded(action.payload.userId, action.payload.boardId));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchUser() {
     yield takeLatest(actionTypes.UserSearchRequested, searchUser);
     yield takeLatest(actionTypes.InviteToBoardRequested, inviteToBoard);
+    yield takeLatest(actionTypes.RemoveFromBoardRequested, removeFromBoard);
 }

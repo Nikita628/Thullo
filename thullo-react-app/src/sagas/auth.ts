@@ -24,6 +24,8 @@ function* signUp(action: IPayloadedAction<SignUpData> & ICallbackAction & ITyped
 function* signIn(action: IPayloadedAction<SignInData> & ITypedAction) {
     const res: AxiosResponse<ApiResponse<SignInResult>> = yield AuthApiClient.signIn(action.payload);
 
+    // TODO signout automatically after 55 minutes
+
     if (res.data.item) {
         yield localStorage.setItem(constants.localStorageTokenKey, res.data.item.token);
         yield localStorage.setItem(constants.localStorageUserKey, JSON.stringify(res.data.item.user));
@@ -36,6 +38,8 @@ function* signIn(action: IPayloadedAction<SignInData> & ITypedAction) {
 function* signInFromLocalStorage(action: ITypedAction) {
     const token = localStorage.getItem(constants.localStorageTokenKey);
     const user = localStorage.getItem(constants.localStorageUserKey);
+
+    // TODO if token is expired, signout
     
     if (token && user) {
         const signInResult = new SignInResult();
@@ -48,9 +52,9 @@ function* signInFromLocalStorage(action: ITypedAction) {
 }
 
 function* signOut(action: ITypedAction) {
-    localStorage.removeItem(constants.localStorageTokenKey);
-    localStorage.removeItem(constants.localStorageUserKey);
-    window.location.reload();
+    yield localStorage.removeItem(constants.localStorageTokenKey);
+    yield localStorage.removeItem(constants.localStorageUserKey);
+    yield window.location.reload();
 }
 
 export function* watchAuth() {
