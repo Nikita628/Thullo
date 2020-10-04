@@ -12,6 +12,8 @@ import Board from '../Board/Board';
 import Modal from '../../common/ui/Modal/Modal';
 import { BaseProps } from '../../../common/data';
 import BoardCreation from '../BoardCreation/BoardCreation';
+import Transition, { AnimationState } from '../../common/ui/Transition/Transition';
+import Backdrop from '../../common/ui/Modal/Backdrop/Backdrop';
 
 interface AllBoardsProps extends BaseProps {
 
@@ -105,22 +107,39 @@ const AllBoards = (props: AllBoardsProps) => {
 
     return (
         <div className="container">
+            {isModalDisplayed && <Backdrop onClick={closeBoardCreationModal} />}
 
-            <Modal
-                isDisplayed={isModalDisplayed}
-                onClose={closeBoardCreationModal}
-            >
-                <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
-            </Modal>
+            {
+                <Transition isIn={isModalDisplayed} timeoutMs={200}>
+                    {
+                        (state) => {
+                            let animationClassName = "";
+                            if (state === AnimationState.exited) {
+                                animationClassName = css.modalClosed;
+                            } else if (state === AnimationState.exiting) {
+                                animationClassName = css.modalClosing;
+                            } else if (state === AnimationState.entering) {
+                                animationClassName = css.modalOpening;
+                            }
+
+                            return (
+                                <Modal onClose={closeBoardCreationModal} className={animationClassName}>
+                                    <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
+                                </Modal>
+                            );
+                        }
+                    }
+                </Transition>
+            }
 
             <div className={css.allBoardsMenu}>
                 <h4>All Boards</h4>
                 <Button onClick={displayBoardCreationModal} type="primary">+ Add</Button>
             </div>
+
             <div className={css.boards}>
                 {boards}
             </div>
-
         </div>
     );
 }

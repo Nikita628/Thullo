@@ -21,6 +21,36 @@
     padding: 5px;
 }
 
+.modalClosing {
+    animation: closeModal 200ms ease-out;
+}
+
+.modalClosed {
+    display: none;
+}
+
+.modalOpening {
+    animation: openModal 200ms ease-out;
+}
+
+@keyframes openModal {
+    0% {
+        transform: translate(-50%, -200%);
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes closeModal {
+    0% {
+        transform: translate(-50%, 0);
+    }
+    100% {
+        transform: translate(-50%, -200%);
+    }
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) { 
 

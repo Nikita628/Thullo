@@ -108,18 +108,16 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
                 <Transition isIn={isSideMenuDisplayed} timeoutMs={300}>
                     {
                         (animationState) => {
+                            console.log(animationState);
                             const animationStyles: CSSProperties = {};
-                            if (animationState === AnimationState.exiting) {
-                                animationStyles.left = "auto";
-                                animationStyles.right = "0";
+                            if (animationState === AnimationState.exited) {
+                                animationStyles.transform = "translateX(100%)"
+                            } else if (animationState === AnimationState.exiting) {
                                 animationStyles.transform = "translateX(100%)";
                                 animationStyles.transition = "all 300ms ease-out";
                             } else if (animationState === AnimationState.entering) {
-                                animationStyles.transform = "translateX(-100%)";
+                                animationStyles.transform = "translateX(0)";
                                 animationStyles.transition = "all 300ms ease-out";
-                            } else if (animationState === AnimationState.entered) {
-                                animationStyles.left = "auto";
-                                animationStyles.right = "0";
                             }
                             return (
                                 <BoardSideMenu
