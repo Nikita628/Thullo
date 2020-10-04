@@ -110,7 +110,7 @@ const AllBoards = (props: AllBoardsProps) => {
             {isModalDisplayed && <Backdrop onClick={closeBoardCreationModal} />}
 
             {
-                <Transition isIn={isModalDisplayed} timeoutMs={200}>
+                <Transition isIn={isModalDisplayed} timeoutMs={300}>
                     {
                         (state) => {
                             let animationClassName = "";

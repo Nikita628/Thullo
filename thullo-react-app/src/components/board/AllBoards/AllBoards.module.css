@@ -22,7 +22,7 @@
 }
 
 .modalClosing {
-    animation: closeModal 200ms ease-out;
+    animation: closeModal 300ms ease-out;
 }
 
 .modalClosed {
@@ -30,7 +30,7 @@
 }
 
 .modalOpening {
-    animation: openModal 200ms ease-out;
+    animation: openModal 300ms ease-out;
 }
 
 @keyframes openModal {

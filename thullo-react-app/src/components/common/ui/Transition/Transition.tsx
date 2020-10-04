@@ -37,9 +37,9 @@ const Transition = (props: TransitionProps) => {
 
         if (shouldStartAnimation) {
             if (animationState === AnimationState.entered) {
-                setTimeout(() => setAnimationState(AnimationState.exiting), 100);
+                setAnimationState(AnimationState.exiting);
             } else if (animationState === AnimationState.exited) {
-                setTimeout(() => setAnimationState(AnimationState.entering), 100);
+                setAnimationState(AnimationState.entering);
             } else if (animationState === AnimationState.entering) {
                 setTimeout(() => setAnimationState(AnimationState.entered), props.timeoutMs);
             } else if (animationState === AnimationState.exiting) {
