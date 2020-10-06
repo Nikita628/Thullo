@@ -104,31 +104,28 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
                 <Button onClick={() => setIsSideMenuDisplayed(true)} type="secondary"><Icon type="three-dots" style={{ marginRight: "10px" }} />Show Menu</Button>
             </div>
 
-            {
-                <Transition isIn={isSideMenuDisplayed} timeoutMs={300}>
-                    {
-                        (animationState) => {
-                            console.log(animationState);
-                            const animationStyles: CSSProperties = {};
-                            if (animationState === AnimationState.exited) {
-                                animationStyles.transform = "translateX(100%)"
-                            } else if (animationState === AnimationState.exiting) {
-                                animationStyles.transform = "translateX(100%)";
-                                animationStyles.transition = "all 300ms ease-out";
-                            } else if (animationState === AnimationState.entering) {
-                                animationStyles.transform = "translateX(0)";
-                                animationStyles.transition = "all 300ms ease-out";
-                            }
-                            return (
-                                <BoardSideMenu
-                                    style={animationStyles}
-                                    onClose={() => setIsSideMenuDisplayed(false)}
-                                />
-                            );
+            <Transition isIn={isSideMenuDisplayed} timeoutMs={300}>
+                {
+                    (animationState) => {
+                        const animationStyles: CSSProperties = {};
+                        if (animationState === AnimationState.exited) {
+                            animationStyles.transform = "translateX(100%)"
+                        } else if (animationState === AnimationState.exiting) {
+                            animationStyles.transform = "translateX(100%)";
+                            animationStyles.transition = "all 300ms ease-out";
+                        } else if (animationState === AnimationState.entering) {
+                            animationStyles.transform = "translateX(0)";
+                            animationStyles.transition = "all 300ms ease-out";
                         }
+                        return (
+                            <BoardSideMenu
+                                style={animationStyles}
+                                onClose={() => setIsSideMenuDisplayed(false)}
+                            />
+                        );
                     }
-                </Transition>
-            }
+                }
+            </Transition>
         </div>
     );
 }

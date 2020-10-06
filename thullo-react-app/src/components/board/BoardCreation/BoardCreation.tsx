@@ -107,7 +107,7 @@ const BoardCreation = (props: BoardCreationProps) => {
                 <Dropdown onClickOutside={() => setIsVisibilityDropdownOpened(false)}>
                     <DropdownButton onClick={onVisibilityDropdownClick} type="secondary">
                         {
-                            visibility == BoardVisibility.public
+                            visibility === BoardVisibility.public
                                 ? <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="unlock" />
                                 : <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="lock" />
                         }

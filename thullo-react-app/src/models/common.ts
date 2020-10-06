@@ -7,6 +7,8 @@ export class File {
 }
 
 export class Notification {
+    isExpiring: boolean;
+    guid: string;
     type: NotificationType;
     message: string;
 }

@@ -12,9 +12,12 @@ const Dropdown = (props: DropdownProps) => {
     const dropdownRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleMouseDown);
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDown);
+        if (props.onClickOutside) {
+            document.addEventListener("mousedown", handleMouseDown);
+
+            return () => {
+                document.removeEventListener("mousedown", handleMouseDown);
+            }
         }
     }, [])
 

@@ -109,28 +109,26 @@ const AllBoards = (props: AllBoardsProps) => {
         <div className="container">
             {isModalDisplayed && <Backdrop onClick={closeBoardCreationModal} />}
 
-            {
-                <Transition isIn={isModalDisplayed} timeoutMs={300}>
-                    {
-                        (state) => {
-                            let animationClassName = "";
-                            if (state === AnimationState.exited) {
-                                animationClassName = css.modalClosed;
-                            } else if (state === AnimationState.exiting) {
-                                animationClassName = css.modalClosing;
-                            } else if (state === AnimationState.entering) {
-                                animationClassName = css.modalOpening;
-                            }
-
-                            return (
-                                <Modal onClose={closeBoardCreationModal} className={animationClassName}>
-                                    <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
-                                </Modal>
-                            );
+            <Transition isIn={isModalDisplayed} timeoutMs={300}>
+                {
+                    (state) => {
+                        let animationClassName = "";
+                        if (state === AnimationState.exited) {
+                            animationClassName = css.modalClosed;
+                        } else if (state === AnimationState.exiting) {
+                            animationClassName = css.modalClosing;
+                        } else if (state === AnimationState.entering) {
+                            animationClassName = css.modalOpening;
                         }
+
+                        return (
+                            <Modal onClose={closeBoardCreationModal} className={animationClassName}>
+                                <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
+                            </Modal>
+                        );
                     }
-                </Transition>
-            }
+                }
+            </Transition>
 
             <div className={css.allBoardsMenu}>
                 <h4>All Boards</h4>

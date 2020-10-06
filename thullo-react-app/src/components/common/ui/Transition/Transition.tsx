@@ -29,13 +29,13 @@ const Transition = (props: TransitionProps) => {
     const [animationState, setAnimationState] = useState<AnimationState>(props.isIn ? AnimationState.entered : AnimationState.exited);
 
     useEffect(() => {
-        const shouldStartAnimation =
-            props.isIn && animationState === AnimationState.exited
-            || !props.isIn && animationState === AnimationState.entered
+        const shouldAnimate =
+                (props.isIn && animationState === AnimationState.exited)
+            || (!props.isIn && animationState === AnimationState.entered)
             || animationState === AnimationState.entering
             || animationState === AnimationState.exiting;
 
-        if (shouldStartAnimation) {
+        if (shouldAnimate) {
             if (animationState === AnimationState.entered) {
                 setAnimationState(AnimationState.exiting);
             } else if (animationState === AnimationState.exited) {

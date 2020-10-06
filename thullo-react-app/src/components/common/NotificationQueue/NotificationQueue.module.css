@@ -5,23 +5,3 @@
     width: 300px;
     z-index: 2;
 }
-
-.notification {
-    opacity: 0.7;
-    margin: 10px;
-    padding: 5px;
-    color: white;
-    border-radius: 5px;
-}
-
-.notificationError {
-    background-color: red;
-}
-
-.notificationSuccess {
-    background-color: green;
-}
-
-.notificationWarning {
-    background-color: #d7910a;
-}

@@ -15,11 +15,14 @@ export interface ICallbackAction<CallbackParamType = any> {
 
 export const actionTypes = {
     CreateNotificationsRequested: "common/createNotificationsRequested",
-    DequeueNotificationRequested: "common/dequeueNotificationRequested",
+    DequeueNotificationAfterExpiration: "common/dequeueNotificationAfterExpiration",
     EnqueueNotification: "common/enqueueNotification",
     DequeueNotification: "common/dequeueNotification",
+    StartNotificationExpiration: "common/startNotificationExpiration",
+
     SearchPexelsRequested: "common/searchPexelsRequested",
     SearchPexelsSucceeded: "common/searchPexelsSucceeded",
+
     SetAppContext: "common/setAppContext",
 };
 
@@ -31,16 +34,23 @@ export const actionCreators = {
             type
         },
     }),
-    DequeueNotificationRequested: (): ITypedAction => ({
-        type: actionTypes.DequeueNotificationRequested
+    DequeueNotificationAfterExpiration: (notificationGuid: string): ITypedAction & IPayloadedAction<string> => ({
+        type: actionTypes.DequeueNotificationAfterExpiration,
+        payload: notificationGuid,
     }),
     EnqueueNotification: (notification: Notification): IPayloadedAction<Notification> & ITypedAction => ({
         type: actionTypes.EnqueueNotification,
         payload: notification
     }),
-    DequeueNotification: (): ITypedAction => ({
-        type: actionTypes.DequeueNotification
+    DequeueNotification: (notificationGuid: string): ITypedAction & IPayloadedAction<string> => ({
+        type: actionTypes.DequeueNotification,
+        payload: notificationGuid,
     }),
+    StartNotificationExpiration: (notificationGuid: string): ITypedAction & IPayloadedAction<string> => ({
+        type: actionTypes.StartNotificationExpiration,
+        payload: notificationGuid,
+    }),
+
     SearchPexelsRequested: (param: PexelsSearchParam): ITypedAction & IPayloadedAction<PexelsSearchParam> => ({
         type: actionTypes.SearchPexelsRequested,
         payload: param,
@@ -49,6 +59,7 @@ export const actionCreators = {
         type: actionTypes.SearchPexelsSucceeded,
         payload: page,
     }),
+
     SetAppContext: (context: "allBoards" | "boardDetails"): ITypedAction & IPayloadedAction<"allBoards" | "boardDetails"> => ({
         type: actionTypes.SetAppContext,
         payload: context,
@@ -79,7 +90,7 @@ export const reducer = (state: CommonState = initialState, action: ITypedAction 
         case actionTypes.DequeueNotification: {
             return {
                 ...state,
-                notifications: state.notifications.filter((_, i) => i > 0),
+                notifications: state.notifications.filter(n => n.guid !== action.payload),
             };
         }
         case actionTypes.SearchPexelsSucceeded: {
@@ -93,6 +104,20 @@ export const reducer = (state: CommonState = initialState, action: ITypedAction 
                 ...state,
                 appContext: action.payload
             }
+        }
+        case actionTypes.StartNotificationExpiration: {
+            const notifications: Notification[] = [];
+            for (let i = 0; i < state.notifications.length; i++) {
+                const updatedNotification = { ...state.notifications[i] };
+                if (updatedNotification.guid === action.payload) {
+                    updatedNotification.isExpiring = true;
+                }
+                notifications.push(updatedNotification);
+            }
+            return {
+                ...state,
+                notifications: notifications
+            };
         }
         default:
             return state;
