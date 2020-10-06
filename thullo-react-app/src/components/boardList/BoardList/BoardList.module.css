@@ -11,17 +11,35 @@
 
 .menuContent {
     background-color: white;
-    width: 200px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 2px 10px #e1e1e1;
 }
 
-.menuContent p {
-    margin-bottom: 0;
+.listTitleInput {
+    font-size: large;
+    font-weight: bold;
+    border: none;
+    padding: 7px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.listTitleInput:focus {
+    background-color: white;
+    box-shadow: 2px 2px 7px #c5c5c5;
+}
+
+.listMenuButton {
+    white-space: nowrap;
+    width: 100%;
 }
 
 .cards {
     display: flex;
     flex-flow: column;
+}
+
+.addCardButton {
+    margin-bottom: 20px;
 }

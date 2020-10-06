@@ -4,5 +4,5 @@ export class BoardList {
     id: number;
     boardId: number;
     title: string;
-    cards: Card[];
+    cards: Card[] = [];
 }

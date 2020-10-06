@@ -9,12 +9,10 @@ namespace Thullo.Application.Services
 {
     public class BoardService : IBoardService
     {
-        private readonly CurrentUserAccessor _userAccessor;
         private readonly ThulloDbContext _db;
 
-        public BoardService(CurrentUserAccessor cua, ThulloDbContext db)
+        public BoardService(ThulloDbContext db)
         {
-            _userAccessor = cua;
             _db = db;
         }
 

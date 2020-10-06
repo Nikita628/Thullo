@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
 
 namespace Thullo.WebApi.Controllers
 {
-    [Authorize]
+	[Authorize]
 	[ApiController]
 	[Route("api/[controller]")]
 	public class CardController : ControllerBase

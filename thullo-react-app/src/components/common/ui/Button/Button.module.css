@@ -64,3 +64,8 @@
     border: 1px solid #b92828;
     color: red;
 }
+
+.primary-light {
+    background-color: #dae4fd;
+    color: #3281ed;
+}

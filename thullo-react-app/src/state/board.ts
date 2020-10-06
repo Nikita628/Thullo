@@ -2,6 +2,8 @@ import { Board, BoardSearchParam } from "../models/board";
 import { ApiPageResponse } from "../models/common";
 import { ICallbackAction, IPayloadedAction, ITypedAction } from "./common";
 import { actionTypes as userActionTypes } from "./user";
+import { actionTypes as boardListActionTypes } from "./boardList";
+import { BoardList } from "../models/boardList";
 
 export const actionTypes = {
     searchBoardRequested: "board/searchBoardRequested",
@@ -148,6 +150,40 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
                 board: {
                     ...state.board,
                     users: state.board.users.filter(u => u.id !== action.payload.userId),
+                }
+            };
+        }
+        case boardListActionTypes.createBoardListSuccceded: {
+            return {
+                ...state,
+                board: {
+                    ...state.board,
+                    boardLists: [...state.board.boardLists, action.payload],
+                }
+            };
+        }
+        case boardListActionTypes.updateBoardListTitleSucceeded: {
+            const boardLists = state.board.boardLists.map((bl) => {
+                const listClone = { ...bl };
+                if (bl.id === action.payload.listId) {
+                    listClone.title = action.payload.title;
+                }
+                return listClone;
+            });
+            return {
+                ...state,
+                board: {
+                    ...state.board,
+                    boardLists: boardLists,
+                }
+            };
+        }
+        case boardListActionTypes.deleteBoardListSucceeded: {
+            return {
+                ...state,
+                board: {
+                    ...state.board,
+                    boardLists: state.board.boardLists.filter(bl => bl.id !== action.payload.listId),
                 }
             };
         }

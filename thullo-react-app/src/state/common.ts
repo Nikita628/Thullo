@@ -106,14 +106,13 @@ export const reducer = (state: CommonState = initialState, action: ITypedAction 
             }
         }
         case actionTypes.StartNotificationExpiration: {
-            const notifications: Notification[] = [];
-            for (let i = 0; i < state.notifications.length; i++) {
-                const updatedNotification = { ...state.notifications[i] };
+            const notifications = state.notifications.map(n => {
+                const updatedNotification = { ...n };
                 if (updatedNotification.guid === action.payload) {
                     updatedNotification.isExpiring = true;
                 }
-                notifications.push(updatedNotification);
-            }
+                return updatedNotification;
+            });
             return {
                 ...state,
                 notifications: notifications

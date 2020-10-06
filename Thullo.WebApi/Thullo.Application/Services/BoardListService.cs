@@ -1,19 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
 using Thullo.Application.Models;
 
 namespace Thullo.Application.Services
 {
-    public class BoardListService : IBoardListService
+	public class BoardListService : IBoardListService
 	{
-		private readonly CurrentUserAccessor _userAccessor;
 		private readonly ThulloDbContext _db;
 
-		public BoardListService(CurrentUserAccessor cua, ThulloDbContext db)
+		public BoardListService(ThulloDbContext db)
 		{
-			_userAccessor = cua;
 			_db = db;
 		}
 
@@ -27,8 +24,11 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			boardList.CreatedById = _userAccessor.CurrentUserId;
-			boardList.CreatedDate = DateTime.UtcNow;
+			if (boardList.BoardId == default)
+			{
+				result.Errors.Add("BoardId is empty");
+				return result;
+			}
 
 			await _db.BoardLists.AddAsync(boardList);
 			await _db.SaveChangesAsync();
@@ -90,8 +90,6 @@ namespace Thullo.Application.Services
 				return result;
 			}
 
-			boardList.UpdatedById = _userAccessor.CurrentUserId;
-			boardList.UpdatedDate = DateTime.UtcNow;
 			boardList.Title = title;
 
 			await _db.SaveChangesAsync();

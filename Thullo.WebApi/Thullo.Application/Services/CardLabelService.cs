@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Thullo.Application.Common;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
 using Thullo.Application.Models;
@@ -11,12 +10,10 @@ namespace Thullo.Application.Services
 {
 	public class CardLabelService : ICardLabelService
 	{
-		private readonly CurrentUserAccessor _userAccessor;
 		private readonly ThulloDbContext _db;
 
-		public CardLabelService(CurrentUserAccessor cua, ThulloDbContext db)
+		public CardLabelService(ThulloDbContext db)
 		{
-			_userAccessor = cua;
 			_db = db;
 		}
 
@@ -53,9 +50,6 @@ namespace Thullo.Application.Services
 				result.Errors.Add("Color is empty");
 				return result;
 			}
-
-			label.CreatedById = _userAccessor.CurrentUserId;
-			label.CreatedDate = DateTime.UtcNow;
 
 			await _db.CardLabels.AddAsync(label);
 			await _db.SaveChangesAsync();
