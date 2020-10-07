@@ -33,13 +33,13 @@ function* updateListTitle(action: ITypedAction & IPayloadedAction<{ listId: numb
     }
 }
 
-function* deleteList(action: ITypedAction & IPayloadedAction<{ listId: number }>) {
+function* deleteList(action: ITypedAction & IPayloadedAction<number>) {
     const res: AxiosResponse<ApiResponse<boolean>>
-        = yield BoardListApiClient.delete(action.payload.listId);
+        = yield BoardListApiClient.delete(action.payload);
 
     if (!res.data.errors.length) {
         yield put(commonActionCreators.CreateNotificationsRequested(["List has been deleted"], NotificationType.success));
-        yield put(actionCreators.DeleteBoardListSucceeded(action.payload.listId));
+        yield put(actionCreators.DeleteBoardListSucceeded(action.payload));
     } else {
         yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
     }

@@ -122,7 +122,7 @@ const AllBoards = (props: AllBoardsProps) => {
                         }
 
                         return (
-                            <Modal onClose={closeBoardCreationModal} className={animationClassName}>
+                            <Modal hasCloseButton onClose={closeBoardCreationModal} className={animationClassName}>
                                 <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
                             </Modal>
                         );

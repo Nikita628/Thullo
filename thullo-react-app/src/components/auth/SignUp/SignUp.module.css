@@ -5,9 +5,8 @@
     font-weight: bold;
 }
 
-.signUpHeader {
-    font-weight: 600;
-    color: #888;
+.formLogo {
+    margin: 20px 0 20px 0;
     text-align: center;
 }
 

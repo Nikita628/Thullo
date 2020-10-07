@@ -17,6 +17,6 @@ export class BoardListApiClient {
     }
 
     static delete(listId: number) {
-        return axios.post<ApiResponse<number>>(`${config.apiUrl}/boardList/delete/${listId}`);
+        return axios.delete<ApiResponse<number>>(`${config.apiUrl}/boardList/delete/${listId}`);
     }
 }

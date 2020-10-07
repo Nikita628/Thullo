@@ -183,7 +183,7 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
                 ...state,
                 board: {
                     ...state.board,
-                    boardLists: state.board.boardLists.filter(bl => bl.id !== action.payload.listId),
+                    boardLists: state.board.boardLists.filter(bl => bl.id !== action.payload),
                 }
             };
         }

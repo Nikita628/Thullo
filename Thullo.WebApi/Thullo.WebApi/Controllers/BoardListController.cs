@@ -38,7 +38,7 @@ namespace Thullo.WebApi.Controllers
 		}
 
 		[HttpDelete("delete/{id}")]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> Delete([FromRoute]int id)
 		{
 			var res = await _listService.Delete(id);
 
@@ -46,7 +46,7 @@ namespace Thullo.WebApi.Controllers
 		}
 
 		[HttpGet("get/{id}")]
-		public async Task<IActionResult> Get(int id)
+		public async Task<IActionResult> Get([FromRoute]int id)
 		{
 			var res = await _listService.Get(id);
 
