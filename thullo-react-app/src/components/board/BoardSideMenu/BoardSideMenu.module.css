@@ -4,8 +4,8 @@
     right: 0;
     width: 100%;
     background-color: white;
-    border-left: 2px solid #efefef;
-    border-bottom: 2px solid #efefef;
+    border-radius: 10px;
+    box-shadow: 2px 2px 7px #9a9a9a;
     padding: 20px 10px;
     z-index: 1;
 }

@@ -9,7 +9,7 @@
 
 .card:hover {
     border: 1px solid #b7b7eb;
-    cursor: pointer;
+    cursor: move;
 }
 
 .cardCover {

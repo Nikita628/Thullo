@@ -85,6 +85,7 @@ const BoardList = (props: BoardListProps) => {
 
             <div className={css.cards}>
                 {props.boardList.cards.map((c, i) => <Card key={i} card={c} />)}
+                
                 <div className={css.addCardButton}>
                     <Button style={{ width: "100%", fontWeight: "bold" }} type="primary-light">Add another card +</Button>
                 </div>
