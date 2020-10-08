@@ -32,7 +32,7 @@ const Card = (props: CardProps) => {
 
     return (
         <div key={props.card.id} className={concatCssClasses(css.card, props.className)}>
-            {props.card.coverUrl && <img draggable={false} className={css.cardCover} src={props.card.coverUrl} alt="" />}
+            {props.card.coverUrl && <img onDragStart={(e) => e.preventDefault()} draggable={false} className={css.cardCover} src={props.card.coverUrl} alt="" />}
 
             <h6 className={css.cardTitle}>{props.card.title}</h6>
 

@@ -1,0 +1,8 @@
+.draggable, .ghost {
+    user-select: none;
+}
+
+.ghost {
+    position: absolute;
+    z-index: 1;
+}

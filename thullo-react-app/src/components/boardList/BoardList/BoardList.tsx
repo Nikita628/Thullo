@@ -13,6 +13,7 @@ import DropdownContent from '../../common/ui/Dropdown/DropdownContent/DropdownCo
 import Card from '../../card/Card/Card';
 import Button from '../../common/ui/Button/Button';
 import BoardListDeletion from '../BoardListDeletion/BoardListDeletion';
+import { Draggable } from '../../common/ui/DragAndDrop/DragAndDrop';
 
 interface BoardListProps extends BaseProps {
     boardList: BoardListModel;
@@ -84,8 +85,14 @@ const BoardList = (props: BoardListProps) => {
             </div>
 
             <div className={css.cards}>
-                {props.boardList.cards.map((c, i) => <Card key={i} card={c} />)}
-                
+                {
+                    props.boardList.cards.map((c, i) =>
+                        <Draggable>
+                            <Card key={i} card={c} />
+                        </Draggable>
+                    )
+                }
+
                 <div className={css.addCardButton}>
                     <Button style={{ width: "100%", fontWeight: "bold" }} type="primary-light">Add another card +</Button>
                 </div>
