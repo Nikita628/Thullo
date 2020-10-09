@@ -13,7 +13,7 @@ import DropdownContent from '../../common/ui/Dropdown/DropdownContent/DropdownCo
 import Card from '../../card/Card/Card';
 import Button from '../../common/ui/Button/Button';
 import BoardListDeletion from '../BoardListDeletion/BoardListDeletion';
-import { Draggable } from '../../common/ui/DragAndDrop/DragAndDrop';
+import { Draggable } from '../../common/ui/DragAndDrop/Draggable/Draggable';
 
 interface BoardListProps extends BaseProps {
     boardList: BoardListModel;
@@ -54,7 +54,7 @@ const BoardList = (props: BoardListProps) => {
     }
 
     return (
-        <div key={props.key} className={concatCssClasses(css.boardList, props.className)}>
+        <div className={concatCssClasses(css.boardList, props.className)}>
             {
                 isDeletionModalDisplayed
                 && <BoardListDeletion onConfirm={deleteList} onCancel={() => setIsDeletionModalDisplayed(false)} />
@@ -87,8 +87,8 @@ const BoardList = (props: BoardListProps) => {
             <div className={css.cards}>
                 {
                     props.boardList.cards.map((c, i) =>
-                        <Draggable>
-                            <Card key={i} card={c} />
+                        <Draggable key={i} draggableType="card" draggableData={c}>
+                            <Card card={c} />
                         </Draggable>
                     )
                 }

@@ -12,7 +12,6 @@ interface CardLabelProps extends BaseProps {
 const CardLabel = (props: CardLabelProps) => {
     return (
         <div
-            key={props.key}
             style={{ ...props.style, backgroundColor: props.cardlabel.color }}
             className={concatCssClasses(css.cardLabel, props.className)}
         >

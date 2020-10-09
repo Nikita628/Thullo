@@ -14,6 +14,7 @@ import BoardList from '../../boardList/BoardList/BoardList';
 import Button from '../../common/ui/Button/Button';
 import TitleCreation from '../../common/TitleCreation/TitleCreation';
 import { BoardList as BoardListModel } from "../../../models/boardList";
+import { DropZone } from '../../common/ui/DragAndDrop/Dropzone/Dropzone';
 
 interface BoardDetailsProps extends BaseProps {
 
@@ -51,7 +52,15 @@ const BoardDetails = (props: BoardDetailsProps) => {
             <BoardTopMenu board={board} />
 
             <div className={css.boardLists}>
-                {board.boardLists.map((bl, i) => <BoardList key={i} className={css.boardList} boardList={bl} />)}
+                {
+                    board.boardLists.map((bl, i) => (
+                        <div className={css.boardList} key={i}>
+                            <DropZone allowedDraggableType="card" onDrop={(d) => console.log("dropped", d)}>
+                                <BoardList boardList={bl} />
+                            </DropZone>
+                        </div>
+                    ))
+                }
 
                 <div className={css.boardList}>
                     {

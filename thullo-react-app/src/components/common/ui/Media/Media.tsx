@@ -15,7 +15,7 @@ interface MediaProps extends BaseProps {
 
 const Media = (props: MediaProps) => {
     return (
-        <div style={{ ...props.style }} className={concatCssClasses(css.media, props.className)} key={props.key}>
+        <div style={{ ...props.style }} className={concatCssClasses(css.media, props.className)}>
             <div>
                 {
                     props.imgSource
