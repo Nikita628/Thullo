@@ -11,9 +11,8 @@ interface DropZoneProps extends BaseProps {
     onDrop?: (draggableCoord: DragAndDropData) => void;
 }
 
-let relevantDragAndDrop: DragAndDropData;
-
 export const DropZone = (props: DropZoneProps) => {
+    let relevantDragAndDrop: DragAndDropData;
     const dropZoneRef = useRef<HTMLDivElement>();
     const [hasHoveringDraggable, setHasHoveringDraggable] = useState(false);
 

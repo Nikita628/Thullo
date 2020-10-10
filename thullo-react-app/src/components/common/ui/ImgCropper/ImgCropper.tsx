@@ -29,10 +29,13 @@ const defaultImageHeight = 300;
 const defaultCropperColor = "#c4c4c4";
 const defaultLineWidth = 2;
 
+
+// TODO move inside component
 let originalImage: HTMLImageElement;
 let isDragging = false;
 let isResizing = false;
 
+// should be classes with ctors
 let initialMousePositionInCropperRect: Point = {
     x: 0,
     y: 0
