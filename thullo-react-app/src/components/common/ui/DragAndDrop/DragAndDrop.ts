@@ -35,11 +35,11 @@ export class DragAndDropHub {
         this.draggable = null;
     }
 
-    public getCurrentDraggable() {
+    public getActiveDragAndDrop() {
         return this.draggable;
     }
 
-    public updateCurrentDraggable(draggable: DragAndDropData) {
+    public updateActiveDragAndDrop(draggable: DragAndDropData) {
         this.draggable = draggable;
     }
 }

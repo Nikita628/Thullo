@@ -53,6 +53,7 @@ const BoardList = (props: BoardListProps) => {
 
     const deleteList = () => {
         dispatch(actionCreators.DeleteBoardList(props.boardList.id));
+        setIsDeletionModalDisplayed(false);
     }
 
     return (

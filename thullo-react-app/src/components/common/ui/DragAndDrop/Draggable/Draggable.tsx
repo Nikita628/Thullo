@@ -97,7 +97,7 @@ export const Draggable = (props: DraggableProps) => {
                 props.onDragging(currentGhostCoord);
             }
 
-            hub.updateCurrentDraggable(newGhostCoord);
+            hub.updateActiveDragAndDrop(newGhostCoord);
         }
     }, [props.draggableData]);
 
