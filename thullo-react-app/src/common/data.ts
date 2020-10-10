@@ -24,7 +24,6 @@ export enum BoardVisibility {
 }
 
 export interface BaseProps {
-    //key?: number;
     style?: CSSProperties;
     className?: string;
     children?: ReactNode;

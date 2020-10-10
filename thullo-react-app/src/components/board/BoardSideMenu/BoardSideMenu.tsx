@@ -21,8 +21,9 @@ interface BoardSideMenuProps extends BaseProps {
 const BoardSideMenu = (props: BoardSideMenuProps) => {
     const dispatch = useDispatch();
     const board = useSelector((state: AppState) => state.board.board);
+    const boardUsers = useSelector((state: AppState) => state.user.boardUsers);
     const currentUser = useSelector((state: AppState) => state.auth.user);
-    const isCurrentUserAdmin = true;//board.createdBy.id === currentUser.id;
+    const isCurrentUserAdmin = true;// TODO board.createdBy.id === currentUser.id;
     const [boardTitle, setBoardTitle] = useState(board.title);
 
     const saveTitle = () => {
@@ -58,7 +59,7 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
                     <span>Admin</span>
                 </div>
                 {
-                    board.users.map((u, i) => (
+                    boardUsers.map((u, i) => (
                         <div key={i} className={css.teamMember}>
                             <Media
                                 imgSource={u.img ? u.img.url : null}

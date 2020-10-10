@@ -1,5 +1,5 @@
 import React, { CSSProperties, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { actionCreators as userActionCreators } from "../../../state/user";
 import { actionCreators as boardActionCreators } from "../../../state/board";
@@ -18,6 +18,7 @@ import UserSearch from '../../user/UserSearch/UserSearch';
 import { User } from '../../../models/user';
 import BoardSideMenu from '../BoardSideMenu/BoardSideMenu';
 import Transition, { AnimationState } from '../../common/ui/Transition/Transition';
+import { AppState } from '../../../state';
 
 interface BoardTopMenuProps extends BaseProps {
     board: Board;
@@ -25,6 +26,7 @@ interface BoardTopMenuProps extends BaseProps {
 
 const BoardTopMenu = (props: BoardTopMenuProps) => {
     const dispatch = useDispatch();
+    const boardUsers = useSelector((state: AppState) => state.user.boardUsers);
     const [isVisibilityDropdownOpened, setIsVisibilityDropdownOpened] = useState(false);
     const [isUserSearchDropdownOpened, setIsUserSearchDropdownOpened] = useState(false);
     const [isSideMenuDisplayed, setIsSideMenuDisplayed] = useState(false);
@@ -51,7 +53,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
     }
 
     const handleUserInvited = (user: User) => {
-        const isAlreadyMember = props.board.users.some(u => u.id === user.id);
+        const isAlreadyMember = boardUsers.some(u => u.id === user.id);
 
         if (!isAlreadyMember) {
             dispatch(userActionCreators.InviteToBoardRequested(user.id, props.board.id));
@@ -62,7 +64,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
     const renderUsersMenu = () => {
         return (
             <div className={css.usersMenu}>
-                <UserImagesList users={props.board.users} />
+                <UserImagesList users={boardUsers} />
 
                 <Dropdown onClickOutside={() => setIsUserSearchDropdownOpened(false)}>
                     <DropdownButton style={{ width: "40px", height: "40px" }} onClick={toggleUserSearchDropdown} type="primary">

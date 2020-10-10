@@ -5,6 +5,7 @@ import { CommonState, reducer as commonReducer } from "./common";
 import { BoardState, reducer as boardReducer } from "./board";
 import { UserState, reducer as userReducer } from "./user";
 import { BoardListState, reducer as boardListReducer } from "./boardList";
+import { CardState, reducer as cardReducer } from "./card";
 
 export interface AppState {
     auth: AuthState;
@@ -12,6 +13,7 @@ export interface AppState {
     board: BoardState;
     user: UserState;
     boardList: BoardListState;
+    card: CardState;
 };
 
 const rootReducer = combineReducers<AppState>({
@@ -20,6 +22,7 @@ const rootReducer = combineReducers<AppState>({
     board: boardReducer,
     user: userReducer,
     boardList: boardListReducer,
+    card: cardReducer,
 });
 
 export default rootReducer;

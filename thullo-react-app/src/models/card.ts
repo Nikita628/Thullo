@@ -5,6 +5,7 @@ export class Card {
     coverUrl: string;
     title: string;
     description: string;
+    boardListId: number;
     users: User[] = [];
     labels: CardLabel[] = [];
 }

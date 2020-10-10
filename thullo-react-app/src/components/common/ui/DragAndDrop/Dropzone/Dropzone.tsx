@@ -4,6 +4,7 @@ import { BaseProps } from '../../../../../common/data';
 import { DragAndDropData } from '../DragAndDrop';
 import css from './Dropzone.module.css';
 import { hub } from "../DragAndDrop";
+import { concatCssClasses } from '../../../../../common/functionality';
 
 interface DropZoneProps extends BaseProps {
     allowedDraggableType: string;
@@ -55,7 +56,11 @@ export const DropZone = (props: DropZoneProps) => {
     }, []);
 
     return (
-        <div ref={dropZoneRef} className={hasHoveringDraggable ? css.hovered : ""}>
+        <div
+            style={{ ...props.style }}
+            ref={dropZoneRef}
+            className={concatCssClasses(hasHoveringDraggable ? css.hovered : null, props.className)}
+        >
             {props.children}
         </div>
     );

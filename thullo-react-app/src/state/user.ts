@@ -1,6 +1,7 @@
 import { ApiPageResponse } from "../models/common";
 import { User, UserSearchParam } from "../models/user";
 import { IPayloadedAction, ITypedAction } from "./common";
+import { actionTypes as boardActionTypes } from "./board";
 
 export const actionTypes = {
     UserSearchRequested: "user/userSearchRequested",
@@ -52,10 +53,12 @@ export const actionCreators = {
 
 export interface UserState {
     usersPage: ApiPageResponse<User>;
+    boardUsers: User[];
 }
 
 const initialState: UserState = {
     usersPage: null,
+    boardUsers: [],
 };
 
 export const reducer = (state: UserState = initialState, action: ITypedAction & IPayloadedAction): UserState => {
@@ -69,6 +72,18 @@ export const reducer = (state: UserState = initialState, action: ITypedAction & 
                         ? [...state.usersPage.items, ...action.payload.page.items]
                         : action.payload.page.items
                 }
+            };
+        }
+        case actionTypes.RemoveFromBoardSucceeded: {
+            return {
+                ...state,
+                boardUsers: state.boardUsers.filter(u => u.id !== action.payload.userId)
+            };
+        }
+        case boardActionTypes.getBoardSucceeded: {
+            return {
+                ...state,
+                boardUsers: action.payload.users,
             };
         }
         default:

@@ -15,6 +15,8 @@ import Button from '../../common/ui/Button/Button';
 import TitleCreation from '../../common/TitleCreation/TitleCreation';
 import { BoardList as BoardListModel } from "../../../models/boardList";
 import { DropZone } from '../../common/ui/DragAndDrop/Dropzone/Dropzone';
+import { Card } from '../../../models/card';
+import { actionCreators as cardActionCreators } from "../../../state/card";
 
 interface BoardDetailsProps extends BaseProps {
 
@@ -24,6 +26,7 @@ const BoardDetails = (props: BoardDetailsProps) => {
     const { id } = useParams<{ id: string }>();
     const dispatch = useDispatch();
     const board = useSelector((state: AppState) => state.board.board);
+    const boardLists = useSelector((state: AppState) => state.boardList.boardLists);
     const [isListCreationDisplayed, setIsListCreationDisplayed] = useState(false);
 
     useEffect(() => {
@@ -37,6 +40,12 @@ const BoardDetails = (props: BoardDetailsProps) => {
         newList.title = title;
         dispatch(boardListActionCreators.CreateBoardList(newList));
         setIsListCreationDisplayed(false);
+    }
+
+    const moveCard = (card: Card, futureListId: number) => {
+        if (card.boardListId !== futureListId) {
+            dispatch(cardActionCreators.MoveCardToList(card.id, futureListId));
+        }
     }
 
     if (!board) return (
@@ -53,16 +62,16 @@ const BoardDetails = (props: BoardDetailsProps) => {
 
             <div className={css.boardLists}>
                 {
-                    board.boardLists.map((bl, i) => (
-                        <div className={css.boardList} key={i}>
-                            <DropZone allowedDraggableType="card" onDrop={(d) => console.log("dropped", d)}>
+                    boardLists.map((bl, i) => (
+                        <div className={css.boardListContainer} key={i}>
+                            <DropZone style={{height: "100%"}} allowedDraggableType="card" onDrop={(d) => moveCard(d.draggableData, bl.id)}>
                                 <BoardList boardList={bl} />
                             </DropZone>
                         </div>
                     ))
                 }
 
-                <div className={css.boardList}>
+                <div className={css.boardListContainer}>
                     {
                         isListCreationDisplayed
                             ? <TitleCreation placeholder="Enter a title for this list" onSave={createBoardList} />

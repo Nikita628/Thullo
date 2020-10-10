@@ -1,20 +1,22 @@
 import { Board, BoardSearchParam } from "../models/board";
 import { ApiPageResponse } from "../models/common";
 import { ICallbackAction, IPayloadedAction, ITypedAction } from "./common";
-import { actionTypes as userActionTypes } from "./user";
-import { actionTypes as boardListActionTypes } from "./boardList";
-import { BoardList } from "../models/boardList";
 
 export const actionTypes = {
     searchBoardRequested: "board/searchBoardRequested",
     searchBoardSucceeded: "board/searchBoardSucceeded",
+
     createBoardRequested: "board/createBoardRequested",
+
     getBoardRequested: "board/getBoardRequested",
     getBoardSucceeded: "board/getBoardSucceeded",
+
     updateBoardVisibilityRequested: "board/updateBoardVisibilityRequested",
     updateBoardVisibilitySucceeded: "board/updateBoardVisibilitySucceeded",
+
     updateBoardTitleRequested: "board/updateBoardTitleRequested",
     updateBoardTitleSucceeded: "board/updateBoardTitleSucceeded",
+
     updateBoardDescriptionRequested: "board/updateBoardDescriptionRequested",
     updateBoardDescriptionSucceeded: "board/updateBoardDescriptionSucceeded",
 };
@@ -114,7 +116,11 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
         case actionTypes.getBoardSucceeded: {
             return {
                 ...state,
-                board: action.payload,
+                board: {
+                    ...action.payload, // TODO create "flat" board model (no nested arrays with related models), for state specifically
+                    boardLists: null,  // it will allow to flatten state, which makes it easier to manage
+                    users: null,
+                }
             };
         }
         case actionTypes.updateBoardVisibilitySucceeded: {
@@ -141,49 +147,6 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
                 board: {
                     ...state.board,
                     description: action.payload
-                }
-            };
-        }
-        case userActionTypes.RemoveFromBoardSucceeded: {
-            return {
-                ...state,
-                board: {
-                    ...state.board,
-                    users: state.board.users.filter(u => u.id !== action.payload.userId),
-                }
-            };
-        }
-        case boardListActionTypes.createBoardListSuccceded: {
-            return {
-                ...state,
-                board: {
-                    ...state.board,
-                    boardLists: [...state.board.boardLists, action.payload],
-                }
-            };
-        }
-        case boardListActionTypes.updateBoardListTitleSucceeded: {
-            const boardLists = state.board.boardLists.map((bl) => {
-                const listClone = { ...bl };
-                if (bl.id === action.payload.listId) {
-                    listClone.title = action.payload.title;
-                }
-                return listClone;
-            });
-            return {
-                ...state,
-                board: {
-                    ...state.board,
-                    boardLists: boardLists,
-                }
-            };
-        }
-        case boardListActionTypes.deleteBoardListSucceeded: {
-            return {
-                ...state,
-                board: {
-                    ...state.board,
-                    boardLists: state.board.boardLists.filter(bl => bl.id !== action.payload),
                 }
             };
         }

@@ -99,7 +99,7 @@ export const Draggable = (props: DraggableProps) => {
 
             hub.updateCurrentDraggable(newGhostCoord);
         }
-    }, []);
+    }, [props.draggableData]);
 
     return (
         <div ref={draggableRef} className={css.draggable} onMouseDown={startDragging}>

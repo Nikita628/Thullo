@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { actionCreators } from "../../../state/boardList";
 import css from './BoardList.module.css';
@@ -14,6 +14,7 @@ import Card from '../../card/Card/Card';
 import Button from '../../common/ui/Button/Button';
 import BoardListDeletion from '../BoardListDeletion/BoardListDeletion';
 import { Draggable } from '../../common/ui/DragAndDrop/Draggable/Draggable';
+import { AppState } from '../../../state';
 
 interface BoardListProps extends BaseProps {
     boardList: BoardListModel;
@@ -21,6 +22,7 @@ interface BoardListProps extends BaseProps {
 
 const BoardList = (props: BoardListProps) => {
     const dispatch = useDispatch();
+    const cards = useSelector((state: AppState) => state.card.boardCards.filter(c => c.boardListId === props.boardList.id));
     const listTitleInputRef = useRef<HTMLInputElement>();
     const [isMenuDisplayed, setIsMenuDisplayed] = useState(false);
     const [isRenaming, setIsRenaming] = useState(false);
@@ -86,7 +88,7 @@ const BoardList = (props: BoardListProps) => {
 
             <div className={css.cards}>
                 {
-                    props.boardList.cards.map((c, i) =>
+                    cards.map((c, i) =>
                         <Draggable key={i} draggableType="card" draggableData={c}>
                             <Card card={c} />
                         </Draggable>
