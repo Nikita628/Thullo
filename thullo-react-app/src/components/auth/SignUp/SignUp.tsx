@@ -139,18 +139,17 @@ const SignUp = (props: SignUpProps) => {
                 </div>
                 {
                     profileImg
-                        ? <div className={css.formGroup}>
-                            <p className={css.formPar}>Select area that should be used</p>
-                            <ImgCropper
-                                isInvalid={!!validationErrors?.croppedProfileImg}
-                                img={profileImg}
-                                cropType="square"
-                                minWidth={50}
-                                minHeight={50}
-                                onCroppedImgChanged={onProfileImageCropped} />
-                            <div className={css.errorText}>{validationErrors?.croppedProfileImg}</div>
-                        </div>
-                        : null
+                    && <div className={css.formGroup}>
+                        <p className={css.formPar}>Select area that should be used</p>
+                        <ImgCropper
+                            isInvalid={!!validationErrors?.croppedProfileImg}
+                            img={profileImg}
+                            cropType="square"
+                            minWidth={50}
+                            minHeight={50}
+                            onCroppedImgChanged={onProfileImageCropped} />
+                        <div className={css.errorText}>{validationErrors?.croppedProfileImg}</div>
+                    </div>
                 }
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>First Name</label>

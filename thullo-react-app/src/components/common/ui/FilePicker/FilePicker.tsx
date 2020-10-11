@@ -210,8 +210,7 @@ const FilePicker = (props: FilePickerProps) => {
             }
             {
                 props.isUploadEnabled
-                    ? <button className={uploadButtonClassName} onClick={onUploadClick} type="button">Upload Selected Files</button>
-                    : null
+                && <button className={uploadButtonClassName} onClick={onUploadClick} type="button">Upload Selected Files</button>
             }
         </div>
     );

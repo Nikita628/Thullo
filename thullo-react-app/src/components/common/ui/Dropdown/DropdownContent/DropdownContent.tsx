@@ -13,17 +13,16 @@ interface DropdownContentProps extends BaseProps {
 const DropdownContent = (props: DropdownContentProps) => {
     return (
         props.isDisplayed
-            ? <div
-                className={concatCssClasses(css.dropdownContent, props.className)}
-                style={{
-                    ...props.style,
-                    marginTop: props.offsetY ? `${props.offsetY}px` : undefined,
-                    marginLeft: props.offsetX ? `${props.offsetX}px` : undefined,
-                }}
-            >
-                {props.children}
-            </div>
-            : null
+        && <div
+            className={concatCssClasses(css.dropdownContent, props.className)}
+            style={{
+                ...props.style,
+                marginTop: props.offsetY ? `${props.offsetY}px` : undefined,
+                marginLeft: props.offsetX ? `${props.offsetX}px` : undefined,
+            }}
+        >
+            {props.children}
+        </div>
     );
 }
 

@@ -33,14 +33,13 @@ const TopNav = (props: TopNavProps) => {
                     </svg>
                 </Link>
                 {
-                    commonState.appContext === "boardDetails" && boardState.board
-                        ? <div className={css.boardMenu}>
-                            <h6 className={css.boardTitle}>{boardState.board.title}</h6>
-                            <Button type="secondary" onClick={() => history.push("/")}>
-                                <Icon type="columns" style={{ marginRight: "10px" }} />All Boards
-                            </Button>
-                        </div>
-                        : null
+                    (commonState.appContext === "boardDetails" && boardState.board)
+                    && <div className={css.boardMenu}>
+                        <h6 className={css.boardTitle}>{boardState.board.title}</h6>
+                        <Button type="secondary" onClick={() => history.push("/")}>
+                            <Icon type="columns" style={{ marginRight: "10px" }} />All Boards
+                        </Button>
+                    </div>
                 }
             </div>
 

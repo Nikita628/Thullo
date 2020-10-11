@@ -20,6 +20,8 @@ interface AllBoardsProps extends BaseProps {
 }
 
 const defaultPageSize = 10;
+
+// TODO move rename
 const pagingState = {
     responseItemsTotalCount: 0,
     searchParam: new BoardSearchParam(),

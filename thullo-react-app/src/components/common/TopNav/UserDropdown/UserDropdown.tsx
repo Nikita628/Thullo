@@ -27,7 +27,7 @@ const UserDropdown = (props: UserDropdownProps) => {
 
     return (
         <div className={css.userDropdown}>
-            
+
             <img className={css.userImg} src={currentUser.img.url} />
 
             <button
@@ -42,12 +42,11 @@ const UserDropdown = (props: UserDropdownProps) => {
 
             {
                 isDropdownOpened
-                    ? <div className={css.dropContent}>
-                        <Link to="/profile">Profile</Link>
-                        <hr className={css.dropDivider} />
-                        <a href="#" onClick={onLogoutClick}>Log Out</a>
-                    </div>
-                    : null
+                && <div className={css.dropContent}>
+                    <Link to="/profile">Profile</Link>
+                    <hr className={css.dropDivider} />
+                    <a href="#" onClick={onLogoutClick}>Log Out</a>
+                </div>
             }
         </div>
     );

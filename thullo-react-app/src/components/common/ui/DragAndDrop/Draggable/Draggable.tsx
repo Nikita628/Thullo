@@ -17,6 +17,7 @@ interface DraggableProps extends BaseProps {
     draggableData: any;
 }
 
+// TODO move, name _ghostSize
 let cursorCoordInsideGhost: { x: number, y: number } = null;
 let ghostSize: { width: number, height: number } = null;
 let currentGhostCoord: DragAndDropData = null;
@@ -51,7 +52,6 @@ export const Draggable = (props: DraggableProps) => {
         if (props.onDragEnd) {
             props.onDragEnd(currentGhostCoord);
         }
-
         currentGhostCoord = null;
         cursorCoordInsideGhost = null;
         ghostSize = null;

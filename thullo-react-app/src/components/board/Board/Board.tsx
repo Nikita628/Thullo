@@ -23,14 +23,14 @@ const Board = (props: BoardProps) => {
             <div className={css.usersList}>
                 {
                     props.board.users
-                        ? <div style={{ display: "inline-block" }}><UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} /></div>
-                        : null
+                    && <div style={{ display: "inline-block" }}>
+                        <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />
+                    </div>
                 }
 
                 {
                     props.board.users.length > maxNumberOfUsersToDisplay
-                        ? <span className="text-muted">+ {props.board.users.length - maxNumberOfUsersToDisplay} others</span>
-                        : null
+                    && <span className="text-muted">+ {props.board.users.length - maxNumberOfUsersToDisplay} others</span>
                 }
             </div>
 
