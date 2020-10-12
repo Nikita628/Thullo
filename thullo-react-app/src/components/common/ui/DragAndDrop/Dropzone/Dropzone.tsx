@@ -31,7 +31,7 @@ export const DropZone = (props: DropZoneProps) => {
     const watchForDraggable = useCallback((e: MouseEvent) => {
         _activeDragAndDropData.current = hub.getActiveDragAndDrop();
 
-        if (_activeDragAndDropData
+        if (_activeDragAndDropData.current
             && _activeDragAndDropData.current.draggableType === props.allowedDraggableType) {
             if (isInsideDropzone(_activeDragAndDropData.current)) {
                 document.addEventListener("mouseup", watchForDraggableWasDropped);
@@ -44,7 +44,7 @@ export const DropZone = (props: DropZoneProps) => {
     }, []);
 
     const watchForDraggableWasDropped = (e: MouseEvent) => {
-        if (_activeDragAndDropData
+        if (_activeDragAndDropData.current
             && _activeDragAndDropData.current.draggableType === props.allowedDraggableType) {
             if (isInsideDropzone(_activeDragAndDropData.current) && props.onDrop) {
                 props.onDrop(_activeDragAndDropData.current);

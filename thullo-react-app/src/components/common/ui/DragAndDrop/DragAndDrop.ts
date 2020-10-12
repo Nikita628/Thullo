@@ -6,11 +6,13 @@ export class DragAndDropData {
     cursorX: number;
     cursorY: number;
 
-    constructor(x?: number, y?: number, id?: string, data?: any) {
+    constructor(x?: number, y?: number, id?: string, data?: any, cursorX?: number, cursorY?: number) {
         this.x = x ? x : 0;
         this.y = y ? y : 0;
         this.draggableType = id;
         this.draggableData = data;
+        this.cursorX = cursorX;
+        this.cursorY = cursorY;
     }
 }
 

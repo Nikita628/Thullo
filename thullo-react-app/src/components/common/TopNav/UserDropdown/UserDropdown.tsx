@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import css from './UserDropdown.module.css';
 import { AppState } from '../../../../state';
@@ -12,6 +13,7 @@ interface UserDropdownProps {
 }
 
 const UserDropdown = (props: UserDropdownProps) => {
+    const history = useHistory();
     const currentUser = useSelector((state: AppState) => state.auth.user);
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const dispatch = useDispatch();
@@ -23,6 +25,12 @@ const UserDropdown = (props: UserDropdownProps) => {
     const logout = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         dispatch(authActionCreators.SignOutRequested());
+    }
+
+    const openProfile = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        setIsDropdownOpened(false);
+        history.push("/profile");
     }
 
     return (
@@ -43,7 +51,7 @@ const UserDropdown = (props: UserDropdownProps) => {
             {
                 isDropdownOpened
                 && <div className={css.dropContent}>
-                    <Link to="/profile">Profile</Link>
+                    <a href="#" onClick={openProfile}>Profile</a>
                     <hr className={css.dropDivider} />
                     <a href="#" onClick={logout}>Log Out</a>
                 </div>

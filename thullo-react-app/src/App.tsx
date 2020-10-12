@@ -11,7 +11,7 @@ import { actionCreators } from "./state/auth";
 const App = () => {
   const dispatch = useDispatch();
   const authState = useSelector((state: AppState) => state.auth);
-
+  
   useEffect(() => {
     dispatch(actionCreators.SignInFromLocalStorageRequested());
   }, []);

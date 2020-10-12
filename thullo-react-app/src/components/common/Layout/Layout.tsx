@@ -5,6 +5,7 @@ import { BaseProps } from '../../../common/data';
 import AllBoards from '../../board/AllBoards/AllBoards';
 import BoardDetails from '../../board/BoardDetails/BoardDetails';
 import TopNav from '../TopNav/TopNav';
+import UnderConstruction from '../UnderConstruction/UnderConstruction';
 import css from './Layout.module.css';
 
 interface LayoutProps extends BaseProps {
@@ -20,6 +21,7 @@ const Layout = (props: LayoutProps) => {
                 <Switch>
                     <Route path="/boards" exact component={AllBoards} />
                     <Route path="/board/:id" exact component={BoardDetails} />
+                    <Route path="/profile" exact component={UnderConstruction} />
                     <Redirect from="/" to="/boards" />
                 </Switch>
             </main>
