@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -7,8 +6,10 @@ import css from './UserDropdown.module.css';
 import { AppState } from '../../../../state';
 import Icon from '../../ui/Icon/Icon';
 import { actionCreators as authActionCreators } from "../../../../state/auth";
+import { BaseProps } from '../../../../common/data';
+import { concatCssClasses } from '../../../../common/functionality';
 
-interface UserDropdownProps {
+interface UserDropdownProps extends BaseProps {
 
 }
 
@@ -34,7 +35,7 @@ const UserDropdown = (props: UserDropdownProps) => {
     }
 
     return (
-        <div className={css.userDropdown}>
+        <div className={concatCssClasses(css.userDropdown, props.className)}>
 
             <img alt="" className={css.userImg} src={currentUser.img.url} />
 

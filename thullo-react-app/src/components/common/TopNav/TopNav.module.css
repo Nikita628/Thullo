@@ -1,26 +1,21 @@
 .topNav {
     background-color: white;
     border-bottom: 1px solid #eaeaea;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 1rem;
 }
 
 .logo {
-    margin-right: 50px;
-}
-
-.navRight {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.inputGroup {
-    min-width: 290px;
-    margin-right: 30px;
-}
-
-.navLeft {
-    display: flex;
-    flex-wrap: wrap;
+    display: inline-block;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
 }
 
 .boardMenu {
@@ -29,10 +24,109 @@
     flex-wrap: wrap;
 }
 
+.logo, .boardMenu {
+    flex-basis: 100%;
+}
+
 .boardTitle {
     margin-right: 30px;
     padding-right: 30px;
     border-right: 1px solid gray;
     padding-top: 5px;
     font-weight: bold;
+}
+
+.navLeft, .navRight {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+}
+
+.logo {
+    text-align: center;
+}
+
+.boardMenu {
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.navRight {
+    justify-content: end;
+    margin: 1rem 0;
+}
+
+.inputGroup, .userDropdown {
+    flex-basis: 100%;
+    text-align: center;
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    .inputGroup, .userDropdown {
+        flex-basis: 50%;
+    }
+    .inputGroup {
+        margin-bottom: 0;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .inputGroup, .userDropdown {
+        flex-basis: 50%;
+    }
+
+    .logo {
+        flex-basis: 30%;
+    }
+
+    .boardMenu {
+        flex-basis: 70%;
+        margin: 0;
+        justify-content: start;
+    }
+
+    .logo {
+        text-align: start;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .navLeft, .navRight {
+        flex-basis: 50%;
+    }
+
+    .navRight {
+        margin: 0;
+    }
+
+    .inputGroup, .userDropdown {
+        text-align: end;
+    }
+
+    .inputGroup {
+        flex-basis: 65%;
+    }
+
+    .userDropdown {
+        flex-basis: 35%;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    .inputGroup {
+        flex-basis: 70%;
+    }
+
+    .userDropdown {
+        flex-basis: 30%;
+    }
 }
