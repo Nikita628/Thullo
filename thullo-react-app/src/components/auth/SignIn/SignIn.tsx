@@ -13,15 +13,15 @@ const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   }
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   }
 
-  const onSignInClick = (e: React.MouseEvent<HTMLElement>) => {
+  const signIn = (e: React.MouseEvent<HTMLElement>) => {
     const signInData = new SignInData();
     signInData.login = email;
     signInData.password = password;
@@ -29,8 +29,6 @@ const SignIn = () => {
   }
 
   return (
-    <>
-
       <div className={css.signIn}>
         <div className={css.formLogo}>
           <svg width="98" height="29" viewBox="0 0 98 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,19 +40,18 @@ const SignIn = () => {
         <form>
           <div className={css.formGroup}>
             <label className={css.formLabel}>Email</label>
-            <Input type="email" value={email} onChange={onEmailChange} className={css.formInput} />
+            <Input type="email" value={email} onChange={changeEmail} className={css.formInput} />
           </div>
           <div className={css.formGroup}>
             <label className={css.formLabel}>Password</label>
-            <Input type="password" value={password} onChange={onPasswordChange} className={css.formInput} />
+            <Input type="password" value={password} onChange={changePassword} className={css.formInput} />
           </div>
           <div className={css.signInButton}>
-            <Button onClick={onSignInClick} type="primary">Sign In</Button>
+            <Button onClick={signIn} type="primary">Sign In</Button>
           </div>
         </form>
         <p className={css.already}>Don't have an account? Sign up <Link to="/signup">here</Link></p>
       </div>
-    </>
   );
 }
 

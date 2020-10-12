@@ -35,7 +35,7 @@ const AllBoards = (props: AllBoardsProps) => {
 
     const getNextPage = useCallback(() => {
         const totalPageHeight = document.body.scrollHeight;
-        const scrollPoint = window.scrollY + window.innerHeight;
+        const scrollPoint = Math.ceil(window.scrollY + window.innerHeight);
         const isScrolledToBottom = scrollPoint >= totalPageHeight;
         const totalPages = Math.ceil(_responseItemsTotalCount.current / defaultPageSize);
         const hasMorePagesToRequest = _searchParam.current.pageNumber < totalPages;

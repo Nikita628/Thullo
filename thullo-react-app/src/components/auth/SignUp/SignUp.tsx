@@ -48,53 +48,53 @@ const SignUp = (props: SignUpProps) => {
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>();
 
-    const onFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (validationErrors?.firstName) {
             setValidationErrors({ ...validationErrors, firstName: undefined });
         }
         setFirstName(e.target.value);
     }
 
-    const onLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (validationErrors?.lastName) {
             setValidationErrors({ ...validationErrors, lastName: undefined });
         }
         setLastName(e.target.value);
     }
 
-    const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (validationErrors?.email) {
             setValidationErrors({ ...validationErrors, email: undefined });
         }
         setEmail(e.target.value);
     }
 
-    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (validationErrors?.password) {
             setValidationErrors({ ...validationErrors, password: undefined });
         }
         setPassword(e.target.value);
     }
 
-    const onPasswordConfirmationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changePasswordConfirmation = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (validationErrors?.passwordConfirmation) {
             setValidationErrors({ ...validationErrors, passwordConfirmation: undefined });
         }
         setPasswordConfirmation(e.target.value);
     }
 
-    const onProfileImageChanged = (files: File[]) => {
+    const changeProfileImg = (files: File[]) => {
         setProfileImg(files[0]);
     }
 
-    const onProfileImageCropped = (file: File) => {
+    const changeCroppedProfileImg = (file: File) => {
         if (validationErrors?.croppedProfileImg) {
             setValidationErrors({ ...validationErrors, croppedProfileImg: undefined });
         }
         setCroppedImg(file);
     }
 
-    const onSignUpClick = (e: React.MouseEvent<HTMLElement>) => {
+    const signUp = (e: React.MouseEvent<HTMLElement>) => {
         const form: FormData = {
             img: profileImg,
             croppedImg: croppedImg,
@@ -135,7 +135,7 @@ const SignUp = (props: SignUpProps) => {
                     <FilePicker
                         isUploadEnabled={false}
                         maxNumberOfFiles={1}
-                        onSelectedFilesChanged={onProfileImageChanged} />
+                        onSelectedFilesChanged={changeProfileImg} />
                 </div>
                 {
                     profileImg
@@ -147,37 +147,37 @@ const SignUp = (props: SignUpProps) => {
                             cropType="square"
                             minWidth={50}
                             minHeight={50}
-                            onCroppedImgChanged={onProfileImageCropped} />
+                            onCroppedImgChanged={changeCroppedProfileImg} />
                         <div className={css.errorText}>{validationErrors?.croppedProfileImg}</div>
                     </div>
                 }
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>First Name</label>
-                    <Input type="text" isInvalid={!!validationErrors?.firstName} value={firstName} onChange={onFirstNameChange} className={css.formInput} />
+                    <Input type="text" isInvalid={!!validationErrors?.firstName} value={firstName} onChange={changeFirstName} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.firstName}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Last Name</label>
-                    <Input type="text" isInvalid={!!validationErrors?.lastName} value={lastName} onChange={onLastNameChange} className={css.formInput} />
+                    <Input type="text" isInvalid={!!validationErrors?.lastName} value={lastName} onChange={changeLastName} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.lastName}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Email</label>
-                    <Input type="email" isInvalid={!!validationErrors?.email} value={email} onChange={onEmailChange} className={css.formInput} />
+                    <Input type="email" isInvalid={!!validationErrors?.email} value={email} onChange={changeEmail} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.email}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Password</label>
-                    <Input type="password" isInvalid={!!validationErrors?.password} value={password} onChange={onPasswordChange} className={css.formInput} />
+                    <Input type="password" isInvalid={!!validationErrors?.password} value={password} onChange={changePassword} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.password}</div>
                 </div>
                 <div className={css.formGroup}>
                     <label className={css.formLabel}>Password Confirmation</label>
-                    <Input type="password" isInvalid={!!validationErrors?.passwordConfirmation} value={passwordConfirmation} onChange={onPasswordConfirmationChange} className={css.formInput} />
+                    <Input type="password" isInvalid={!!validationErrors?.passwordConfirmation} value={passwordConfirmation} onChange={changePasswordConfirmation} className={css.formInput} />
                     <div className={css.errorText}>{validationErrors?.passwordConfirmation}</div>
                 </div>
                 <div className={css.signUpButton}>
-                    <Button onClick={onSignUpClick} type="primary">Sign Up</Button>
+                    <Button onClick={signUp} type="primary">Sign Up</Button>
                 </div>
             </form>
             <p className={css.already}>Already have an account? Sign in <Link to="/signin">here</Link></p>

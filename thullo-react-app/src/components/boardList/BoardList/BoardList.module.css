@@ -25,6 +25,10 @@
     border-radius: 10px;
 }
 
+.listTitleInput:focus {
+    outline: none;
+}
+
 .listTitleInputFocused {
     background-color: white;
     box-shadow: 2px 2px 7px #c5c5c5;
