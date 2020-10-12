@@ -1,7 +1,7 @@
 .formLabel {
     width: 100%;
     margin-bottom: 0;
-    color: #888;
+    color: #333;
     font-weight: bold;
 }
 
@@ -23,18 +23,23 @@
     margin: 20px 0 20px 0;
 }
 
-.formInput {
+.signUp .formInput {
     width: 100%;
+    box-shadow: none;
+    border-bottom: 1px solid #333;
+    color: #333;
+    border-radius: 0;
 }
 
 .formPar {
     margin-bottom: 5px;
-    color: #888;
+    color: #333;
     font-weight: bold;
 }
 
 .signUpButton {
     text-align: center;
+    margin-top: 2.5rem;
 }
 
 .signUp {
@@ -47,6 +52,6 @@
 
 .already {
     margin: 20px 0px 20px 0px;
-    color: gray;
+    color: #333;
     text-align: center;
 }

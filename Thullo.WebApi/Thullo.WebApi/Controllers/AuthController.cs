@@ -35,15 +35,18 @@ namespace Thullo.WebApi.Controllers
 		[HttpPost("signUp")]
 		public async Task<IActionResult> SignUp([FromForm]IFormFile userImg, [FromForm]string signUpDataJson)
         {
-			var file = new FileData
-			{
-				FileName = userImg.FileName,
-				Bytes = await userImg.ToByteArrayAsync()
-			};
-
 			var signUpData = JsonConvert.DeserializeObject<SignUpData>(signUpDataJson);
 
-			signUpData.Img = file;
+			if (userImg != null)
+			{
+				var file = new FileData
+				{
+					FileName = userImg.FileName,
+					Bytes = await userImg.ToByteArrayAsync()
+				};
+
+				signUpData.Img = file;
+			}
 
 			var res = await _authService.SignUp(signUpData);
 
