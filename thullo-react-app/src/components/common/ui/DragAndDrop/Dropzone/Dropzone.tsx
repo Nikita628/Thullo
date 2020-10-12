@@ -12,13 +12,13 @@ interface DropZoneProps extends BaseProps {
 }
 
 export const DropZone = (props: DropZoneProps) => {
-    let relevantDragAndDrop: DragAndDropData;
+    const _activeDragAndDropData = useRef<DragAndDropData>();
     const dropZoneRef = useRef<HTMLDivElement>();
     const [hasHoveringDraggable, setHasHoveringDraggable] = useState(false);
 
     useEffect(() => {
-        document.addEventListener("mousemove", handleMouseMove);
-        return () => document.removeEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mousemove", watchForDraggable);
+        return () => document.removeEventListener("mousemove", watchForDraggable);
     }, []);
 
     const isInsideDropzone = (coord: DragAndDropData) => {
@@ -28,28 +28,30 @@ export const DropZone = (props: DropZoneProps) => {
             && coord.cursorY < (dropZoneRef.current.offsetTop + dropZoneRef.current.offsetHeight)
     }
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        relevantDragAndDrop = hub.getActiveDragAndDrop();
+    const watchForDraggable = useCallback((e: MouseEvent) => {
+        _activeDragAndDropData.current = hub.getActiveDragAndDrop();
 
-        if (relevantDragAndDrop && relevantDragAndDrop.draggableType === props.allowedDraggableType) {
-            if (isInsideDropzone(relevantDragAndDrop)) {
-                document.addEventListener("mouseup", handleMouseUp);
+        if (_activeDragAndDropData
+            && _activeDragAndDropData.current.draggableType === props.allowedDraggableType) {
+            if (isInsideDropzone(_activeDragAndDropData.current)) {
+                document.addEventListener("mouseup", watchForDraggableWasDropped);
                 setHasHoveringDraggable(true);
             } else {
-                document.removeEventListener("mouseup", handleMouseUp);
+                document.removeEventListener("mouseup", watchForDraggableWasDropped);
                 setHasHoveringDraggable(false);
             }
         }
     }, []);
 
-    const handleMouseUp = (e: MouseEvent) => {
-        if (relevantDragAndDrop && relevantDragAndDrop.draggableType === props.allowedDraggableType) {
-            if (isInsideDropzone(relevantDragAndDrop) && props.onDrop) {
-                props.onDrop(relevantDragAndDrop);
+    const watchForDraggableWasDropped = (e: MouseEvent) => {
+        if (_activeDragAndDropData
+            && _activeDragAndDropData.current.draggableType === props.allowedDraggableType) {
+            if (isInsideDropzone(_activeDragAndDropData.current) && props.onDrop) {
+                props.onDrop(_activeDragAndDropData.current);
             }
         }
 
-        document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("mouseup", watchForDraggableWasDropped);
         setHasHoveringDraggable(false);
     };
 

@@ -17,12 +17,11 @@ interface DraggableProps extends BaseProps {
     draggableData: any;
 }
 
-// TODO move, name _ghostSize
-let cursorCoordInsideGhost: { x: number, y: number } = null;
-let ghostSize: { width: number, height: number } = null;
-let currentGhostCoord: DragAndDropData = null;
-
 export const Draggable = (props: DraggableProps) => {
+    const _cursorCoordInsideGhost = useRef<{x: number, y: number}>();
+    const _ghostSize = useRef<{width: number, height: number}>();
+    const _currentGhostCoord = useRef<DragAndDropData>();
+
     const draggableRef = useRef<HTMLDivElement>();
     const ghostRef = useRef<HTMLDivElement>();
     const [isDragging, setIsDragging] = useState(false);
@@ -30,11 +29,11 @@ export const Draggable = (props: DraggableProps) => {
     const startDragging = (e: React.MouseEvent<HTMLElement>) => {
         document.addEventListener("mousemove", drag);
 
-        ghostSize = {
+        _ghostSize.current = {
             width: draggableRef.current.offsetWidth,
             height: draggableRef.current.offsetHeight
         };
-        currentGhostCoord = new DragAndDropData(
+        _currentGhostCoord.current = new DragAndDropData(
             draggableRef.current.offsetLeft,
             draggableRef.current.offsetTop,
             props.draggableType,
@@ -50,11 +49,11 @@ export const Draggable = (props: DraggableProps) => {
         document.removeEventListener("mousemove", drag);
 
         if (props.onDragEnd) {
-            props.onDragEnd(currentGhostCoord);
+            props.onDragEnd(_currentGhostCoord.current);
         }
-        currentGhostCoord = null;
-        cursorCoordInsideGhost = null;
-        ghostSize = null;
+        _currentGhostCoord.current = null;
+        _cursorCoordInsideGhost.current = null;
+        _ghostSize.current = null;
 
         setIsDragging(false);
 
@@ -70,13 +69,13 @@ export const Draggable = (props: DraggableProps) => {
             const cursorPosition = getCurrentCursorPosition(e);
             const cursorInsideGhost = getCursorPositionInsideElement(e, draggableRef.current);
 
-            if (!cursorCoordInsideGhost) {
-                cursorCoordInsideGhost = cursorInsideGhost;
+            if (!_cursorCoordInsideGhost.current) {
+                _cursorCoordInsideGhost.current = cursorInsideGhost;
             }
 
             const newGhostCoord = new DragAndDropData(
-                cursorPosition.x - cursorCoordInsideGhost.x,
-                cursorPosition.y - cursorCoordInsideGhost.y,
+                cursorPosition.x - _cursorCoordInsideGhost.current.x,
+                cursorPosition.y - _cursorCoordInsideGhost.current.y,
                 props.draggableType,
                 props.draggableData
             );
@@ -84,17 +83,17 @@ export const Draggable = (props: DraggableProps) => {
             newGhostCoord.cursorY = cursorPosition.y;
 
             if (!ghostRef.current.style.width) {
-                ghostRef.current.style.width = ghostSize.width + "px";
-                ghostRef.current.style.height = ghostSize.height + "px";
+                ghostRef.current.style.width = _ghostSize.current.width + "px";
+                ghostRef.current.style.height = _ghostSize.current.height + "px";
             }
 
             ghostRef.current.style.left = newGhostCoord.x + "px";
             ghostRef.current.style.top = newGhostCoord.y + "px";
 
-            currentGhostCoord = newGhostCoord;
+            _currentGhostCoord.current = newGhostCoord;
 
             if (props.onDragging) {
-                props.onDragging(currentGhostCoord);
+                props.onDragging(_currentGhostCoord.current);
             }
 
             hub.updateActiveDragAndDrop(newGhostCoord);

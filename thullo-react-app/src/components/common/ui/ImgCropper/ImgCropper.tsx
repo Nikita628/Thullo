@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+
 import { concatCssClasses } from '../../../../common/functionality';
 import css from './ImgCropper.module.css';
 
@@ -13,14 +14,24 @@ interface ImgCropperProps {
     onCroppedImgChanged: (croppedImg: File) => void;
 }
 
-interface Point {
+class Point {
     x: number;
     y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
 }
 
-interface Dimensions {
+class Dimensions {
     width: number;
     height: number;
+
+    constructor(width: number, height: number) {
+        this.width = width;
+        this.height = height;
+    }
 }
 
 const defaultResizerButtonRadius = 8;
@@ -29,47 +40,20 @@ const defaultImageHeight = 300;
 const defaultCropperColor = "#c4c4c4";
 const defaultLineWidth = 2;
 
-
-// TODO move inside component
-let originalImage: HTMLImageElement;
-let isDragging = false;
-let isResizing = false;
-
-// should be classes with ctors
-let initialMousePositionInCropperRect: Point = {
-    x: 0,
-    y: 0
-};
-
-let cropperRectanglePosition: Point = {
-    x: 0,
-    y: 0
-};
-
-let cropperRectangleDimensions: Dimensions = {
-    width: 0,
-    height: 0
-};
-
-let canvasDimensions: Dimensions = {
-    width: 0,
-    height: 0
-}
-
 const ImgCropper = (props: ImgCropperProps) => {
-    if (props.cropType === "square" && props.minHeight !== props.minWidth) {
-        throw Error("For the square crop the minHeight and minWidth must be the same");
-    }
-
-    if (!props.img.type.includes("image")) {
-        throw Error("Only images can be cropped");
-    }
-
-    cropperRectangleDimensions.width = props.minWidth;
-    cropperRectangleDimensions.height = props.minHeight;
+    const _originalImage = useRef<HTMLImageElement>();
+    const _isDragging = useRef(false);
+    const _isResizing = useRef(false);
+    const _initialMousePositionInCropperRect = useRef(new Point(0, 0));
+    const _cropperRectanglePosition = useRef(new Point(0, 0));
+    const _cropperRectangleDimensions = useRef(new Dimensions(0, 0));
+    const _canvasDimensions = useRef(new Dimensions(0, 0));
 
     const [croppedImageSrc, setCroppedImageSrc] = useState<string>();
     const canvasRef = useRef<HTMLCanvasElement>();
+
+    _cropperRectangleDimensions.current.width = props.minWidth;
+    _cropperRectangleDimensions.current.height = props.minHeight;
 
     useEffect(() => {
         let reader = new FileReader();
@@ -81,88 +65,108 @@ const ImgCropper = (props: ImgCropperProps) => {
             inputImage.onload = () => {
                 scaleImage(inputImage, defaultImageWidth, defaultImageHeight)
                     .then((img: { scaledImg: HTMLImageElement, scaledImgSrc: string }) => {
-                        originalImage = img.scaledImg;
-                        cropperRectanglePosition = { x: 0, y: 0 };
-                        canvasDimensions.width = img.scaledImg.naturalWidth;
-                        canvasDimensions.height = img.scaledImg.naturalHeight;
+                        _originalImage.current = img.scaledImg;
+                        _cropperRectanglePosition.current = { x: 0, y: 0 };
+                        _canvasDimensions.current.width = img.scaledImg.naturalWidth;
+                        _canvasDimensions.current.height = img.scaledImg.naturalHeight;
                         canvasRef.current.width = img.scaledImg.naturalWidth;
                         canvasRef.current.height = img.scaledImg.naturalHeight;
 
-                        draw(canvasRef.current);
+                        draw(
+                            canvasRef.current,
+                            _originalImage.current,
+                            _canvasDimensions.current,
+                            _cropperRectanglePosition.current,
+                            _cropperRectangleDimensions.current
+                        );
                     });
             };
 
             inputImage.src = imgSrc;
         };
-        return () => {
-            originalImage = undefined;
-        };
     }, [props.img]);
 
     useEffect(() => {
-        if (!croppedImageSrc && originalImage && canvasRef.current) {
-            cropperRectanglePosition = { x: 0, y: 0 };
-            canvasRef.current.width = originalImage.naturalWidth;
-            canvasRef.current.height = originalImage.naturalHeight;
-            draw(canvasRef.current);
+        if (!croppedImageSrc && _originalImage.current && canvasRef.current) {
+            _cropperRectanglePosition.current = { x: 0, y: 0 };
+            canvasRef.current.width = _originalImage.current.naturalWidth;
+            canvasRef.current.height = _originalImage.current.naturalHeight;
+            draw(
+                canvasRef.current,
+                _originalImage.current,
+                _canvasDimensions.current,
+                _cropperRectanglePosition.current,
+                _cropperRectangleDimensions.current
+            );
         }
     }, [croppedImageSrc]);
 
-    const onCropClick = () => {
+    const handleCropClick = () => {
         cropImage(
             props.img,
-            originalImage,
-            cropperRectanglePosition,
-            cropperRectangleDimensions.width,
-            cropperRectangleDimensions.height
+            _originalImage.current,
+            _cropperRectanglePosition.current,
+            _cropperRectangleDimensions.current.width,
+            _cropperRectangleDimensions.current.height
         ).then((croppedImg) => {
             props.onCroppedImgChanged(croppedImg.file);
             setCroppedImageSrc(croppedImg.src);
         });
     }
 
-    const onCropAnotherClick = () => {
-        cropperRectanglePosition = { x: 0, y: 0 };
+    const handleCropAnotherAreaClick = () => {
+        _cropperRectanglePosition.current = { x: 0, y: 0 };
         props.onCroppedImgChanged(undefined);
         setCroppedImageSrc(undefined);
     }
 
-    const onCanvasMouseDown = (e: any) => {
+    const handleCanvasClick = (e: any) => {
         const positionInsideCanvas = getMousePositionInsideCanvas(e, canvasRef.current);
 
-        if (isInsideResizerButton(positionInsideCanvas)) {
-            isResizing = true;
+        if (isInsideResizerButton(positionInsideCanvas, _cropperRectanglePosition.current, _cropperRectangleDimensions.current)) {
+            _isResizing.current = true;
         }
-        else if (isInsideCropperRect(positionInsideCanvas)) {
-            isDragging = true;
-            if (!initialMousePositionInCropperRect.x && !initialMousePositionInCropperRect.y) {
-                initialMousePositionInCropperRect.x = positionInsideCanvas.x - cropperRectanglePosition.x;
-                initialMousePositionInCropperRect.y = positionInsideCanvas.y - cropperRectanglePosition.y;
+        else if (isInsideCropperRect(positionInsideCanvas, _cropperRectanglePosition.current, _cropperRectangleDimensions.current)) {
+            _isDragging.current = true;
+            if (!_initialMousePositionInCropperRect.current.x && !_initialMousePositionInCropperRect.current.y) {
+                _initialMousePositionInCropperRect.current.x = positionInsideCanvas.x - _cropperRectanglePosition.current.x;
+                _initialMousePositionInCropperRect.current.y = positionInsideCanvas.y - _cropperRectanglePosition.current.y;
             }
         }
     }
 
-    const onCanvasMouseUp = () => {
-        isDragging = false;
-        isResizing = false;
-        initialMousePositionInCropperRect.x = 0;
-        initialMousePositionInCropperRect.y = 0;
+    const handleCanvasLeave = () => {
+        _isDragging.current = false;
+        _isResizing.current = false;
+        _initialMousePositionInCropperRect.current.x = 0;
+        _initialMousePositionInCropperRect.current.y = 0;
     }
 
-    const onCanvasMouseMove = (e: any) => {
-        if (isDragging) {
+    const handleMovementInsideCanvas = (e: any) => {
+        if (_isDragging.current) {
             const positionInsideCanvas = getMousePositionInsideCanvas(e, canvasRef.current);
 
-            cropperRectanglePosition.x = positionInsideCanvas.x - initialMousePositionInCropperRect.x;
-            cropperRectanglePosition.y = positionInsideCanvas.y - initialMousePositionInCropperRect.y;
+            _cropperRectanglePosition.current.x = positionInsideCanvas.x - _initialMousePositionInCropperRect.current.x;
+            _cropperRectanglePosition.current.y = positionInsideCanvas.y - _initialMousePositionInCropperRect.current.y;
 
-            ensureCropperRectInsideCanvas();
-            window.requestAnimationFrame(() => draw(canvasRef.current));
-        } else if (isResizing) {
+            ensureCropperRectInsideCanvas(
+                _cropperRectanglePosition.current,
+                _cropperRectangleDimensions.current,
+                _canvasDimensions.current
+            );
+
+            window.requestAnimationFrame(() => draw(
+                canvasRef.current,
+                _originalImage.current,
+                _canvasDimensions.current,
+                _cropperRectanglePosition.current,
+                _cropperRectangleDimensions.current
+            ));
+        } else if (_isResizing.current) {
             const bottomRight = getMousePositionInsideCanvas(e, canvasRef.current);
 
-            let newWidth = bottomRight.x - cropperRectanglePosition.x;
-            let newHeight = bottomRight.y - cropperRectanglePosition.y;
+            let newWidth = bottomRight.x - _cropperRectanglePosition.current.x;
+            let newHeight = bottomRight.y - _cropperRectanglePosition.current.y;
 
             if (props.cropType === "square") {
                 newWidth = newHeight;
@@ -171,33 +175,40 @@ const ImgCropper = (props: ImgCropperProps) => {
             let isNeedToDraw = false;
 
             if (newWidth >= props.minWidth) {
-                cropperRectangleDimensions.width = newWidth;
+                _cropperRectangleDimensions.current.width = newWidth;
                 isNeedToDraw = true;
             }
 
             if (newHeight >= props.minHeight) {
-                cropperRectangleDimensions.height = newHeight;
+                _cropperRectangleDimensions.current.height = newHeight;
                 isNeedToDraw = true;
             }
 
             if (isNeedToDraw) {
-                ensureCropperRectInsideCanvas();
-                window.requestAnimationFrame(() => draw(canvasRef.current));
+                ensureCropperRectInsideCanvas(
+                    _cropperRectanglePosition.current,
+                    _cropperRectangleDimensions.current,
+                    _canvasDimensions.current
+                );
+
+                window.requestAnimationFrame(() => draw(
+                    canvasRef.current,
+                    _originalImage.current,
+                    _canvasDimensions.current,
+                    _cropperRectanglePosition.current,
+                    _cropperRectangleDimensions.current
+                ));
             }
         }
-    }
-
-    const onCanvasMouseLeave = () => {
-        onCanvasMouseUp();
     }
 
     const renderCroppedImageMenu = () => {
         return (
             <div className={css.croppedImgMenu}>
                 <div className={css.scroll}>
-                    <img src={croppedImageSrc}></img>
+                    <img alt="" src={croppedImageSrc}></img>
                 </div>
-                <button className={css.button} type="button" onClick={onCropAnotherClick}>Select Another Area</button>
+                <button className={css.button} type="button" onClick={handleCropAnotherAreaClick}>Select Another Area</button>
             </div>
         );
     }
@@ -207,14 +218,14 @@ const ImgCropper = (props: ImgCropperProps) => {
             <div className={css.cropperMenu}>
                 <div className={css.scroll}>
                     <canvas
-                        onMouseDown={onCanvasMouseDown}
-                        onMouseUp={onCanvasMouseUp}
-                        onMouseMove={onCanvasMouseMove}
-                        onMouseLeave={onCanvasMouseLeave}
+                        onMouseDown={handleCanvasClick}
+                        onMouseUp={handleCanvasLeave}
+                        onMouseMove={handleMovementInsideCanvas}
+                        onMouseLeave={handleCanvasLeave}
                         ref={canvasRef}
                     ></canvas>
                 </div>
-                <button className={css.button} type="button" onClick={onCropClick}>Crop Selection</button>
+                <button className={css.button} type="button" onClick={handleCropClick}>Crop Selection</button>
             </div>
         );
     }
@@ -230,7 +241,13 @@ const ImgCropper = (props: ImgCropperProps) => {
     );
 }
 
-const draw = (canvas: HTMLCanvasElement) => {
+const draw = (
+    canvas: HTMLCanvasElement,
+    originalImage: HTMLImageElement,
+    canvasDimensions: Dimensions,
+    cropperRectanglePosition: Point,
+    cropperRectangleDimensions: Dimensions
+) => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(originalImage, 0, 0, canvasDimensions.width, canvasDimensions.height);
 
@@ -255,19 +272,19 @@ const draw = (canvas: HTMLCanvasElement) => {
     );
 }
 
-const isInsideCropperRect = (point: Point) => {
+const isInsideCropperRect = (point: Point, cropperRectanglePosition: Point, cropperRectangleDimensions: Dimensions) => {
     return point.x > cropperRectanglePosition.x && point.x < cropperRectanglePosition.x + cropperRectangleDimensions.width
         && point.y > cropperRectanglePosition.y && point.y < cropperRectanglePosition.y + cropperRectangleDimensions.height;
 }
 
-const isInsideResizerButton = (point: Point) => {
+const isInsideResizerButton = (point: Point, cropperRectanglePosition: Point, cropperRectangleDimensions: Dimensions) => {
     // pythagorean theorem
     const xSquared = Math.pow((cropperRectanglePosition.x + cropperRectangleDimensions.width) - point.x, 2);
     const ySquared = Math.pow((cropperRectanglePosition.y + cropperRectangleDimensions.height) - point.y, 2);
     return Math.sqrt(xSquared + ySquared) < defaultResizerButtonRadius;
 }
 
-const ensureCropperRectInsideCanvas = () => {
+const ensureCropperRectInsideCanvas = (cropperRectanglePosition: Point, cropperRectangleDimensions: Dimensions, canvasDimensions: Dimensions) => {
     const leftSideX = cropperRectanglePosition.x;
     if (leftSideX < 0) {
         cropperRectanglePosition.x = 0;

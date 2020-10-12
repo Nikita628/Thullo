@@ -39,7 +39,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
         setIsUserSearchDropdownOpened(!isUserSearchDropdownOpened);
     }
 
-    const handleBoardVisibilityChange = (visibility: BoardVisibility) => {
+    const changeBoardVisibility = (visibility: BoardVisibility) => {
         const currentBoardVisibility = props.board.isPrivate
             ? BoardVisibility.private
             : BoardVisibility.public;
@@ -52,7 +52,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
         }
     }
 
-    const handleUserInvited = (user: User) => {
+    const inviteUser = (user: User) => {
         const isAlreadyMember = boardUsers.some(u => u.id === user.id);
 
         if (!isAlreadyMember) {
@@ -71,7 +71,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
                         <Icon type="person-plus" />
                     </DropdownButton>
                     <DropdownContent isDisplayed={isUserSearchDropdownOpened} offsetY={10}>
-                        <UserSearch searchType="Board" onUserConfirmationClick={handleUserInvited} />
+                        <UserSearch searchType="Board" onUserConfirmationClick={inviteUser} />
                     </DropdownContent>
                 </Dropdown>
             </div>
@@ -89,7 +89,7 @@ const BoardTopMenu = (props: BoardTopMenuProps) => {
                     }
                 </DropdownButton>
                 <DropdownContent isDisplayed={isVisibilityDropdownOpened} offsetY={10}>
-                    <BoardVisibilityMenu onVisibilityChange={handleBoardVisibilityChange} />
+                    <BoardVisibilityMenu onVisibilityChange={changeBoardVisibility} />
                 </DropdownContent>
             </Dropdown>
         );

@@ -26,7 +26,7 @@ const Card = (props: CardProps) => {
         setIsUserSearchDropdownOpened(!isUserSearchDropdownOpened);
     }
 
-    const handleUserInvited = (user: User) => {
+    const inviteUser = (user: User) => {
         setIsUserSearchDropdownOpened(false);
     }
 
@@ -51,7 +51,7 @@ const Card = (props: CardProps) => {
                         <Icon type="person-plus" />
                     </DropdownButton>
                     <DropdownContent isDisplayed={isUserSearchDropdownOpened} offsetY={10}>
-                        <UserSearch searchType="Card" onUserConfirmationClick={handleUserInvited} />
+                        <UserSearch searchType="Card" onUserConfirmationClick={inviteUser} />
                     </DropdownContent>
                 </Dropdown>
             </div>

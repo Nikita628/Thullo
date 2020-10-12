@@ -34,18 +34,18 @@ const UserSearch = (props: UserSearchProps) => {
         dispatch(userActionCreators.UserSearchRequested(searchParam.param, searchParam.appendToExistingPage))
     }, [searchParam]);
 
-    const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
     }
 
-    const handleSearchButtonClick = () => {
+    const searchUsers = () => {
         const newSearchParam = new UserSearchParam();
         newSearchParam.nameOrEmailContains = searchText;
         setSearchParam({ param: newSearchParam, appendToExistingPage: false });
     }
 
-    const handleUserListScroll = (e: any) => {
-        const isScrolledToBottom = (e.target.offsetHeight + e.target.scrollTop == e.target.scrollHeight);
+    const getNextPage = (e: any) => {
+        const isScrolledToBottom = (e.target.offsetHeight + e.target.scrollTop === e.target.scrollHeight);
 
         if (isScrolledToBottom) {
             const totalPages = Math.ceil(usersPage.totalCount / searchParam.param.pageSize);
@@ -61,29 +61,29 @@ const UserSearch = (props: UserSearchProps) => {
         }
     }
 
-    const handleUserClick = (user: User) => {
+    const selectUser = (user: User) => {
         setSelectedUser(user);
     }
 
-    const handleInviteButtonClick = () => {
+    const inviteUser = () => {
         props.onUserConfirmationClick(selectedUser);
     }
 
     const renderUserList = () => {
         return (
-            <div onScroll={handleUserListScroll} className={css.usersList}>
+            <div onScroll={getNextPage} className={css.usersList}>
                 {
                     usersPage.items.map((u: User, i: number) => {
                         const isUserSelected = selectedUser && u.id === selectedUser.id;
                         return (
                             <div
-                                onClick={() => handleUserClick(u)}
+                                onClick={() => selectUser(u)}
                                 key={i}
                                 className={concatCssClasses(css.userRow, isUserSelected ? css.selectedUserRow : "")}
                             >
                                 {
                                     u.img
-                                        ? <img className={css.userImg} src={u.img.url} />
+                                        ? <img alt="" className={css.userImg} src={u.img.url} />
                                         : <div className={css.userImgPlaceholder}>{User.getInitials(u)}</div>
                                 }
                                 <span>{User.getFullName(u)}</span>
@@ -97,22 +97,21 @@ const UserSearch = (props: UserSearchProps) => {
 
     return (
         usersPage
-            ? <div className={concatCssClasses(css.userSearch, props.className)}>
-                <h6>Invite to {props.searchType}</h6>
-                <p className="text-muted">Search users you want to invite</p>
+        && <div className={concatCssClasses(css.userSearch, props.className)}>
+            <h6>Invite to {props.searchType}</h6>
+            <p className="text-muted">Search users you want to invite</p>
 
-                <InputGroup>
-                    <InputGroupInput style={{ width: "80%" }} onChange={handleSearchInputChange} />
-                    <InputGroupButton style={{ width: "20%" }} onClick={handleSearchButtonClick}><Icon type="search" /></InputGroupButton>
-                </InputGroup>
+            <InputGroup>
+                <InputGroupInput style={{ width: "80%" }} onChange={changeSearchText} />
+                <InputGroupButton style={{ width: "20%" }} onClick={searchUsers}><Icon type="search" /></InputGroupButton>
+            </InputGroup>
 
-                {renderUserList()}
+            {renderUserList()}
 
-                <div style={{ textAlign: "center" }}>
-                    <Button disabled={!selectedUser} onClick={handleInviteButtonClick} type="primary">Invite</Button>
-                </div>
+            <div style={{ textAlign: "center" }}>
+                <Button disabled={!selectedUser} onClick={inviteUser} type="primary">Invite</Button>
             </div>
-            : null
+        </div>
     );
 }
 

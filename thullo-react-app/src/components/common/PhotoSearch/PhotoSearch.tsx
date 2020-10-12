@@ -26,11 +26,11 @@ const PhotoSearch = (props: PhotoSearchProps) => {
         dispatch(actionCreators.SearchPexelsRequested(param));
     }, [])
 
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     }
 
-    const onSearchClick = () => {
+    const searchPhotos = () => {
         if (searchQuery) {
             const param = new PexelsSearchParam();
             param.query = searchQuery;
@@ -43,7 +43,7 @@ const PhotoSearch = (props: PhotoSearchProps) => {
     if (pexelsPage) {
         pexelsPage.items.forEach((p: PexelsPhoto, i: number) => {
             photosToRender.push(
-                <img key={i} onClick={() => props.onPhotoSelected(p)} className={css.photo} src={p.src.tiny} />
+                <img alt="" key={i} onClick={() => props.onPhotoSelected(p)} className={css.photo} src={p.src.tiny} />
             );
         });
     }
@@ -54,8 +54,8 @@ const PhotoSearch = (props: PhotoSearchProps) => {
             <p>Search Pexels for photos</p>
 
             <InputGroup className={css.searchInputGroup}>
-                <InputGroupInput className={css.searchInput} onChange={onInputChange} />
-                <InputGroupButton className={css.searchButton} onClick={onSearchClick}><Icon type="search" /></InputGroupButton>
+                <InputGroupInput className={css.searchInput} onChange={changeSearchQuery} />
+                <InputGroupButton className={css.searchButton} onClick={searchPhotos}><Icon type="search" /></InputGroupButton>
             </InputGroup>
 
             <div className={css.photos}>

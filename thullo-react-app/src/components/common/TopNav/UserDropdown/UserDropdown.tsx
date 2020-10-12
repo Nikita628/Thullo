@@ -16,11 +16,11 @@ const UserDropdown = (props: UserDropdownProps) => {
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const dispatch = useDispatch();
 
-    const onDropClick = () => {
+    const toggleUserDropdown = () => {
         setIsDropdownOpened(!isDropdownOpened);
     }
 
-    const onLogoutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const logout = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         dispatch(authActionCreators.SignOutRequested());
     }
@@ -28,10 +28,10 @@ const UserDropdown = (props: UserDropdownProps) => {
     return (
         <div className={css.userDropdown}>
 
-            <img className={css.userImg} src={currentUser.img.url} />
+            <img alt="" className={css.userImg} src={currentUser.img.url} />
 
             <button
-                onClick={onDropClick}
+                onClick={toggleUserDropdown}
                 className={css.dropButton}>{currentUser.firstName + " " + currentUser.lastName}
                 {
                     isDropdownOpened
@@ -45,7 +45,7 @@ const UserDropdown = (props: UserDropdownProps) => {
                 && <div className={css.dropContent}>
                     <Link to="/profile">Profile</Link>
                     <hr className={css.dropDivider} />
-                    <a href="#" onClick={onLogoutClick}>Log Out</a>
+                    <a href="#" onClick={logout}>Log Out</a>
                 </div>
             }
         </div>

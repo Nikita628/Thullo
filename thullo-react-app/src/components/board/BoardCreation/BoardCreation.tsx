@@ -31,26 +31,26 @@ const BoardCreation = (props: BoardCreationProps) => {
     const [titleError, setTitleError] = useState<string>();
     const [coverError, setCoverErrror] = useState<string>();
 
-    const onCoverDropdownClick = () => {
+    const toggleCoverDropdown = () => {
         setIsCoverDropdownOpened(!isCoverDropdownOpened);
     }
 
-    const onVisibilityDropdownClick = () => {
+    const toggleVisibilityDropdown = () => {
         setIsVisibilityDropdownOpened(!isVisibilityDropdownOpened);
     }
 
-    const onCoverSelect = (photo: PexelsPhoto) => {
+    const selectCover = (photo: PexelsPhoto) => {
         setCoverErrror(undefined);
         setSelectedCover(photo);
         setIsCoverDropdownOpened(false);
     }
 
-    const onVisibilityChange = (visibility: BoardVisibility) => {
+    const changeVisibility = (visibility: BoardVisibility) => {
         setVisibility(visibility);
         setIsVisibilityDropdownOpened(false);
     }
 
-    const onCreateButtonClick = () => {
+    const createBoard = () => {
         if (!title) {
             setTitleError("Please enter title");
         }
@@ -68,11 +68,11 @@ const BoardCreation = (props: BoardCreationProps) => {
         }
     }
 
-    const onCancelButtonClick = () => {
+    const cancelBoardCreation = () => {
         props.onCancel();
     }
 
-    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (titleError) {
             setTitleError(undefined);
         }
@@ -85,27 +85,27 @@ const BoardCreation = (props: BoardCreationProps) => {
 
             {
                 selectedCover
-                    ? <img className={css.coverImg} src={selectedCover.src.medium} />
+                    ? <img alt="" className={css.coverImg} src={selectedCover.src.medium} />
                     : <div className={concatCssClasses(css.coverPlaceholder, coverError ? css.invalidCover : "")}>Cover not selected</div>
             }
 
             <div className={css.titleInputContainer}>
-                <Input onChange={onTitleChange} isInvalid={!!titleError} type="text" style={{ width: "100%" }} />
+                <Input onChange={changeTitle} isInvalid={!!titleError} type="text" style={{ width: "100%" }} />
                 <p className={css.titleError}>{titleError}</p>
             </div>
 
             <div className={css.boardMenu}>
                 <Dropdown onClickOutside={() => setIsCoverDropdownOpened(false)}>
-                    <DropdownButton onClick={onCoverDropdownClick} type="secondary">
+                    <DropdownButton onClick={toggleCoverDropdown} type="secondary">
                         <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="file-image" /> Cover
                 </DropdownButton>
                     <DropdownContent isDisplayed={isCoverDropdownOpened} offsetY={10}>
-                        <PhotoSearch onPhotoSelected={onCoverSelect} />
+                        <PhotoSearch onPhotoSelected={selectCover} />
                     </DropdownContent>
                 </Dropdown>
 
                 <Dropdown onClickOutside={() => setIsVisibilityDropdownOpened(false)}>
-                    <DropdownButton onClick={onVisibilityDropdownClick} type="secondary">
+                    <DropdownButton onClick={toggleVisibilityDropdown} type="secondary">
                         {
                             visibility === BoardVisibility.public
                                 ? <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="unlock" />
@@ -114,14 +114,14 @@ const BoardCreation = (props: BoardCreationProps) => {
                         {visibility}
                     </DropdownButton>
                     <DropdownContent isDisplayed={isVisibilityDropdownOpened} offsetY={10}>
-                        <BoardVisibilityMenu onVisibilityChange={onVisibilityChange} />
+                        <BoardVisibilityMenu onVisibilityChange={changeVisibility} />
                     </DropdownContent>
                 </Dropdown>
             </div>
 
             <div className={css.creationButtons}>
-                <Button onClick={onCancelButtonClick} type="light">Cancel</Button>{" "}
-                <Button onClick={onCreateButtonClick} type="primary">+ Create</Button>
+                <Button onClick={cancelBoardCreation} type="light">Cancel</Button>{" "}
+                <Button onClick={createBoard} type="primary">+ Create</Button>
             </div>
 
         </div>

@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useCallback, useState } from 'react';
+import React, { ReactNode, useEffect, useCallback, useState, useRef } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -21,37 +21,29 @@ interface AllBoardsProps extends BaseProps {
 
 const defaultPageSize = 10;
 
-// TODO move rename
-const pagingState = {
-    responseItemsTotalCount: 0,
-    searchParam: new BoardSearchParam(),
-};
-
-const updatePagingState = (responseItemsTotalCount: number, searchParam: BoardSearchParam) => {
-    pagingState.responseItemsTotalCount = responseItemsTotalCount;
-    pagingState.searchParam = searchParam;
-}
-
 const AllBoards = (props: AllBoardsProps) => {
+    const _responseItemsTotalCount = useRef(0);
+    const _searchParam = useRef(new BoardSearchParam());
     const history = useHistory();
     const dispatch = useDispatch();
     const boardsPage = useSelector((state: AppState) => state.board.boardsPage);
     const [searchParam, setSearchParam] = useState({ param: new BoardSearchParam(), appendToExistingBoardPage: false });
     const [isModalDisplayed, setIsModalDisplayed] = useState(false);
 
-    updatePagingState(boardsPage.totalCount, searchParam.param);
+    _responseItemsTotalCount.current = boardsPage.totalCount;
+    _searchParam.current = searchParam.param;
 
-    const onPageScroll = useCallback(() => {
+    const getNextPage = useCallback(() => {
         const totalPageHeight = document.body.scrollHeight;
         const scrollPoint = window.scrollY + window.innerHeight;
         const isScrolledToBottom = scrollPoint >= totalPageHeight;
-        const totalPages = Math.ceil(pagingState.responseItemsTotalCount / defaultPageSize);
-        const hasMorePagesToRequest = pagingState.searchParam.pageNumber < totalPages;
+        const totalPages = Math.ceil(_responseItemsTotalCount.current / defaultPageSize);
+        const hasMorePagesToRequest = _searchParam.current.pageNumber < totalPages;
 
         if (isScrolledToBottom && hasMorePagesToRequest) {
             const newSearchParam: BoardSearchParam = {
-                ...pagingState.searchParam,
-                pageNumber: pagingState.searchParam.pageNumber + 1
+                ..._searchParam.current,
+                pageNumber: _searchParam.current.pageNumber + 1
             };
             setSearchParam({ param: newSearchParam, appendToExistingBoardPage: true });
         }
@@ -65,7 +57,7 @@ const AllBoards = (props: AllBoardsProps) => {
         setIsModalDisplayed(false);
     }
 
-    const handleBoardCreation = () => {
+    const createBoard = () => {
         const param = new BoardSearchParam();
         setSearchParam({ param: param, appendToExistingBoardPage: false });
         closeBoardCreationModal();
@@ -77,15 +69,15 @@ const AllBoards = (props: AllBoardsProps) => {
         );
     }
 
-    const handleBoardClick = (boardId: number) => {
+    const openBoardDetails = (boardId: number) => {
         history.push(`/board/${boardId}`);
     }
 
     useEffect(() => {
-        window.addEventListener("scroll", onPageScroll);
+        window.addEventListener("scroll", getNextPage);
         dispatch(commonActionCreators.SetAppContext("allBoards"));
         return () => {
-            window.removeEventListener("scroll", onPageScroll);
+            window.removeEventListener("scroll", getNextPage);
         }
     }, []);
 
@@ -100,7 +92,7 @@ const AllBoards = (props: AllBoardsProps) => {
                     <Board
                         className={css.board}
                         board={boardsPage.items[i]}
-                        onClick={() => handleBoardClick(boardsPage.items[i].id)}
+                        onClick={() => openBoardDetails(boardsPage.items[i].id)}
                     />
                 </div>
             );
@@ -125,7 +117,7 @@ const AllBoards = (props: AllBoardsProps) => {
 
                         return (
                             <Modal hasCloseButton onClose={closeBoardCreationModal} className={animationClassName}>
-                                <BoardCreation onCreate={handleBoardCreation} onCancel={closeBoardCreationModal} />
+                                <BoardCreation onCreate={createBoard} onCancel={closeBoardCreationModal} />
                             </Modal>
                         );
                     }

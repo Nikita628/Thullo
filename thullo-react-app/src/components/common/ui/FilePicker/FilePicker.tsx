@@ -25,41 +25,32 @@ const FilePicker = (props: FilePickerProps) => {
     const [filePriviews, setFilePreviews] = useState<FilePreview[]>([]);
     const fileInputElement = useRef<HTMLInputElement>();
 
-    const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
         handleFiles(e.target.files);
     }
 
-    const onFileFormClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const openFileSelectionWindow = (e: React.MouseEvent<HTMLDivElement>) => {
         fileInputElement.current.click();
     }
 
-    const onFileFormDragEnter = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const highlightFileForm = (e: React.MouseEvent<HTMLDivElement>) => {
+        preventDefault(e);
         setIsFileFormHighlited(true);
     }
 
-    const onFileFormDragLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const unhighlightFileForm = (e: React.MouseEvent<HTMLDivElement>) => {
+        preventDefault(e);
         setIsFileFormHighlited(false);
     }
 
-    const onFileFormDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const selectFilesAfterDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        preventDefault(e);
         setIsFileFormHighlited(false);
         const dataTransfer = e.dataTransfer;
         handleFiles(dataTransfer.files);
     }
 
-    const onFileFormDragOver = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setIsFileFormHighlited(true);
-    }
-
-    const onUploadClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const uploadSelectedFiles = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
 
         if (props.fileUploadUrl) {
@@ -175,7 +166,7 @@ const FilePicker = (props: FilePickerProps) => {
 
     const renderFilePreviewImg = (filePreview: FilePreview): ReactNode => {
         if (filePreview.isImage) {
-            return <img src={filePreview.imgSrc as string} className={css.filePreviewImg}></img>
+            return <img alt="" src={filePreview.imgSrc as string} className={css.filePreviewImg}></img>
         } else {
             return <div className={css.filePreviewImgPlaceholder}></div>
         }
@@ -196,13 +187,13 @@ const FilePicker = (props: FilePickerProps) => {
     return (
         <div
             className={fileFormClassName}
-            onClick={onFileFormClick}
-            onDragEnter={onFileFormDragEnter}
-            onDragLeave={onFileFormDragLeave}
-            onDrop={onFileFormDrop}
-            onDragOver={onFileFormDragOver}
+            onClick={openFileSelectionWindow}
+            onDragEnter={highlightFileForm}
+            onDragLeave={unhighlightFileForm}
+            onDrop={selectFilesAfterDrop}
+            onDragOver={highlightFileForm}
         >
-            <input ref={fileInputElement} type="file" id={css.fileInput} onChange={onFileInputChange} />
+            <input ref={fileInputElement} type="file" id={css.fileInput} onChange={selectFiles} />
             {
                 filePriviews.length
                     ? renderFilePreviews()
@@ -210,7 +201,7 @@ const FilePicker = (props: FilePickerProps) => {
             }
             {
                 props.isUploadEnabled
-                && <button className={uploadButtonClassName} onClick={onUploadClick} type="button">Upload Selected Files</button>
+                && <button className={uploadButtonClassName} onClick={uploadSelectedFiles} type="button">Upload Selected Files</button>
             }
         </div>
     );
