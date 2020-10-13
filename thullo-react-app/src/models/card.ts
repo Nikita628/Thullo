@@ -1,3 +1,4 @@
+import { File } from "./common";
 import { User } from "./user";
 
 export class Card {
@@ -8,6 +9,8 @@ export class Card {
     boardListId: number;
     users: User[] = [];
     labels: CardLabel[] = [];
+    attachments: CardAttachment[] = [];
+    comments: CardComment[] = [];
 }
 
 export class CardLabel {
@@ -15,4 +18,16 @@ export class CardLabel {
     name: string;
     color: string;
     boardId: number;
+}
+
+export class CardAttachment {
+    id: number;
+    file: File;
+}
+
+export class CardComment {
+    id: number;
+    text: string;
+    createdBy: User;
+    createdDate: Date;
 }

@@ -5,7 +5,11 @@ import { BoardList } from "../models/boardList";
 
 export const actionTypes = {
     moveCardToList: "card/moveCardToList",
-    moveCardToListSucceeded: "card/moveCardToListSucceeded"
+    moveCardToListSucceeded: "card/moveCardToListSucceeded",
+    createCard: "card/createCard",
+    createCardSucceeded: "card/createCardSucceeded",
+    getCard: "card/getCard",
+    getCardSucceeded: "card/getCardSucceeded",
 };
 
 export const actionCreators = {
@@ -23,14 +27,32 @@ export const actionCreators = {
             futureListId
         },
     }),
+    CreateCard: (card: Card): ITypedAction & IPayloadedAction<Card> => ({
+        type: actionTypes.createCard,
+        payload: card,
+    }),
+    CreateCardSucceeded: (card: Card): ITypedAction & IPayloadedAction<Card> => ({
+        type: actionTypes.createCardSucceeded,
+        payload: card,
+    }),
+    GetCard: (cardId: number): ITypedAction & IPayloadedAction<number> => ({
+        type: actionTypes.getCard,
+        payload: cardId,
+    }),
+    GetCardSucceeded: (card: Card): ITypedAction & IPayloadedAction<Card> => ({
+        type: actionTypes.getCardSucceeded,
+        payload: card,
+    })
 };
 
 export interface CardState {
     boardCards: Card[];
+    card: Card;
 }
 
 const initialState: CardState = {
     boardCards: [],
+    card: null,
 };
 
 export const reducer = (state: CardState = initialState, action: ITypedAction & IPayloadedAction): CardState => {
@@ -53,7 +75,19 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
                     }
                     return c;
                 })
-            }
+            };
+        }
+        case actionTypes.createCardSucceeded: {
+            return {
+                ...state,
+                boardCards: [...state.boardCards, action.payload],
+            };
+        }
+        case actionTypes.getCardSucceeded: {
+            return {
+                ...state,
+                card: action.payload,
+            };
         }
         default:
             return state;

@@ -15,6 +15,9 @@ import Button from '../../common/ui/Button/Button';
 import BoardListDeletion from '../BoardListDeletion/BoardListDeletion';
 import { Draggable } from '../../common/ui/DragAndDrop/Draggable/Draggable';
 import { AppState } from '../../../state';
+import TitleCreation from '../../common/TitleCreation/TitleCreation';
+import { Card as CardModel } from "../../../models/card";
+import { actionCreators as cardActionCreators } from "../../../state/card";
 
 interface BoardListProps extends BaseProps {
     boardList: BoardListModel;
@@ -28,6 +31,7 @@ const BoardList = (props: BoardListProps) => {
     const [isRenaming, setIsRenaming] = useState(false);
     const [listTitle, setListTitle] = useState(props.boardList.title);
     const [isDeletionModalDisplayed, setIsDeletionModalDisplayed] = useState(false);
+    const [isCreatingCard, setIsCreatingCard] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuDisplayed(!isMenuDisplayed);
@@ -54,6 +58,22 @@ const BoardList = (props: BoardListProps) => {
     const deleteList = () => {
         dispatch(actionCreators.DeleteBoardList(props.boardList.id));
         setIsDeletionModalDisplayed(false);
+    }
+
+    const createCard = (title: string) => {
+        const newCard = new CardModel();
+        newCard.boardListId = props.boardList.id;
+        newCard.title = title;
+        dispatch(cardActionCreators.CreateCard(newCard));
+        hideCardCreationDialog();
+    }
+
+    const displayCardCreationDialog = () => {
+        setIsCreatingCard(true);
+    }
+
+    const hideCardCreationDialog = () => {
+        setIsCreatingCard(false);
     }
 
     return (
@@ -96,9 +116,15 @@ const BoardList = (props: BoardListProps) => {
                     )
                 }
 
-                <div className={css.addCardButton}>
-                    <Button style={{ width: "100%", fontWeight: "bold" }} type="primary-light">Add another card +</Button>
-                </div>
+                {
+                    isCreatingCard
+                        ? <TitleCreation placeholder="Enter a title for this card" onSave={createCard} onCancel={hideCardCreationDialog} />
+                        : <div className={css.addCardButton}>
+                            <Button onClick={displayCardCreationDialog} style={{ width: "100%", fontWeight: "bold" }} type="primary-light">
+                                Add another card +
+                            </Button>
+                        </div>
+                }
             </div>
         </div>
     );

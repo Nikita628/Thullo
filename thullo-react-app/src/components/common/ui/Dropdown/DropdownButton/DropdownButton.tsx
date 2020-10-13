@@ -15,6 +15,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
             className={concatCssClasses(css.button, props.className, css[props.type])}
             style={{...props.style}}
             onClick={props.onClick}
+            onMouseDown={props.onMouseDown}
         >
             {props.children}
         </button>

@@ -28,4 +28,5 @@ export interface BaseProps {
     className?: string;
     children?: ReactNode;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+    onMouseDown?: (e: React.MouseEvent<HTMLElement>) => void;
 }

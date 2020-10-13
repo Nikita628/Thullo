@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 
 namespace Thullo.WebApi.Controllers
 {
@@ -26,7 +27,9 @@ namespace Thullo.WebApi.Controllers
 		{
 			var res = await _cardService.Get(cardId);
 
-			return Ok(res);
+			var mappedRes = _mapper.Map<Response<Dtos.Card.Card>>(res);
+
+			return Ok(mappedRes);
 		}
 
 		[HttpPost("create")]

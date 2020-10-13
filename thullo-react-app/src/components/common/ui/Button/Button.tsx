@@ -6,7 +6,7 @@ import css from './Button.module.css';
 
 interface ButtonProps extends BaseProps {
     type: "primary" | "secondary" | "secondary-outline"
-        | "light" | "success" | "danger-outline" | "primary-light";
+        | "light" | "success" | "danger-outline" | "primary-light" | "link";
     disabled?: boolean;
 }
 
@@ -16,6 +16,7 @@ const Button = (props: ButtonProps) => {
             disabled={props.disabled}
             type="button"
             onClick={props.onClick}
+            onMouseDown={props.onMouseDown}
             className={concatCssClasses(css.button, css[props.type], props.className, props.disabled ? css.disabled : "")}
             style={{...props.style}}
         >

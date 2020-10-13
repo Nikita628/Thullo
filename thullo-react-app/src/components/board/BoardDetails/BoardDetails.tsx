@@ -64,7 +64,7 @@ const BoardDetails = (props: BoardDetailsProps) => {
                 {
                     boardLists.map((bl, i) => (
                         <div className={css.boardListContainer} key={i}>
-                            <DropZone style={{height: "100%"}} allowedDraggableType="card" onDrop={(d) => moveCard(d.draggableData, bl.id)}>
+                            <DropZone style={{ height: "100%" }} allowedDraggableType="card" onDrop={(d) => moveCard(d.draggableData, bl.id)}>
                                 <BoardList boardList={bl} />
                             </DropZone>
                         </div>
@@ -74,7 +74,11 @@ const BoardDetails = (props: BoardDetailsProps) => {
                 <div className={css.boardListContainer}>
                     {
                         isListCreationDisplayed
-                            ? <TitleCreation placeholder="Enter a title for this list" onSave={createBoardList} />
+                            ? <TitleCreation
+                                placeholder="Enter a title for this list"
+                                onSave={createBoardList}
+                                onCancel={() => setIsListCreationDisplayed(false)}
+                            />
                             : <Button
                                 onClick={() => setIsListCreationDisplayed(true)}
                                 style={{ width: "100%", fontWeight: "bold" }}

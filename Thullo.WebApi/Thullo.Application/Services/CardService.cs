@@ -37,7 +37,22 @@ namespace Thullo.Application.Services
 		{
 			var result = new Response<Card>();
 
-			var card = await _db.Cards.AsNoTracking().FirstOrDefaultAsync(c => c.Id == cardId);
+			var card = await _db.Cards
+				.AsNoTracking()
+
+				.Include(c => c.CardMemberships)
+				.ThenInclude(cm => cm.User)
+
+				.Include(c => c.LabelToCardRelations)
+				.ThenInclude(lcr => lcr.CardLabel)
+
+				.Include(c => c.CardAttachments)
+				.ThenInclude(ca => ca.File)
+
+				.Include(c => c.CardComments)
+				.ThenInclude(cc => cc.CreatedBy)
+
+				.FirstOrDefaultAsync(c => c.Id == cardId);
 
 			if (card is null)
 			{

@@ -35,5 +35,7 @@ namespace Thullo.WebApi.Dtos.Card
         public int BoardListId { get; set; }
 		public List<Dtos.User.User> Users { get; set; }
 		public List<Dtos.CardLabel.CardLabel> Labels { get; set; }
+		public List<Dtos.CardAttachment.CardAttachment> Attachments { get; set; }
+		public List<Dtos.CardComment.CardComment> Comments { get; set; }
 	}
 }

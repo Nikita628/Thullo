@@ -69,3 +69,14 @@
     background-color: #dae4fd;
     color: #3281ed;
 }
+
+.link {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

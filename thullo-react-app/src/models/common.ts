@@ -4,6 +4,7 @@ export class File {
     id: number;
     name: string;
     url: string;
+    storageData: string;
 }
 
 export class Notification {
