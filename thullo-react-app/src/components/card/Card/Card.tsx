@@ -19,6 +19,7 @@ import CardDetails from '../CardDetails/CardDetails';
 
 interface CardProps extends BaseProps {
     card: CardModel;
+    listTitle: string;
 }
 
 const defaultNumberOfUserToDisplay = 2;
@@ -84,8 +85,8 @@ const Card = (props: CardProps) => {
                 isCardDetailsDisplayed
                 && <>
                     <Backdrop onClick={hideCardDetails} />
-                    <Modal hasCloseButton onClose={hideCardDetails}>
-                        <CardDetails cardId={props.card.id} />
+                    <Modal style={{width: "50%"}} hasCloseButton onClose={hideCardDetails}>
+                        <CardDetails listTitle={props.listTitle} cardId={props.card.id} />
                     </Modal>
                 </>
             }

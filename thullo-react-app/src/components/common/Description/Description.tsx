@@ -56,8 +56,8 @@ const Description = (props: DescriptionProps) => {
             </div>
 
             {
-                (descriptionText || isEditingDescription)
-                && <textarea
+                <textarea
+                    style={{ display: (descriptionText || isEditingDescription) ? "block" : "none" }}
                     className={isEditingDescription ? css.editedDescription : ""}
                     onInput={(e: any) => setDescriptionText(e.target.value)}
                     ref={descriptionRef}

@@ -111,7 +111,7 @@ const BoardList = (props: BoardListProps) => {
                 {
                     cards.map((c, i) =>
                         <Draggable key={i} draggableType="card" draggableData={c}>
-                            <Card card={c} />
+                            <Card listTitle={props.boardList.title} card={c} />
                         </Draggable>
                     )
                 }
