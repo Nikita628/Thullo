@@ -85,7 +85,7 @@ const Card = (props: CardProps) => {
                 isCardDetailsDisplayed
                 && <>
                     <Backdrop onClick={hideCardDetails} />
-                    <Modal style={{width: "50%"}} hasCloseButton onClose={hideCardDetails}>
+                    <Modal className={css.cardDetails} hasCloseButton onClose={hideCardDetails}>
                         <CardDetails listTitle={props.listTitle} cardId={props.card.id} />
                     </Modal>
                 </>

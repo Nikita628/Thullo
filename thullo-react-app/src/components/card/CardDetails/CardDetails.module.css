@@ -20,13 +20,46 @@
 .body {
     width: 100%;
     display: flex;
+    flex-flow: row wrap;
     padding-top: 1rem;
 }
 
 .content {
-    width: 70%;
+    flex-basis: 100%;
 }
 
 .actions {
-    width: 30%;
+    flex-basis: 100%;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    .content {
+        flex-basis: 65%;
+    }
+    
+    .actions {
+        flex-basis: 35%;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .content {
+        flex-basis: 70%;
+    }
+    
+    .actions {
+        flex-basis: 30%;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    
 }
