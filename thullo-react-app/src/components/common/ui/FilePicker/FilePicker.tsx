@@ -4,9 +4,9 @@ import axios from "axios";
 import Icon from '../Icon/Icon';
 import css from './FilePicker.module.css';
 import { actionCreators as commonActionCreators } from "../../../../state/common";
-import { NotificationType } from '../../../../common/data';
+import { BaseProps, NotificationType } from '../../../../common/data';
 
-interface FilePickerProps {
+interface FilePickerProps extends BaseProps {
     isUploadEnabled: boolean;
     fileUploadUrl?: string;
     maxNumberOfFiles?: number;
@@ -186,6 +186,7 @@ const FilePicker = (props: FilePickerProps) => {
 
     return (
         <div
+            style={{...props.style}}
             className={fileFormClassName}
             onClick={openFileSelectionWindow}
             onDragEnter={highlightFileForm}

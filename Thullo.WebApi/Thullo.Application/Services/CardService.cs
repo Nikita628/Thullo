@@ -49,6 +49,9 @@ namespace Thullo.Application.Services
 				.Include(c => c.CardAttachments)
 				.ThenInclude(ca => ca.File)
 
+				.Include(c => c.CardAttachments)
+				.ThenInclude(ca => ca.CreatedBy)
+
 				.Include(c => c.CardComments)
 				.ThenInclude(cc => cc.CreatedBy)
 

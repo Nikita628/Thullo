@@ -1,0 +1,12 @@
+.textArea {
+    overflow: hidden;
+    border: none;
+    width: 100%;
+    resize: none;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.textArea:focus {
+    border: 1px solid #c7c7c7;
+}

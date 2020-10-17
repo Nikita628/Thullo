@@ -35,6 +35,7 @@ const Media = (props: MediaProps) => {
                 <div className={css.info}>
                     <h6>{props.header}</h6>
                     {props.text && <p>{props.text}</p>}
+                    <div>{props.children}</div>
                 </div>
             </div>
         </div>

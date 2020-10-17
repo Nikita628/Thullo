@@ -1,0 +1,31 @@
+.commentArea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #d0d0d0;
+    resize: none;
+    color: #333;
+}
+
+.buttonContainer {
+    margin-top: 5px;
+    display: flex;
+    justify-content: end;
+}
+
+.comment {
+    margin: 20px 0;
+}
+
+.commentHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.commentText {
+    width: 100%;
+    border: none;
+    padding: 5px 0;
+}

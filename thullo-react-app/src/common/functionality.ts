@@ -19,6 +19,8 @@ export const concatCssClasses = (...classes: string[]) => {
 }
 
 export const formatDate = (date: Date): string => {
+    if (!date) return "";
+
     const options = { 
         year: 'numeric', 
         month: '2-digit', 
@@ -26,5 +28,6 @@ export const formatDate = (date: Date): string => {
         hour: "numeric",
         minute: "numeric",
     };
+    
     return date.toLocaleDateString("en-US", options);
 }

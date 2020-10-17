@@ -13,20 +13,17 @@ import DropdownContent from '../../common/ui/Dropdown/DropdownContent/DropdownCo
 import UserSearch from '../../user/UserSearch/UserSearch';
 import { User } from '../../../models/user';
 import Button from '../../common/ui/Button/Button';
-import Backdrop from '../../common/ui/Modal/Backdrop/Backdrop';
-import Modal from '../../common/ui/Modal/Modal';
-import CardDetails from '../CardDetails/CardDetails';
 
 interface CardProps extends BaseProps {
     card: CardModel;
     listTitle: string;
+    onOpenDetails: () => void;
 }
 
 const defaultNumberOfUserToDisplay = 2;
 
 const Card = (props: CardProps) => {
     const [isUserSearchDropdownOpened, setIsUserSearchDropdownOpened] = useState(false);
-    const [isCardDetailsDisplayed, setIsCardDetailsDisplayed] = useState(false);
 
     const toggleUserSearchDropdown = () => {
         setIsUserSearchDropdownOpened(!isUserSearchDropdownOpened);
@@ -37,11 +34,7 @@ const Card = (props: CardProps) => {
     }
 
     const displayCardDetails = (e: React.MouseEvent<HTMLElement>) => {
-        setIsCardDetailsDisplayed(true);
-    }
-
-    const hideCardDetails = () => {
-        setIsCardDetailsDisplayed(false);
+        props.onOpenDetails();
     }
 
     return (
@@ -80,16 +73,6 @@ const Card = (props: CardProps) => {
                     </DropdownContent>
                 </Dropdown>
             </div>
-
-            {
-                isCardDetailsDisplayed
-                && <>
-                    <Backdrop onClick={hideCardDetails} />
-                    <Modal className={css.cardDetails} hasCloseButton onClose={hideCardDetails}>
-                        <CardDetails listTitle={props.listTitle} cardId={props.card.id} />
-                    </Modal>
-                </>
-            }
         </div>
     );
 }

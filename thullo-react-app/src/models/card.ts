@@ -23,6 +23,8 @@ export class CardLabel {
 export class CardAttachment {
     id: number;
     file: File;
+    createdDate: Date;
+    createdBy: User;
 }
 
 export class CardComment {

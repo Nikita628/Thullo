@@ -18,6 +18,9 @@ import { AppState } from '../../../state';
 import TitleCreation from '../../common/TitleCreation/TitleCreation';
 import { Card as CardModel } from "../../../models/card";
 import { actionCreators as cardActionCreators } from "../../../state/card";
+import Backdrop from '../../common/ui/Modal/Backdrop/Backdrop';
+import Modal from '../../common/ui/Modal/Modal';
+import CardDetails from '../../card/CardDetails/CardDetails';
 
 interface BoardListProps extends BaseProps {
     boardList: BoardListModel;
@@ -32,6 +35,7 @@ const BoardList = (props: BoardListProps) => {
     const [listTitle, setListTitle] = useState(props.boardList.title);
     const [isDeletionModalDisplayed, setIsDeletionModalDisplayed] = useState(false);
     const [isCreatingCard, setIsCreatingCard] = useState(false);
+    const [cardIdForCardDetails, setCardIdForCardDetails] = useState<number>();
 
     const toggleMenu = () => {
         setIsMenuDisplayed(!isMenuDisplayed);
@@ -76,6 +80,10 @@ const BoardList = (props: BoardListProps) => {
         setIsCreatingCard(false);
     }
 
+    const hideCardDetails = () => {
+        setCardIdForCardDetails(null);
+    }
+
     return (
         <div className={concatCssClasses(css.boardList, props.className)}>
             {
@@ -111,7 +119,7 @@ const BoardList = (props: BoardListProps) => {
                 {
                     cards.map((c, i) =>
                         <Draggable key={i} draggableType="card" draggableData={c}>
-                            <Card listTitle={props.boardList.title} card={c} />
+                            <Card onOpenDetails={() => setCardIdForCardDetails(c.id)} listTitle={props.boardList.title} card={c} />
                         </Draggable>
                     )
                 }
@@ -126,6 +134,16 @@ const BoardList = (props: BoardListProps) => {
                         </div>
                 }
             </div>
+
+            {
+                cardIdForCardDetails
+                && <>
+                    <Backdrop onClick={hideCardDetails} />
+                    <Modal className={css.cardDetails} hasCloseButton onClose={hideCardDetails}>
+                        <CardDetails listTitle={props.boardList.title} cardId={cardIdForCardDetails} />
+                    </Modal>
+                </>
+            }
         </div>
     );
 }
