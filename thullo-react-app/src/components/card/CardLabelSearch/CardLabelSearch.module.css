@@ -1,0 +1,34 @@
+.cardLabelSearch {
+    width: 300px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: -2px 2px 7px #ddd;
+    padding: 10px;
+}
+
+.buttonContainer {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.colorsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows:    repeat(3, 25px);
+    grid-gap: 10px;
+}
+
+.labelColor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.labelColor:hover {
+    cursor: pointer;
+}
+
+.availableLabels {
+    display: flex;
+    flex-flow: row wrap;
+}

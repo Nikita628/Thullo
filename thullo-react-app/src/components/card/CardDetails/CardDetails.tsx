@@ -24,6 +24,14 @@ const CardDetails = (props: CardProps) => {
         dispatch(cardActionCreators.GetCard(props.cardId));
     }, []);
 
+    if (!card) return (
+        <div className={css.spinner}>
+            <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        </div>
+    );
+
     return (
         card && card.id === props.cardId
             ? <div className={css.cardDetails}>

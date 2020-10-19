@@ -5,8 +5,8 @@ import { concatCssClasses } from '../../../../common/functionality';
 import css from './TextArea.module.css';
 
 interface TextAreaProps extends BaseProps {
-    onChange: (text: string) => void;
-    onBlur: (text: string) => void;
+    onChange?: (text: string) => void;
+    onBlur?: (text: string) => void;
     text: string;
     readonly: boolean;
     isFocused: boolean;
@@ -27,22 +27,30 @@ const TextArea = (props: TextAreaProps) => {
         } else if (!props.isFocused && textAreaRef) {
             textAreaRef.current.blur();
         }
-    }, [props.isFocused])
+    }, [props.isFocused]);
+
+    useEffect(() => {
+        setText(props.text);
+    }, [props.text]);
 
     const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newText = e.target.value;
         setText((prev) => newText);
-        props.onChange(newText);
+        if (props.onChange) {
+            props.onChange(newText);
+        }
     }
 
     const exitTextArea = () => {
-        props.onBlur(text);
+        if (props.onBlur) {
+            props.onBlur(text);
+        }
     }
 
     return (
         <textarea 
             ref={textAreaRef}
-            className={css.textArea}
+            className={concatCssClasses(css.textArea, props.className)}
             style={{...props.style}}
             onChange={updateText}
             onBlur={exitTextArea}

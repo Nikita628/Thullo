@@ -13,6 +13,7 @@ import DropdownContent from '../../../common/ui/Dropdown/DropdownContent/Dropdow
 import Icon from '../../../common/ui/Icon/Icon';
 import IconBadge from '../../../common/ui/IconBadge/IconBadge';
 import css from './Actions.module.css';
+import CardLabelSearch from '../../CardLabelSearch/CardLabelSearch';
 
 interface ActionsProps extends BaseProps {
     card: Card;
@@ -50,7 +51,7 @@ const Actions = (props: ActionsProps) => {
                     <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="list-ul" /> Label
                 </DropdownButton>
                 <DropdownContent isDisplayed={isLabelDropdownOpened} offsetY={10}>
-                    {/* labels */}
+                    <CardLabelSearch attachedLabels={card.labels} onAddLabel={() => {}} />
                 </DropdownContent>
             </Dropdown>
 

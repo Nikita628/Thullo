@@ -13,19 +13,3 @@
     display: flex;
     justify-content: end;
 }
-
-.comment {
-    margin: 20px 0;
-}
-
-.commentHeader {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-}
-
-.commentText {
-    width: 100%;
-    border: none;
-    padding: 5px 0;
-}

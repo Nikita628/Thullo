@@ -46,7 +46,7 @@ const PhotoSearch = (props: PhotoSearchProps) => {
                 <img alt="" key={i} onClick={() => props.onPhotoSelected(p)} className={css.photo} src={p.src.tiny} />
             );
         });
-    }
+    } 
 
     return (
         <div className={concatCssClasses(css.photoSearch, props.className)}>
@@ -59,7 +59,15 @@ const PhotoSearch = (props: PhotoSearchProps) => {
             </InputGroup>
 
             <div className={css.photos}>
-                {photosToRender}
+                {
+                    photosToRender.length
+                        ? photosToRender
+                        : <div className={css.spinner}>
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                }
             </div>
         </div>
     );
