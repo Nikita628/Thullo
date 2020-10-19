@@ -36,6 +36,7 @@
 @media (min-width: 576px) { 
     .content {
         flex-basis: 65%;
+        padding-right: 10px;
     }
     
     .actions {

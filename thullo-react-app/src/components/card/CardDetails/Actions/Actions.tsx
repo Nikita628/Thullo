@@ -14,6 +14,9 @@ import Icon from '../../../common/ui/Icon/Icon';
 import IconBadge from '../../../common/ui/IconBadge/IconBadge';
 import css from './Actions.module.css';
 import CardLabelSearch from '../../CardLabelSearch/CardLabelSearch';
+import Media from '../../../common/ui/Media/Media';
+import { User } from '../../../../models/user';
+import UserSearch from '../../../user/UserSearch/UserSearch';
 
 interface ActionsProps extends BaseProps {
     card: Card;
@@ -24,6 +27,7 @@ const Actions = (props: ActionsProps) => {
     const card = useSelector((state: AppState) => state.card.card);
     const [isCoverDropdownOpened, setIsCoverDropdownOpened] = useState(false);
     const [isLabelDropdownOpened, setIsLabelDropdownOpened] = useState(false);
+    const [isMemberDropdownOpened, setIsMemberDropdownOpened] = useState(false);
 
     const toggleCoverDropdown = () => {
         setIsCoverDropdownOpened(!isCoverDropdownOpened);
@@ -31,6 +35,10 @@ const Actions = (props: ActionsProps) => {
 
     const toggleLabelDropdown = () => {
         setIsLabelDropdownOpened(!isLabelDropdownOpened);
+    }
+
+    const toggleMemberDropdown = () => {
+        setIsMemberDropdownOpened(!isMemberDropdownOpened);
     }
 
     return (
@@ -51,11 +59,33 @@ const Actions = (props: ActionsProps) => {
                     <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="list-ul" /> Label
                 </DropdownButton>
                 <DropdownContent isDisplayed={isLabelDropdownOpened} offsetY={10}>
-                    <CardLabelSearch attachedLabels={card.labels} onAddLabel={() => {}} />
+                    <CardLabelSearch attachedLabels={card.labels} onAddLabel={() => { }} />
                 </DropdownContent>
             </Dropdown>
 
-            {/* members */}
+            <div className={css.members}>
+                <IconBadge style={{ width: "100%", marginBottom: "0.5rem" }} icon="list-ul" text="Members" />
+                {
+                    props.card.users.map(u =>
+                        <Media
+                            style={{margin: "5px 0", width: "100%"}}
+                            header={User.getFullName(u)}
+                            imgSource={u.img?.url}
+                            imgPlaceholder={User.getInitials(u)}
+                            imgWidth="30px"
+                            imgHeight="30px"
+                        />
+                    )
+                }
+                <Dropdown style={{ width: "100%", margin: "0.5rem 0" }} onClickOutside={() => setIsMemberDropdownOpened(false)}>
+                    <DropdownButton style={{ width: "100%" }} onClick={toggleMemberDropdown} type="primary">
+                        + Assign a member
+                    </DropdownButton>
+                    <DropdownContent isDisplayed={isMemberDropdownOpened} offsetY={10}>
+                        <UserSearch searchType="Card" onUserConfirmationClick={() => {}} />
+                    </DropdownContent>
+                </Dropdown>
+            </div>
         </div>
     );
 }
