@@ -28,6 +28,12 @@
     box-shadow: none;
 }
 
+.signIn .formInput:focus {
+    border-left: 3px solid #333;
+    border-top: none;
+    border-right: none;
+}
+
 .formPar {
     margin-bottom: 5px;
     color: #333;

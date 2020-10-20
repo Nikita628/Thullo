@@ -19,4 +19,25 @@ export class CardApiClient {
     static getCard(cardId: number) {
         return axios.get<ApiResponse<Card>>(`${config.apiUrl}/card/get/${cardId}`);
     }
+
+    static updateTitle(cardId: number, title: string) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/card/updateTitle`, {
+            title,
+            cardId
+        });
+    }
+
+    static updateDescription(cardId: number, description: string) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/card/updateDescription`, {
+            description,
+            cardId
+        });
+    }
+
+    static updateCoverUrl(cardId: number, coverUrl: string) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/card/updateCoverUrl`, {
+            coverUrl,
+            cardId
+        });
+    }
 }

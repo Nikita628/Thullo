@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BaseProps } from '../../../common/data';
 import { concatCssClasses } from '../../../common/functionality';
 import { AppState } from '../../../state';
-import { actionCreators as cardActionCreators } from "../../../state/card";
+import { actionCreators, actionCreators as cardActionCreators } from "../../../state/card";
 import Description from '../../common/Description/Description';
 import Actions from './Actions/Actions';
 import Attachments from './Attachments/Attachments';
@@ -19,10 +19,27 @@ interface CardProps extends BaseProps {
 const CardDetails = (props: CardProps) => {
     const dispatch = useDispatch();
     const card = useSelector((state: AppState) => state.card.card);
+    const [title, setTitle] = useState<string>("");
 
     useEffect(() => {
         dispatch(cardActionCreators.GetCard(props.cardId));
     }, []);
+
+    useEffect(() => {
+        setTitle(card ? card.title : "");
+    }, [card])
+
+    const saveTitle = () => {
+        if (title && title !== card.title) {
+            dispatch(actionCreators.UpdateCardTitle(card.id, title));
+        } else {
+            setTitle(card.title);
+        }
+    }
+
+    const saveDescription = (description: string) => {
+        dispatch(actionCreators.UpdateCardDescription(card.id, description));
+    }
 
     if (!card) return (
         <div className={css.spinner}>
@@ -43,9 +60,15 @@ const CardDetails = (props: CardProps) => {
 
                 <div className={css.body}>
                     <div className={css.content}>
-                        <h2 className={css.title}>{card.title}</h2>
+                        <input
+                            onChange={e => setTitle(e.target.value)}
+                            onBlur={saveTitle}
+                            type="text"
+                            value={title}
+                            className={css.title}
+                        />
                         <p><strong>In list: </strong> {props.listTitle}</p>
-                        <Description canEdit descriptionText={card.description} onSave={() => { }} />
+                        <Description canEdit descriptionText={card.description} onSave={saveDescription} />
                         <Attachments cardId={card.id} attachments={card.attachments} />
                         <Comments cardId={card.id} comments={card.comments} />
                     </div>

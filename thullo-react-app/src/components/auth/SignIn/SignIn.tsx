@@ -47,7 +47,7 @@ const SignIn = () => {
             <Input type="password" value={password} onChange={changePassword} className={css.formInput} />
           </div>
           <div className={css.signInButton}>
-            <Button onClick={signIn} type="primary">Sign In</Button>
+            <Button disabled={!email || !password} onClick={signIn} type="primary">Sign In</Button>
           </div>
         </form>
         <p className={css.already}>Don't have an account? Sign up <Link to="/signup">here</Link></p>

@@ -51,6 +51,8 @@ export class PexelsPhoto {
         medium: string;
         small: string;
         tiny: string;
+        large: string;
+        large2x: string;
     }
 }
 

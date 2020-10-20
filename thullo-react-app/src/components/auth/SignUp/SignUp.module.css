@@ -15,10 +15,6 @@
     color: red;
 }
 
-.errorBorder {
-    border: 1px solid red;
-}
-
 .formGroup {
     margin: 20px 0 20px 0;
 }
@@ -29,6 +25,12 @@
     border-bottom: 1px solid #333;
     color: #333;
     border-radius: 0;
+}
+
+.signUp .formInput:focus {
+    border-left: 3px solid #333;
+    border-top: none;
+    border-right: none;
 }
 
 .formPar {

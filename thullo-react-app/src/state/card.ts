@@ -10,6 +10,12 @@ export const actionTypes = {
     createCardSucceeded: "card/createCardSucceeded",
     getCard: "card/getCard",
     getCardSucceeded: "card/getCardSucceeded",
+    updateCardTitle: "card/updateCardTitle",
+    updateCardTitleSucceeded: "card/updateCardTitleSucceeded",
+    updateCardDescription: "card/updateCardDescription",
+    updateCardDescriptionSucceeded: "card/updateCardDescriptionSucceeded",
+    updateCardCoverUrl: "card/updateCardCoverUrl",
+    updateCardCoverUrlSucceeded: "cart/updateCardCoverUrlSucceeded",
 };
 
 export const actionCreators = {
@@ -42,7 +48,49 @@ export const actionCreators = {
     GetCardSucceeded: (card: Card): ITypedAction & IPayloadedAction<Card> => ({
         type: actionTypes.getCardSucceeded,
         payload: card,
-    })
+    }),
+    UpdateCardTitle: (cardId: number, title: string): ITypedAction & IPayloadedAction<{ cardId: number, title: string }> => ({
+        type: actionTypes.updateCardTitle,
+        payload: {
+            cardId,
+            title
+        }
+    }),
+    UpdateCardTitleSucceeded: (cardId: number, title: string): ITypedAction & IPayloadedAction<{ cardId: number, title: string }> => ({
+        type: actionTypes.updateCardTitleSucceeded,
+        payload: {
+            cardId,
+            title
+        }
+    }),
+    UpdateCardDescription: (cardId: number, description: string): ITypedAction & IPayloadedAction<{ cardId: number, description: string }> => ({
+        type: actionTypes.updateCardDescription,
+        payload: {
+            cardId,
+            description
+        }
+    }),
+    UpdateCardDescriptionSucceeded: (cardId: number, description: string): ITypedAction & IPayloadedAction<{ cardId: number, description: string }> => ({
+        type: actionTypes.updateCardDescriptionSucceeded,
+        payload: {
+            cardId,
+            description
+        }
+    }),
+    UpdateCardCoverUrl: (cardId: number, coverUrl: string): ITypedAction & IPayloadedAction<{ cardId: number, coverUrl: string }> => ({
+        type: actionTypes.updateCardCoverUrl,
+        payload: {
+            cardId,
+            coverUrl
+        }
+    }),
+    UpdateCardCoverUrlSucceeded: (cardId: number, coverUrl: string): ITypedAction & IPayloadedAction<{ cardId: number, coverUrl: string }> => ({
+        type: actionTypes.updateCardCoverUrlSucceeded,
+        payload: {
+            cardId,
+            coverUrl
+        }
+    }),
 };
 
 export interface CardState {
@@ -87,6 +135,48 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
             return {
                 ...state,
                 card: action.payload,
+            };
+        }
+        case actionTypes.updateCardTitleSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    title: action.payload.title,
+                },
+                boardCards: state.boardCards.map(bc =>
+                    bc.id === action.payload.cardId
+                        ? { ...bc, title: action.payload.title }
+                        : bc
+                ),
+            };
+        }
+        case actionTypes.updateCardDescriptionSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    description: action.payload.description,
+                },
+                boardCards: state.boardCards.map(bc =>
+                    bc.id === action.payload.cardId
+                        ? { ...bc, description: action.payload.description }
+                        : bc
+                ),
+            };
+        }
+        case actionTypes.updateCardCoverUrlSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    coverUrl: action.payload.coverUrl,
+                },
+                boardCards: state.boardCards.map(bc =>
+                    bc.id === action.payload.cardId
+                        ? { ...bc, coverUrl: action.payload.coverUrl }
+                        : bc
+                ),
             };
         }
         default:

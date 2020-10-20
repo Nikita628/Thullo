@@ -12,14 +12,17 @@ interface DescriptionProps extends BaseProps {
     onSave: (description: string) => void;
 }
 
+const defaultMinHeight = 20;
+
 const Description = (props: DescriptionProps) => {
     const descriptionRef = useRef<HTMLTextAreaElement>();
-    const [descriptionText, setDescriptionText] = useState(props.descriptionText);
+    const [descriptionText, setDescriptionText] = useState(props.descriptionText ? props.descriptionText : "");
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
     useEffect(() => {
         descriptionRef.current.style.height = "auto";
-        descriptionRef.current.style.height = descriptionRef.current.scrollHeight + "px";
+        const height = descriptionRef.current.scrollHeight > 0 ? descriptionRef.current.scrollHeight : defaultMinHeight;
+        descriptionRef.current.style.height = height + "px";
     }, [descriptionText])
 
     const editDescription = () => {

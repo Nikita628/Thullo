@@ -50,7 +50,7 @@ const Actions = (props: ActionsProps) => {
                     <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="file-image" /> Cover
                 </DropdownButton>
                 <DropdownContent isDisplayed={isCoverDropdownOpened} offsetY={10}>
-                    <PhotoSearch onPhotoSelected={(photo) => { }} />
+                    <PhotoSearch onPhotoSelected={(photo) => dispatch(cardActionCreators.UpdateCardCoverUrl(card.id, photo.src.large2x)) } />
                 </DropdownContent>
             </Dropdown>
 
