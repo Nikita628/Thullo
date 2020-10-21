@@ -56,6 +56,8 @@ namespace Thullo.Application.Services
 
 			await AddLabelOnCard(label.Id, cardId);
 
+			result.Item = label.Id;
+
 			return result;
 		}
 

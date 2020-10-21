@@ -59,8 +59,8 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
                     <span>Admin</span>
                 </div>
                 {
-                    boardUsers.map((u, i) => (
-                        <div key={i} className={css.teamMember}>
+                    boardUsers.map(u => (
+                        <div key={u.id} className={css.teamMember}>
                             <Media
                                 imgSource={u.img ? u.img.url : null}
                                 imgPlaceholder={User.getInitials(u)}

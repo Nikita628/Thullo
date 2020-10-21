@@ -35,3 +35,8 @@
     flex-flow: row wrap;
     align-items: center;
 }
+
+.labelContainer {
+    margin-right: 3px;
+    margin-top: 3px;
+}

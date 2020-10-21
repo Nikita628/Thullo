@@ -12,7 +12,7 @@ interface DescriptionProps extends BaseProps {
     onSave: (description: string) => void;
 }
 
-const defaultMinHeight = 20;
+const defaultMinHeight = 30;
 
 const Description = (props: DescriptionProps) => {
     const descriptionRef = useRef<HTMLTextAreaElement>();

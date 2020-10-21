@@ -1,7 +1,8 @@
-import { Card } from "../models/card";
+import { Card, CardLabel } from "../models/card";
 import { IPayloadedAction, ITypedAction } from "./common";
 import { actionTypes as boardActionTypes } from "./board";
 import { BoardList } from "../models/boardList";
+import { cardLabelColorsMap } from "../common/data";
 
 export const actionTypes = {
     moveCardToList: "card/moveCardToList",
@@ -15,7 +16,9 @@ export const actionTypes = {
     updateCardDescription: "card/updateCardDescription",
     updateCardDescriptionSucceeded: "card/updateCardDescriptionSucceeded",
     updateCardCoverUrl: "card/updateCardCoverUrl",
-    updateCardCoverUrlSucceeded: "cart/updateCardCoverUrlSucceeded",
+    updateCardCoverUrlSucceeded: "card/updateCardCoverUrlSucceeded",
+    addLabel: "card/addLabel",
+    addLabelSucceeded: "card/addLabelSucceeded",
 };
 
 export const actionCreators = {
@@ -89,6 +92,20 @@ export const actionCreators = {
         payload: {
             cardId,
             coverUrl
+        }
+    }),
+    AddLabel: (cardId: number, label: CardLabel): ITypedAction & IPayloadedAction<{cardId: number, label: CardLabel}> => ({
+        type: actionTypes.addLabel,
+        payload: {
+            cardId,
+            label,
+        }
+    }),
+    AddLabelSucceeded: (cardId: number, label: CardLabel): ITypedAction & IPayloadedAction<{cardId: number, label: CardLabel}> => ({
+        type: actionTypes.addLabelSucceeded,
+        payload: {
+            cardId,
+            label,
         }
     }),
 };
@@ -178,6 +195,24 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
                         : bc
                 ),
             };
+        }
+        case actionTypes.addLabelSucceeded: {
+            return {
+                ...state,
+                card: { 
+                    ...state.card, 
+                    labels: [...state.card.labels, action.payload.label]
+                },
+                boardCards: state.boardCards.map(bc => {
+                    if (bc.id === action.payload.cardId) {
+                        return { 
+                            ...bc,
+                            labels: [...bc.labels, action.payload.label]
+                        };
+                    }
+                    return bc;
+                })
+            }
         }
         default:
             return state;

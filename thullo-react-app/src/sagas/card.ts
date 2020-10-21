@@ -7,7 +7,7 @@ import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiResponse } from "../models/common";
 import { NotificationType } from "../common/data";
 import { CardApiClient } from "../services/cardApiClient";
-import { Card } from "../models/card";
+import { Card, CardLabel } from "../models/card";
 
 function* moveCard(action: IPayloadedAction<{ cardId: number, futureListId: number }> & ITypedAction) {
     const res: AxiosResponse<ApiResponse<boolean>> = yield CardApiClient.moveCard(action.payload.cardId, action.payload.futureListId);
@@ -75,6 +75,18 @@ function* updateCoverUrl(action: IPayloadedAction<{cardId: number, coverUrl: str
     }
 }
 
+function* addLabel(action: IPayloadedAction<{cardId: number, label: CardLabel}> & ITypedAction) {
+    const res: AxiosResponse<ApiResponse<number>> = yield CardApiClient.addLabel(action.payload.cardId, action.payload.label);
+
+    if (!res.data.errors.length) {
+        action.payload.label.id = res.data.item;
+        yield put(commonActionCreators.CreateNotificationsRequested(["Label has been added"], NotificationType.success));
+        yield put(actionCreators.AddLabelSucceeded(action.payload.cardId, action.payload.label));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchCard() {
     yield takeLatest(actionTypes.moveCardToList, moveCard);
     yield takeLatest(actionTypes.createCard, createCard);
@@ -82,4 +94,5 @@ export function* watchCard() {
     yield takeLatest(actionTypes.updateCardTitle, updateTitle);
     yield takeLatest(actionTypes.updateCardDescription, updateDescription);
     yield takeLatest(actionTypes.updateCardCoverUrl, updateCoverUrl);
+    yield takeLatest(actionTypes.addLabel, addLabel);
 }

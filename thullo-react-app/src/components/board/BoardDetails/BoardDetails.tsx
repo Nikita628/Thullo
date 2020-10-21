@@ -62,8 +62,8 @@ const BoardDetails = (props: BoardDetailsProps) => {
 
             <div className={css.boardLists}>
                 {
-                    boardLists.map((bl, i) => (
-                        <div className={css.boardListContainer} key={i}>
+                    boardLists.map(bl => (
+                        <div className={css.boardListContainer} key={bl.id}>
                             <DropZone style={{ height: "100%" }} allowedDraggableType="card" onDrop={(d) => moveCard(d.draggableData, bl.id)}>
                                 <BoardList boardList={bl} />
                             </DropZone>

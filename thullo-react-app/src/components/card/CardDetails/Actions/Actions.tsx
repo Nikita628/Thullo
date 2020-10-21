@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Card } from '../../../../models/card';
 
+import { Card, CardLabel } from '../../../../models/card';
 import { BaseProps } from '../../../../common/data';
 import { concatCssClasses } from '../../../../common/functionality';
 import { AppState } from '../../../../state';
@@ -41,6 +41,11 @@ const Actions = (props: ActionsProps) => {
         setIsMemberDropdownOpened(!isMemberDropdownOpened);
     }
 
+    const addLabel = (label: CardLabel) => {
+        dispatch(cardActionCreators.AddLabel(card.id, label));
+        setIsLabelDropdownOpened(false);
+    }
+
     return (
         <div className={concatCssClasses(css.actions, props.className)}>
             <IconBadge style={{ width: "100%", marginBottom: "0.5rem" }} icon="list-ul" text="Actions" />
@@ -59,7 +64,7 @@ const Actions = (props: ActionsProps) => {
                     <Icon style={{ marginBottom: "5px", marginRight: "10px" }} type="list-ul" /> Label
                 </DropdownButton>
                 <DropdownContent isDisplayed={isLabelDropdownOpened} offsetY={10}>
-                    <CardLabelSearch attachedLabels={card.labels} onAddLabel={() => { }} />
+                    <CardLabelSearch attachedLabels={card.labels} onAddLabel={addLabel} />
                 </DropdownContent>
             </Dropdown>
 
@@ -68,6 +73,7 @@ const Actions = (props: ActionsProps) => {
                 {
                     props.card.users.map(u =>
                         <Media
+                            key={u.id}
                             style={{margin: "5px 0", width: "100%"}}
                             header={User.getFullName(u)}
                             imgSource={u.img?.url}

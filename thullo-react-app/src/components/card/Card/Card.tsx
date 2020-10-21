@@ -48,7 +48,7 @@ const Card = (props: CardProps) => {
             {
                 (props.card.labels && props.card.labels.length)
                     ? <div className={css.labels}>
-                        {props.card.labels.map((cl, i) => <CardLabel key={i} cardlabel={cl} />)}
+                        {props.card.labels.map(cl => <div key={cl.id} className={css.labelContainer}><CardLabel cardlabel={cl} /></div>)}
                     </div>
                     : null
             }

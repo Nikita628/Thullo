@@ -117,8 +117,8 @@ const BoardList = (props: BoardListProps) => {
 
             <div className={css.cards}>
                 {
-                    cards.map((c, i) =>
-                        <Draggable key={i} draggableType="card" draggableData={c}>
+                    cards.map(c =>
+                        <Draggable key={c.id} draggableType="card" draggableData={c}>
                             <Card onOpenDetails={() => setCardIdForCardDetails(c.id)} listTitle={props.boardList.title} card={c} />
                         </Draggable>
                     )

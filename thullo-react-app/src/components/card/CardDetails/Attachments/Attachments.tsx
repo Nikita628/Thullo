@@ -27,7 +27,7 @@ const Attachments = (props: AttachmentsProps) => {
 
     return (
         <div className={concatCssClasses(css.attachments, props.className)}>
-            <IconBadge style={{ width: "100%", margin: "30px 0 5px 0" }} icon="list-ul" text="Attachments" />
+            <IconBadge style={{ width: "100%", margin: "20px 0 5px 0" }} icon="list-ul" text="Attachments" />
             {
                 props.attachments
                 && props.attachments.map(a =>

@@ -14,7 +14,7 @@ const NotificationQueue = (props: NotificationQueueProps) => {
 
     return (
         <div className={css.notificationQueue}>
-            {notifications.map((n, i) => <Notification key={i} notification={n} />)}
+            {notifications.map(n => <Notification key={n.guid} notification={n} />)}
         </div>
     );
 }

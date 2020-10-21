@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import css from './CardLabelSearch.module.css';
 import { concatCssClasses } from '../../../common/functionality';
@@ -8,6 +9,7 @@ import Input from '../../common/ui/Input/Input';
 import IconBadge from '../../common/ui/IconBadge/IconBadge';
 import Button from '../../common/ui/Button/Button';
 import CardLabel from '../CardLabel/CardLabel';
+import { AppState } from '../../../state';
 
 interface CardLabelSearchProps extends BaseProps {
     onAddLabel: (label: CardLabelModel) => void;
@@ -15,12 +17,16 @@ interface CardLabelSearchProps extends BaseProps {
 }
 
 const CardLabelSearch = (props: CardLabelSearchProps) => {
+    const board = useSelector((state: AppState) => state.board.board);
     const [selectedLabel, setSelectedLabel] = useState<string>();
     const [labelName, setLabelName] = useState("");
 
     const addLabelOnCard = () => {
-        // create label
-        // props.onAddLabel(label);
+        const label = new CardLabelModel();
+        label.color = selectedLabel;
+        label.name = labelName;
+        label.boardId = board.id;
+        props.onAddLabel(label);
     }
 
     return (
@@ -57,12 +63,12 @@ const CardLabelSearch = (props: CardLabelSearchProps) => {
 
             <div className={css.availableLabels}>
                 {
-                    props.attachedLabels.map(cl => <CardLabel key={cl.id} cardlabel={cl} />)
+                    props.attachedLabels.map(cl => <div key={cl.id} className={css.labelContainer}><CardLabel cardlabel={cl} /></div>)
                 }
             </div>
 
             <div className={css.buttonContainer}>
-                <Button onClick={addLabelOnCard} type="primary">Add</Button>
+                <Button disabled={!selectedLabel || !labelName} onClick={addLabelOnCard} type="primary">Add</Button>
             </div>
         </div>
     );

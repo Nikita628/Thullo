@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { ApiResponse } from "../models/common";
 import config from "../common/config";
-import { Card } from "../models/card";
+import { Card, CardLabel } from "../models/card";
 
 export class CardApiClient {
     static moveCard(cardId: number, listId: number) {
@@ -38,6 +38,13 @@ export class CardApiClient {
         return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/card/updateCoverUrl`, {
             coverUrl,
             cardId
+        });
+    }
+
+    static addLabel(cardId: number, label: CardLabel) {
+        return axios.post<ApiResponse<number>>(`${config.apiUrl}/cardLabel/createLabelAndAddOnCard`, {
+            cardId,
+            label
         });
     }
 }

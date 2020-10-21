@@ -73,12 +73,12 @@ const UserSearch = (props: UserSearchProps) => {
         return (
             <div onScroll={getNextPage} className={css.usersList}>
                 {
-                    usersPage.items.map((u: User, i: number) => {
+                    usersPage.items.map((u: User) => {
                         const isUserSelected = selectedUser && u.id === selectedUser.id;
                         return (
                             <div
                                 onClick={() => selectUser(u)}
-                                key={i}
+                                key={u.id}
                                 className={concatCssClasses(css.userRow, isUserSelected ? css.selectedUserRow : "")}
                             >
                                 {
