@@ -7,7 +7,7 @@ import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiResponse } from "../models/common";
 import { NotificationType } from "../common/data";
 import { BoardList } from "../models/boardList";
-import { BoardListApiClient } from "../services/boardListApiClient";
+import { BoardListApiClient } from "../services/api/boardListApiClient";
 
 function* createList(action: ITypedAction & IPayloadedAction<BoardList>) {
     const res: AxiosResponse<ApiResponse<number>> = yield BoardListApiClient.create(action.payload);

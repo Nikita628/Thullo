@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { concatCssClasses } from '../../../../common/functionality';
+import { Dimensions, Point } from '../../../../models/common';
 import css from './ImgCropper.module.css';
 
 interface ImgCropperProps {
@@ -12,26 +13,6 @@ interface ImgCropperProps {
     className?: string;
     style?: Record<string, string>;
     onCroppedImgChanged: (croppedImg: File) => void;
-}
-
-class Point {
-    x: number;
-    y: number;
-
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-class Dimensions {
-    width: number;
-    height: number;
-
-    constructor(width: number, height: number) {
-        this.width = width;
-        this.height = height;
-    }
 }
 
 const defaultResizerButtonRadius = 8;

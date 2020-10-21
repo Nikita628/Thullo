@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import config from "../common/config";
-import { BoardList } from "../models/boardList";
-import { ApiResponse } from "../models/common";
+import config from "../../common/config";
+import { BoardList } from "../../models/boardList";
+import { ApiResponse } from "../../models/common";
 
 export class BoardListApiClient {
     static create(list: BoardList) {

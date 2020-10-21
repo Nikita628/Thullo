@@ -2,7 +2,7 @@ import { put, takeLatest } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 
 import { SignInData, SignInResult, SignUpData } from "../models/auth";
-import { AuthApiClient } from "../services/authApiClient";
+import { AuthApiClient } from "../services/api/authApiClient";
 import { IPayloadedAction, ITypedAction, ICallbackAction } from "../state/common";
 import { actionTypes, actionCreators } from "../state/auth";
 import { actionCreators as commonActionCreators } from "../state/common";

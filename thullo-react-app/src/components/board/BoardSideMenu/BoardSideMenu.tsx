@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
 import { actionCreators as boardActionCreators } from "../../../state/board";
@@ -23,7 +23,7 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
     const board = useSelector((state: AppState) => state.board.board);
     const boardUsers = useSelector((state: AppState) => state.user.boardUsers);
     const currentUser = useSelector((state: AppState) => state.auth.user);
-    const isCurrentUserAdmin = true;// TODO board.createdBy.id === currentUser.id;
+    const isCurrentUserAdmin = board.createdBy.id === currentUser.id;
     const [boardTitle, setBoardTitle] = useState(board.title);
 
     const saveTitle = () => {

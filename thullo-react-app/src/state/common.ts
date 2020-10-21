@@ -1,5 +1,5 @@
 import { NotificationType } from "../common/data";
-import { ApiPageResponse, ApiResponse, Notification, PexelsPhoto, PexelsSearchParam } from "../models/common";
+import { ApiPageResponse, Notification, PexelsPhoto, PexelsSearchParam } from "../models/common";
 
 export interface ITypedAction {
     type: string;
@@ -19,10 +19,8 @@ export const actionTypes = {
     EnqueueNotification: "common/enqueueNotification",
     DequeueNotification: "common/dequeueNotification",
     StartNotificationExpiration: "common/startNotificationExpiration",
-
     SearchPexelsRequested: "common/searchPexelsRequested",
     SearchPexelsSucceeded: "common/searchPexelsSucceeded",
-
     SetAppContext: "common/setAppContext",
 };
 

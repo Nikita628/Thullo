@@ -5,10 +5,8 @@ import { actionTypes as boardActionTypes } from "./board";
 export const actionTypes = {
     createBoardList: "boardList/createBoardList",
     createBoardListSuccceded: "boardList/createBoardListSucceeded",
-
     updateBoardListTitle: "boardList/updateBoardListTitle",
     updateBoardListTitleSucceeded: "boardList/updateBoardListTitleSucceeded",
-    
     deleteBoardList: "boardList/deleteBoardList",
     deleteBoardListSucceeded: "boardList/deleteBoardListSucceeded",
 };

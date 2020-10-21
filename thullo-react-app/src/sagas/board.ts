@@ -7,7 +7,7 @@ import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiPageResponse, ApiResponse } from "../models/common";
 import { NotificationType } from "../common/data";
 import { Board, BoardSearchParam } from "../models/board";
-import { BoardApiClient } from "../services/boardApiClient";
+import { BoardApiClient } from "../services/api/boardApiClient";
 
 function* searchBoards(action: IPayloadedAction<{ param: BoardSearchParam, appendToExistingBoardPage: boolean }> & ITypedAction) {
     const res: AxiosResponse<ApiPageResponse<Board>> = yield BoardApiClient.search(action.payload.param);

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { ApiResponse } from "../models/common";
-import config from "../common/config";
-import { Card, CardLabel } from "../models/card";
+import { ApiResponse } from "../../models/common";
+import config from "../../common/config";
+import { Card, CardLabel } from "../../models/card";
 
 export class CardApiClient {
     static moveCard(cardId: number, listId: number) {

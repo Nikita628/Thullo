@@ -5,18 +5,13 @@ import { ICallbackAction, IPayloadedAction, ITypedAction } from "./common";
 export const actionTypes = {
     searchBoardRequested: "board/searchBoardRequested",
     searchBoardSucceeded: "board/searchBoardSucceeded",
-
     createBoardRequested: "board/createBoardRequested",
-
     getBoardRequested: "board/getBoardRequested",
     getBoardSucceeded: "board/getBoardSucceeded",
-
     updateBoardVisibilityRequested: "board/updateBoardVisibilityRequested",
     updateBoardVisibilitySucceeded: "board/updateBoardVisibilitySucceeded",
-
     updateBoardTitleRequested: "board/updateBoardTitleRequested",
     updateBoardTitleSucceeded: "board/updateBoardTitleSucceeded",
-
     updateBoardDescriptionRequested: "board/updateBoardDescriptionRequested",
     updateBoardDescriptionSucceeded: "board/updateBoardDescriptionSucceeded",
 };
@@ -117,8 +112,8 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
             return {
                 ...state,
                 board: {
-                    ...action.payload, // TODO create "flat" board model (no nested arrays with related models), for state specifically
-                    boardLists: null,  // it will allow to flatten state, which makes it easier to manage
+                    ...action.payload,
+                    boardLists: null,
                     users: null,
                 }
             };

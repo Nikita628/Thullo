@@ -6,14 +6,11 @@ export const actionTypes = {
     SignUpRequested: "auth/signUpRequested",
     SignUpSucceeded: "auth/signUpCompleted",
     SignUpFailed: "auth/signUpFailed",
-
     SignInRequested: "auth/signInRequested",
     SignInSucceeded: "auth/signInSucceeded",
     SignInFailed: "auth/signInFailed",
-
     SignInFromLocalStorageRequested: "auth/signInFromLocalStorageRequested",
     SignInFromLocalStorageFailed: "auth/signInFromLocalStorageFailed",
-
     SignOutRequested: "auth/signOutRequested",
 };
 

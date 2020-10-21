@@ -6,7 +6,7 @@ import { actionTypes, actionCreators } from "../state/card";
 import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiResponse } from "../models/common";
 import { NotificationType } from "../common/data";
-import { CardApiClient } from "../services/cardApiClient";
+import { CardApiClient } from "../services/api/cardApiClient";
 import { Card, CardLabel } from "../models/card";
 
 function* moveCard(action: IPayloadedAction<{ cardId: number, futureListId: number }> & ITypedAction) {

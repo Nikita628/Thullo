@@ -8,9 +8,9 @@ import { actionCreators as boardActionCreators } from "../state/board";
 import { ApiPageResponse, ApiResponse } from "../models/common";
 import { NotificationType } from "../common/data";
 import { User, UserSearchParam } from "../models/user";
-import { UserApiClient } from "../services/userApiClient";
+import { UserApiClient } from "../services/api/userApiClient";
 import { Board } from "../models/board";
-import { BoardApiClient } from "../services/boardApiClient";
+import { BoardApiClient } from "../services/api/boardApiClient";
 
 function* searchUser(action: IPayloadedAction<{ searchParam: UserSearchParam, appendToExistingPage: boolean }> & ITypedAction) {
     const res: AxiosResponse<ApiPageResponse<User>> = yield UserApiClient.search(action.payload.searchParam);

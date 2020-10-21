@@ -1,7 +1,7 @@
 import axios from "axios";
-import { SignInData, SignInResult, SignUpData } from "../models/auth";
-import { ApiResponse } from "../models/common";
-import config from "../common/config";
+import { SignInData, SignInResult, SignUpData } from "../../models/auth";
+import { ApiResponse } from "../../models/common";
+import config from "../../common/config";
 
 export class AuthApiClient {
     static signIn(signInData: SignInData) {

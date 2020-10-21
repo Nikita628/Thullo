@@ -5,7 +5,7 @@ import { actionTypes, actionCreators } from "../state/common";
 import { ApiPageResponse, Notification, PexelsPhoto, PexelsSearchParam } from "../models/common";
 import { NotificationType } from "../common/data";
 import { AxiosResponse } from "axios";
-import { CommonApiClient } from "../services/commonApiClient";
+import { CommonApiClient } from "../services/api/commonApiClient";
 import { guid } from "../common/functionality";
 
 function* createNotifications(action: IPayloadedAction<{ messages: string[], type: NotificationType }> & ITypedAction) {

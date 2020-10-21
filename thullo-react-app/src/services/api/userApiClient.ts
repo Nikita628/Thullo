@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { ApiPageResponse, ApiResponse } from "../models/common";
-import config from "../common/config";
-import { User, UserSearchParam } from "../models/user";
+import { ApiPageResponse, ApiResponse } from "../../models/common";
+import config from "../../common/config";
+import { User, UserSearchParam } from "../../models/user";
 
 export class UserApiClient {
     static search(searchParam: UserSearchParam) {

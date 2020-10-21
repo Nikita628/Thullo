@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { ApiPageResponse, ApiResponse } from "../models/common";
-import config from "../common/config";
-import { Board, BoardSearchParam } from "../models/board";
+import { ApiPageResponse, ApiResponse } from "../../models/common";
+import config from "../../common/config";
+import { Board, BoardSearchParam } from "../../models/board";
 
 export class BoardApiClient {
     static search(searchParam: BoardSearchParam) {

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-import config from "../common/config";
-import { ApiPageResponse, PexelsPhoto, PexelsSearchParam } from "../models/common";
+import config from "../../common/config";
+import { ApiPageResponse, PexelsPhoto, PexelsSearchParam } from "../../models/common";
 
 export class CommonApiClient {
     static searchPexels(searchParam: PexelsSearchParam) {

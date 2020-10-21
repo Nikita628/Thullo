@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
 import { BaseProps } from '../../../common/data';
-import { concatCssClasses } from '../../../common/functionality';
 import { AppState } from '../../../state';
 import { actionCreators, actionCreators as cardActionCreators } from "../../../state/card";
 import Description from '../../common/Description/Description';

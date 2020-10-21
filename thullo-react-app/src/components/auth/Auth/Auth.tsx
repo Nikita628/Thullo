@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
-import css from './Auth.module.css';
 
 const Auth = () => {
     return (

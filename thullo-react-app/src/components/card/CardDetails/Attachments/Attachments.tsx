@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Card, CardAttachment } from '../../../../models/card';
+import { CardAttachment } from '../../../../models/card';
 
 import { BaseProps } from '../../../../common/data';
 import { concatCssClasses, formatDate } from '../../../../common/functionality';
 import { AppState } from '../../../../state';
 import { actionCreators as cardActionCreators } from "../../../../state/card";
-import PhotoSearch from '../../../common/PhotoSearch/PhotoSearch';
-import Dropdown from '../../../common/ui/Dropdown/Dropdown';
-import DropdownButton from '../../../common/ui/Dropdown/DropdownButton/DropdownButton';
-import DropdownContent from '../../../common/ui/Dropdown/DropdownContent/DropdownContent';
-import Icon from '../../../common/ui/Icon/Icon';
 import IconBadge from '../../../common/ui/IconBadge/IconBadge';
 import css from './Attachments.module.css';
 import Media from '../../../common/ui/Media/Media';
