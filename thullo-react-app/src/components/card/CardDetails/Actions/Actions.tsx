@@ -6,6 +6,7 @@ import { BaseProps } from '../../../../common/data';
 import { concatCssClasses } from '../../../../common/functionality';
 import { AppState } from '../../../../state';
 import { actionCreators as cardActionCreators } from "../../../../state/card";
+import { actionCreators as userActionCreators } from "../../../../state/user";
 import PhotoSearch from '../../../common/PhotoSearch/PhotoSearch';
 import Dropdown from '../../../common/ui/Dropdown/Dropdown';
 import DropdownButton from '../../../common/ui/Dropdown/DropdownButton/DropdownButton';
@@ -44,6 +45,13 @@ const Actions = (props: ActionsProps) => {
     const addLabel = (label: CardLabel) => {
         dispatch(cardActionCreators.AddLabel(card.id, label));
         setIsLabelDropdownOpened(false);
+    }
+
+    const inviteUser = (user: User) => {
+        if (!card.users.some(u => u.id === user.id)) {
+            dispatch(userActionCreators.InviteToCard(user, card.id));
+            setIsMemberDropdownOpened(false);
+        }
     }
 
     return (
@@ -88,7 +96,7 @@ const Actions = (props: ActionsProps) => {
                         + Assign a member
                     </DropdownButton>
                     <DropdownContent isDisplayed={isMemberDropdownOpened} offsetY={10}>
-                        <UserSearch searchType="Card" onUserConfirmationClick={() => {}} />
+                        <UserSearch searchType="Card" onUserConfirmationClick={inviteUser} />
                     </DropdownContent>
                 </Dropdown>
             </div>

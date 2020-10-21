@@ -45,8 +45,20 @@ function* removeFromBoard(action: ITypedAction & IPayloadedAction<{userId: numbe
     }
 }
 
+function* inviteToCard(action: ITypedAction & IPayloadedAction<{user: User, cardId: number}>) {
+    const res: AxiosResponse<ApiResponse<boolean>> = yield UserApiClient.inviteToCard(action.payload.user.id, action.payload.cardId);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["User has been invited"], NotificationType.success));
+        yield put(actionCreators.InviteToCardSucceeded(action.payload.user, action.payload.cardId));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchUser() {
     yield takeLatest(actionTypes.UserSearchRequested, searchUser);
     yield takeLatest(actionTypes.InviteToBoardRequested, inviteToBoard);
     yield takeLatest(actionTypes.RemoveFromBoardRequested, removeFromBoard);
+    yield takeLatest(actionTypes.InviteToCard, inviteToCard);
 }

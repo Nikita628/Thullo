@@ -2,7 +2,7 @@ import { Card, CardLabel } from "../models/card";
 import { IPayloadedAction, ITypedAction } from "./common";
 import { actionTypes as boardActionTypes } from "./board";
 import { BoardList } from "../models/boardList";
-import { cardLabelColorsMap } from "../common/data";
+import {  actionTypes as userActionTypes } from "./user";
 
 export const actionTypes = {
     moveCardToList: "card/moveCardToList",
@@ -212,7 +212,28 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
                     }
                     return bc;
                 })
+            };
+        }
+        case userActionTypes.InviteToCardSucceeded: {
+            const updatedState = {
+                ...state,
+                boardCards: state.boardCards.map(bc => {
+                    if (bc.id === action.payload.cardId) {
+                        return {
+                            ...bc,
+                            users: [...bc.users, action.payload.user]
+                        };
+                    }
+                    return bc;
+                }),
+            };
+            if (state.card && state.card.id === action.payload.cardId) {
+                updatedState.card = {
+                    ...state.card,
+                    users: [...state.card.users, action.payload.user]
+                };
             }
+            return updatedState;
         }
         default:
             return state;

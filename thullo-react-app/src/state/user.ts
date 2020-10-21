@@ -9,6 +9,8 @@ export const actionTypes = {
     InviteToBoardRequested: "user/inviteToBoardRequested",
     RemoveFromBoardRequested: "user/removeFromBoardRequested",
     RemoveFromBoardSucceeded: "user/removeFromBoardSucceeded",
+    InviteToCard: "user/inviteToCard",
+    InviteToCardSucceeded: "user/inviteToCardSucceeded",
 };
 
 export const actionCreators = {
@@ -47,6 +49,20 @@ export const actionCreators = {
         payload: {
             userId,
             boardId,
+        }
+    }),
+    InviteToCard: (user: User, cardId: number): ITypedAction & IPayloadedAction<{ user: User, cardId: number }> => ({
+        type: actionTypes.InviteToCard,
+        payload: {
+            user,
+            cardId,
+        }
+    }),
+    InviteToCardSucceeded: (user: User, cardId: number): ITypedAction & IPayloadedAction<{ user: User, cardId: number }> => ({
+        type: actionTypes.InviteToCardSucceeded,
+        payload: {
+            user,
+            cardId,
         }
     }),
 };

@@ -42,6 +42,7 @@ namespace Thullo.Application.Services
 
 				.Include(c => c.CardMemberships)
 				.ThenInclude(cm => cm.User)
+				.ThenInclude(u => u.Img)
 
 				.Include(c => c.LabelToCardRelations)
 				.ThenInclude(lcr => lcr.CardLabel)

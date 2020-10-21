@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
 
 import css from './Card.module.css';
 import { concatCssClasses } from '../../../common/functionality';
@@ -13,6 +14,7 @@ import DropdownContent from '../../common/ui/Dropdown/DropdownContent/DropdownCo
 import UserSearch from '../../user/UserSearch/UserSearch';
 import { User } from '../../../models/user';
 import Button from '../../common/ui/Button/Button';
+import { actionCreators as userActionCreators } from "../../../state/user";
 
 interface CardProps extends BaseProps {
     card: CardModel;
@@ -23,6 +25,7 @@ interface CardProps extends BaseProps {
 const defaultNumberOfUserToDisplay = 2;
 
 const Card = (props: CardProps) => {
+    const dispatch = useDispatch();
     const [isUserSearchDropdownOpened, setIsUserSearchDropdownOpened] = useState(false);
 
     const toggleUserSearchDropdown = () => {
@@ -30,13 +33,17 @@ const Card = (props: CardProps) => {
     }
 
     const inviteUser = (user: User) => {
-        setIsUserSearchDropdownOpened(false);
+        if (!props.card.users.some(u => u.id === user.id)) {
+            dispatch(userActionCreators.InviteToCard(user, props.card.id));
+            setIsUserSearchDropdownOpened(false);
+        }
     }
 
     const displayCardDetails = (e: React.MouseEvent<HTMLElement>) => {
         props.onOpenDetails();
     }
 
+    console.log(props.card.users.length);
     return (
         <div key={props.card.id} className={concatCssClasses(css.card, props.className)}>
             {props.card.coverUrl && <img onDragStart={(e) => e.preventDefault()} draggable={false} className={css.cardCover} src={props.card.coverUrl} alt="" />}

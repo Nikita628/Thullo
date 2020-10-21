@@ -11,12 +11,19 @@ export class UserApiClient {
 
     static inviteToBoard(userId: number, boardId: number) {
         return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/user/inviteToBoard`, {
-            userId: userId,
-            boardId: boardId
+            userId,
+            boardId
         });
     }
 
     static removeFromBoard(userId: number, boardId: number) {
         return axios.delete<ApiResponse<boolean>>(`${config.apiUrl}/user/${userId}/deleteFromBoard/${boardId}`);
+    }
+
+    static inviteToCard(userId: number, cardId: number) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/user/inviteToCard`, {
+            userId,
+            cardId
+        });
     }
 }
