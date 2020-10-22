@@ -29,7 +29,8 @@ namespace Thullo.WebApi.Controllers
 			var file = new FileData
 			{
 				FileName = attachment.FileName,
-				Bytes = await attachment.ToByteArrayAsync()
+				Bytes = await attachment.ToByteArrayAsync(),
+				ContentType = attachment.ContentType,
 			};
 
 			var res = await _attachmentService.Create(file, cardId);

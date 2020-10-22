@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { CardAttachment } from '../../../../models/card';
 
 import { BaseProps } from '../../../../common/data';
-import { concatCssClasses, formatDate } from '../../../../common/functionality';
+import { concatCssClasses, downloadFile, formatDate } from '../../../../common/functionality';
 import { AppState } from '../../../../state';
 import { actionCreators as cardActionCreators } from "../../../../state/card";
 import IconBadge from '../../../common/ui/IconBadge/IconBadge';
@@ -33,7 +33,7 @@ const Attachments = (props: AttachmentsProps) => {
                 props.attachments
                 && props.attachments.map(a =>
                     <Media
-                        style={{width: "100%", margin: "10px 0"}}
+                        style={{ width: "100%", margin: "10px 0" }}
                         key={a.id}
                         header={a.file.name}
                         text={`Added ${formatDate(new Date(a.createdDate))}`}
@@ -41,13 +41,18 @@ const Attachments = (props: AttachmentsProps) => {
                         imgWidth="110px"
                         imgHeight="70px"
                     >
-                        <Button style={{marginTop: "5px"}} type="secondary-outline">Download</Button>
+                        <Button
+                            onClick={e => downloadFile(a.file.url, a.file.name)}
+                            style={{ marginTop: "5px" }}
+                            type="secondary-outline">
+                            Download
+                        </Button>
                         {" "}
                         {a.createdBy.id === currentUser.id && <Button type="secondary-outline">Delete</Button>}
                     </Media>
                 )
             }
-            <FilePicker style={{margin: "20px 0"}} isUploadEnabled maxNumberOfFiles={1} onUploadClick={createAttachment} />
+            <FilePicker style={{ margin: "20px 0" }} isUploadEnabled maxNumberOfFiles={1} onUploadClick={createAttachment} />
         </div>
     );
 }

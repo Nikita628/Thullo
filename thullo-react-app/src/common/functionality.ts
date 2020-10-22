@@ -21,13 +21,37 @@ export const concatCssClasses = (...classes: string[]) => {
 export const formatDate = (date: Date): string => {
     if (!date) return "";
 
-    const options = { 
-        year: 'numeric', 
-        month: '2-digit', 
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
         day: '2-digit',
         hour: "numeric",
         minute: "numeric",
     };
-    
+
     return date.toLocaleDateString("en-US", options);
+}
+
+export const downloadFile = (srcUrl: string, fileName: string, type = "text/plain") => {
+    fetch(srcUrl)
+        .then(resp => resp.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(() => alert("Error whilte downloading the file"));
+
+    // const link = document.createElement("a");
+    // link.target = "_blank";
+    // link.download = fileName;
+    // link.href = srcUrl;
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
 }

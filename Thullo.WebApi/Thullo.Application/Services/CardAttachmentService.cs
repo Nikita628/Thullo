@@ -34,7 +34,8 @@ namespace Thullo.Application.Services
 					{
 						Name = fileData.FileName,
 						StorageData = uploadResult.PublicId,
-						Url = uploadResult.Url
+						Url = uploadResult.Url,
+						ContentType = fileData.ContentType
 					};
 
 					await _db.Files.AddAsync(file);
@@ -99,7 +100,10 @@ namespace Thullo.Application.Services
 		{
 			var result = new Response<object>();
 
-			var attachment = await _db.CardAttachments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == attachmentId);
+			var attachment = await _db.CardAttachments
+				.AsNoTracking()
+				.Include(a => a.File)
+				.FirstOrDefaultAsync(a => a.Id == attachmentId);
 
 			if (attachment is null)
 			{

@@ -6,6 +6,7 @@
 		public string Name { get; set; }
 		public string Url { get; set; }
 		public string StorageData { get; set; }
+		public string ContentType { get; set; }
 
 		public User User { get; set; }
 		public CardAttachment CardAttachment { get; set; }

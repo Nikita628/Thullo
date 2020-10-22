@@ -50,7 +50,7 @@ namespace Thullo.Application.Services
 				response.Errors.Add("Public id must be present");
 				return response;
 			}
-
+			
 			var deletionParams = new DeletionParams(publicId);
 
 			var res = await _cloudinary.DestroyAsync(deletionParams);

@@ -5,6 +5,7 @@ export class File {
     name: string;
     url: string;
     storageData: string;
+    contentType: string;
 }
 
 export class Notification {
