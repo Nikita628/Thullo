@@ -53,8 +53,13 @@ namespace Thullo.Application.Services
 
 					transaction.Commit();
 
-					attachment.File = file;
-					result.Item = attachment;
+					var createdAttachment = await _db.CardAttachments
+						.AsNoTracking()
+						.Include(a => a.CreatedBy)
+						.Include(a => a.File)
+						.FirstOrDefaultAsync(a => a.Id == attachment.Id);
+
+					result.Item = createdAttachment;
 				}
 				catch (Exception e)
 				{

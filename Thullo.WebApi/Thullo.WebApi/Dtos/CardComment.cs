@@ -12,6 +12,7 @@ namespace Thullo.WebApi.Dtos.CardComment
 	{
 		public int Id { get; set; }
 		public string Text { get; set; }
+		public int CardId { get; set; }
 		public Dtos.User.User CreatedBy { get; set; }
 		public DateTime CreatedDate { get; set; }
 	}

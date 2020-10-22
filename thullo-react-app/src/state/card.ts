@@ -1,4 +1,4 @@
-import { Card, CardComment, CardLabel } from "../models/card";
+import { Card, CardAttachment, CardComment, CardLabel } from "../models/card";
 import { IPayloadedAction, ITypedAction } from "./common";
 import { actionTypes as boardActionTypes } from "./board";
 import { BoardList } from "../models/boardList";
@@ -25,6 +25,8 @@ export const actionTypes = {
     updateCommentTextSucceeded: "card/editCommentTextSucceeded",
     deleteComment: "card/deleteComment",
     deleteCommentSucceeded: "card/deleteCommentSucceeded",
+    createAttachment: "card/createAttachment",
+    createAttachmentSucceeded: "card/createAttachmentSucceeded",
 };
 
 export const actionCreators = {
@@ -150,6 +152,17 @@ export const actionCreators = {
             cardId
         }
     }),
+    CreateAttachment: (cardId: number, file: File): ITypedAction & IPayloadedAction<{cardId: number, file: File}> => ({
+        type: actionTypes.createAttachment,
+        payload: {
+            cardId,
+            file
+        }
+    }),
+    CreateAttachmentSucceeded: (attachment: CardAttachment): ITypedAction & IPayloadedAction<CardAttachment> => ({
+        type: actionTypes.createAttachmentSucceeded,
+        payload: attachment
+    })
 };
 
 export interface CardState {
@@ -317,6 +330,20 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
                         : bc
                 )
             };
+        }
+        case actionTypes.createAttachmentSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    attachments: [...state.card.attachments, action.payload]
+                },
+                boardCards: state.boardCards.map(bc =>
+                    bc.id === action.payload.cardId
+                        ? { ...bc, attachments: [...bc.attachments, action.payload] }
+                        : bc
+                )
+            }
         }
         default:
             return state;

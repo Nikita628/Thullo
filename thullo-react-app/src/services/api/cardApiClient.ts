@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { ApiResponse } from "../../models/common";
 import config from "../../common/config";
-import { Card, CardComment, CardLabel } from "../../models/card";
+import { Card, CardAttachment, CardComment, CardLabel } from "../../models/card";
 
 export class CardApiClient {
     static moveCard(cardId: number, listId: number) {
@@ -61,5 +61,12 @@ export class CardApiClient {
 
     static deleteComment(commentId: number) {
         return axios.delete<ApiResponse<boolean>>(`${config.apiUrl}/cardComment/delete/${commentId}`);
+    }
+
+    static createAttachment (cardId: number, file: File) {
+        const form = new FormData();
+        form.append("attachment", file);
+        form.append("cardId", cardId.toString());
+        return axios.post<ApiResponse<CardAttachment>>(`${config.apiUrl}/cardAttachment/create`, form);
     }
 }

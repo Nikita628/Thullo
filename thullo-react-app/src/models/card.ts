@@ -23,6 +23,7 @@ export class CardLabel {
 export class CardAttachment {
     id: number;
     file: File;
+    cardId: number;
     createdDate: Date;
     createdBy: User;
 }

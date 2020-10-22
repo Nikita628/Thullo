@@ -34,7 +34,9 @@ namespace Thullo.WebApi.Controllers
 
 			var res = await _attachmentService.Create(file, cardId);
 
-			return Ok(res);
+			var mappedRes = _mapper.Map<Response<Dtos.CardAttachment.CardAttachment>>(res);
+
+			return Ok(mappedRes);
 		}
 
 		[HttpDelete("delete/{id}")]

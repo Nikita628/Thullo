@@ -7,7 +7,7 @@ import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiResponse } from "../models/common";
 import { NotificationType } from "../common/data";
 import { CardApiClient } from "../services/api/cardApiClient";
-import { Card, CardComment, CardLabel } from "../models/card";
+import { Card, CardAttachment, CardComment, CardLabel } from "../models/card";
 
 function* moveCard(action: IPayloadedAction<{ cardId: number, futureListId: number }> & ITypedAction) {
     const res: AxiosResponse<ApiResponse<boolean>> = yield CardApiClient.moveCard(action.payload.cardId, action.payload.futureListId);
@@ -120,6 +120,17 @@ function* deleteComment(action: IPayloadedAction<{commentId: number, cardId: num
     }
 }
 
+function* createAttachment(action: IPayloadedAction<{file: File, cardId: number}> & ITypedAction) {
+    const res: AxiosResponse<ApiResponse<CardAttachment>> = yield CardApiClient.createAttachment(action.payload.cardId, action.payload.file);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Attachment has been added"], NotificationType.success));
+        yield put(actionCreators.CreateAttachmentSucceeded(res.data.item));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchCard() {
     yield takeLatest(actionTypes.moveCardToList, moveCard);
     yield takeLatest(actionTypes.createCard, createCard);
@@ -131,4 +142,5 @@ export function* watchCard() {
     yield takeLatest(actionTypes.createComment, createComment);
     yield takeLatest(actionTypes.updateCommentText, updateCommentText);
     yield takeLatest(actionTypes.deleteComment, deleteComment);
+    yield takeLatest(actionTypes.createAttachment, createAttachment);
 }

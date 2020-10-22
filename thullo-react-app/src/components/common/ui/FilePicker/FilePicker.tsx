@@ -1,16 +1,14 @@
 import React, { ReactNode, useRef, useState } from 'react';
-import axios from "axios";
 
 import Icon from '../Icon/Icon';
 import css from './FilePicker.module.css';
-import { actionCreators as commonActionCreators } from "../../../../state/common";
-import { BaseProps, NotificationType } from '../../../../common/data';
+import { BaseProps } from '../../../../common/data';
 
 interface FilePickerProps extends BaseProps {
     isUploadEnabled: boolean;
-    fileUploadUrl?: string;
     maxNumberOfFiles?: number;
     onSelectedFilesChanged?: (file: File[]) => void;
+    onUploadClick?: (file: File[]) => void;
 }
 
 class FilePreview {
@@ -51,18 +49,12 @@ const FilePicker = (props: FilePickerProps) => {
     }
 
     const uploadSelectedFiles = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-
-        if (props.fileUploadUrl) {
-            let formData = new FormData();
-
-            for (let i = 0; i < selectedFiles.length; i++) {
-                formData.append("file" + i, selectedFiles[i]);
-            }
-
-            axios.post(props.fileUploadUrl, formData)
-                .then(() => setSelectedFiles([]))
-                .catch((errors: string[]) => commonActionCreators.CreateNotificationsRequested(errors, NotificationType.error));
+        preventDefault(e);
+        if (props.onUploadClick) {
+            const files = [...selectedFiles];
+            props.onUploadClick(files);
+            setSelectedFiles([]);
+            setFilePreviews([]);
         }
     }
 

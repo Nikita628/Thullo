@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { CardAttachment } from '../../../../models/card';
 
@@ -18,7 +18,13 @@ interface AttachmentsProps extends BaseProps {
 }
 
 const Attachments = (props: AttachmentsProps) => {
+    const dispatch = useDispatch();
     const currentUser = useSelector((state: AppState) => state.auth.user);
+
+    const createAttachment = (files: File[]) => {
+        console.log("createatta");
+        dispatch(cardActionCreators.CreateAttachment(props.cardId, files[0]));
+    }
 
     return (
         <div className={concatCssClasses(css.attachments, props.className)}>
@@ -41,7 +47,7 @@ const Attachments = (props: AttachmentsProps) => {
                     </Media>
                 )
             }
-            <FilePicker style={{margin: "20px 0"}} isUploadEnabled maxNumberOfFiles={1} />
+            <FilePicker style={{margin: "20px 0"}} isUploadEnabled maxNumberOfFiles={1} onUploadClick={createAttachment} />
         </div>
     );
 }
