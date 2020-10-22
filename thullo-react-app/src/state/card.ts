@@ -2,7 +2,7 @@ import { Card, CardAttachment, CardComment, CardLabel } from "../models/card";
 import { IPayloadedAction, ITypedAction } from "./common";
 import { actionTypes as boardActionTypes } from "./board";
 import { BoardList } from "../models/boardList";
-import {  actionTypes as userActionTypes } from "./user";
+import { actionTypes as userActionTypes } from "./user";
 
 export const actionTypes = {
     moveCardToList: "card/moveCardToList",
@@ -27,6 +27,8 @@ export const actionTypes = {
     deleteCommentSucceeded: "card/deleteCommentSucceeded",
     createAttachment: "card/createAttachment",
     createAttachmentSucceeded: "card/createAttachmentSucceeded",
+    deleteAttachment: "card/deleteAttachment",
+    deleteAttachmentSucceeded: "card/deleteAttachmentSucceeded",
 };
 
 export const actionCreators = {
@@ -102,14 +104,14 @@ export const actionCreators = {
             coverUrl
         }
     }),
-    AddLabel: (cardId: number, label: CardLabel): ITypedAction & IPayloadedAction<{cardId: number, label: CardLabel}> => ({
+    AddLabel: (cardId: number, label: CardLabel): ITypedAction & IPayloadedAction<{ cardId: number, label: CardLabel }> => ({
         type: actionTypes.addLabel,
         payload: {
             cardId,
             label,
         }
     }),
-    AddLabelSucceeded: (cardId: number, label: CardLabel): ITypedAction & IPayloadedAction<{cardId: number, label: CardLabel}> => ({
+    AddLabelSucceeded: (cardId: number, label: CardLabel): ITypedAction & IPayloadedAction<{ cardId: number, label: CardLabel }> => ({
         type: actionTypes.addLabelSucceeded,
         payload: {
             cardId,
@@ -124,35 +126,35 @@ export const actionCreators = {
         type: actionTypes.createCommentSucceeded,
         payload: comment
     }),
-    UpdateCommentText: (commentId: number, text: string): ITypedAction & IPayloadedAction<{commentId: number, text: string}> => ({
+    UpdateCommentText: (commentId: number, text: string): ITypedAction & IPayloadedAction<{ commentId: number, text: string }> => ({
         type: actionTypes.updateCommentText,
         payload: {
             commentId,
             text,
         }
     }),
-    UpdateCommentTextSucceeded: (commentId: number, text: string): ITypedAction & IPayloadedAction<{commentId: number, text: string}> => ({
+    UpdateCommentTextSucceeded: (commentId: number, text: string): ITypedAction & IPayloadedAction<{ commentId: number, text: string }> => ({
         type: actionTypes.updateCommentTextSucceeded,
         payload: {
             commentId,
             text,
         }
     }),
-    DeleteComment: (commentId: number, cardId: number): ITypedAction & IPayloadedAction<{commentId: number, cardId: number}> => ({
+    DeleteComment: (commentId: number, cardId: number): ITypedAction & IPayloadedAction<{ commentId: number, cardId: number }> => ({
         type: actionTypes.deleteComment,
         payload: {
             commentId,
             cardId
         }
     }),
-    DeleteCommentSucceeded: (commentId: number, cardId: number): ITypedAction & IPayloadedAction<{commentId: number, cardId: number}> => ({
+    DeleteCommentSucceeded: (commentId: number, cardId: number): ITypedAction & IPayloadedAction<{ commentId: number, cardId: number }> => ({
         type: actionTypes.deleteCommentSucceeded,
         payload: {
             commentId,
             cardId
         }
     }),
-    CreateAttachment: (cardId: number, file: File): ITypedAction & IPayloadedAction<{cardId: number, file: File}> => ({
+    CreateAttachment: (cardId: number, file: File): ITypedAction & IPayloadedAction<{ cardId: number, file: File }> => ({
         type: actionTypes.createAttachment,
         payload: {
             cardId,
@@ -162,7 +164,21 @@ export const actionCreators = {
     CreateAttachmentSucceeded: (attachment: CardAttachment): ITypedAction & IPayloadedAction<CardAttachment> => ({
         type: actionTypes.createAttachmentSucceeded,
         payload: attachment
-    })
+    }),
+    DeleteAttachment: (attachmentId: number, cardId: number): ITypedAction & IPayloadedAction<{ attachmentId: number, cardId: number }> => ({
+        type: actionTypes.deleteAttachment,
+        payload: {
+            cardId,
+            attachmentId
+        },
+    }),
+    DeleteAttachmentSucceeded: (attachmentId: number, cardId: number): ITypedAction & IPayloadedAction<{ cardId: number, attachmentId: number }> => ({
+        type: actionTypes.deleteAttachmentSucceeded,
+        payload: {
+            attachmentId,
+            cardId
+        },
+    }),
 };
 
 export interface CardState {
@@ -254,13 +270,13 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
         case actionTypes.addLabelSucceeded: {
             return {
                 ...state,
-                card: { 
-                    ...state.card, 
+                card: {
+                    ...state.card,
                     labels: [...state.card.labels, action.payload.label]
                 },
                 boardCards: state.boardCards.map(bc => {
                     if (bc.id === action.payload.cardId) {
-                        return { 
+                        return {
                             ...bc,
                             labels: [...bc.labels, action.payload.label]
                         };
@@ -344,6 +360,20 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
                         : bc
                 )
             }
+        }
+        case actionTypes.deleteAttachmentSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    attachments: state.card.attachments.filter(a => a.id !== action.payload.attachmentId)
+                },
+                boardCards: state.boardCards.map(bc =>
+                    bc.id === action.payload.cardId
+                        ? { ...bc, attachments: bc.attachments.filter(a => a.id !== action.payload.attachmentId) }
+                        : bc
+                )
+            };
         }
         default:
             return state;

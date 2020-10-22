@@ -69,4 +69,8 @@ export class CardApiClient {
         form.append("cardId", cardId.toString());
         return axios.post<ApiResponse<CardAttachment>>(`${config.apiUrl}/cardAttachment/create`, form);
     }
+
+    static deleteAttachment(attachmentId: number) {
+        return axios.delete<ApiResponse<boolean>>(`${config.apiUrl}/cardAttachment/delete/${attachmentId}`);
+    }
 }

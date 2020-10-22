@@ -131,6 +131,17 @@ function* createAttachment(action: IPayloadedAction<{file: File, cardId: number}
     }
 }
 
+function* deleteAttachment(action: IPayloadedAction<{attachmentId: number, cardId: number}> & ITypedAction) {
+    const res: AxiosResponse<ApiResponse<boolean>> = yield CardApiClient.deleteAttachment(action.payload.attachmentId);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Attachment has been deleted"], NotificationType.success));
+        yield put(actionCreators.DeleteAttachmentSucceeded(action.payload.attachmentId, action.payload.cardId));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchCard() {
     yield takeLatest(actionTypes.moveCardToList, moveCard);
     yield takeLatest(actionTypes.createCard, createCard);
@@ -143,4 +154,5 @@ export function* watchCard() {
     yield takeLatest(actionTypes.updateCommentText, updateCommentText);
     yield takeLatest(actionTypes.deleteComment, deleteComment);
     yield takeLatest(actionTypes.createAttachment, createAttachment);
+    yield takeLatest(actionTypes.deleteAttachment, deleteAttachment);
 }

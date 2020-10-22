@@ -26,6 +26,10 @@ const Attachments = (props: AttachmentsProps) => {
         dispatch(cardActionCreators.CreateAttachment(props.cardId, files[0]));
     }
 
+    const deleteAttachment = (id: number) => {
+        dispatch(cardActionCreators.DeleteAttachment(id, props.cardId));
+    }
+
     return (
         <div className={concatCssClasses(css.attachments, props.className)}>
             <IconBadge style={{ width: "100%", margin: "20px 0 5px 0" }} icon="list-ul" text="Attachments" />
@@ -48,7 +52,7 @@ const Attachments = (props: AttachmentsProps) => {
                             Download
                         </Button>
                         {" "}
-                        {a.createdBy.id === currentUser.id && <Button type="secondary-outline">Delete</Button>}
+                        {a.createdBy.id === currentUser.id && <Button onClick={e => deleteAttachment(a.id)} type="secondary-outline">Delete</Button>}
                     </Media>
                 )
             }
