@@ -43,7 +43,6 @@ const Card = (props: CardProps) => {
         props.onOpenDetails();
     }
 
-    console.log(props.card.users.length);
     return (
         <div key={props.card.id} className={concatCssClasses(css.card, props.className)}>
             {props.card.coverUrl && <img onDragStart={(e) => e.preventDefault()} draggable={false} className={css.cardCover} src={props.card.coverUrl} alt="" />}

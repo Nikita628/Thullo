@@ -30,6 +30,7 @@ export class CardAttachment {
 export class CardComment {
     id: number;
     text: string;
+    cardId: number;
     createdBy: User;
     createdDate: Date;
 }

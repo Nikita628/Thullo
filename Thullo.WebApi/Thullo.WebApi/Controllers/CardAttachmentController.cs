@@ -23,7 +23,7 @@ namespace Thullo.WebApi.Controllers
 			_mapper = m;
 		}
 
-		[HttpPost]
+		[HttpPost("create")]
 		public async Task<IActionResult> Create([FromForm] IFormFile attachment, [FromForm]int cardId)
 		{
 			var file = new FileData

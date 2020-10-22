@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
 import { CardComment } from '../../../../models/card';
 import { BaseProps } from '../../../../common/data';
-import { concatCssClasses, formatDate } from '../../../../common/functionality';
-import { AppState } from '../../../../state';
+import { formatDate } from '../../../../common/functionality';
 import { actionCreators as cardActionCreators } from "../../../../state/card";
 import css from './Comment.module.css';
 import Button from '../../../common/ui/Button/Button';
 import Media from '../../../common/ui/Media/Media';
 import { User } from '../../../../models/user';
 import TextArea from '../../../common/ui/TextArea/TextArea';
+import { AppState } from '../../../../state';
 
 interface CommentsProps extends BaseProps {
     cardId: number;
     comment: CardComment;
 }
 
-const Comments = (props: CommentsProps) => {
+const Comment = (props: CommentsProps) => {
+    const dispatch = useDispatch();
+    const currentUser = useSelector((state: AppState) => state.auth.user);
     const [isEditing, setIsEditing] = useState(false);
     const [commentText, setCommentText] = useState(props.comment.text);
 
     const saveEditedComment = (text: string) => {
         if (text) {
-            //dispatch  
+            dispatch(cardActionCreators.UpdateCommentText(props.comment.id, commentText));
         } else {
             setCommentText(props.comment.text);
         }
@@ -32,11 +34,11 @@ const Comments = (props: CommentsProps) => {
     }
 
     const deleteComment = () => {
-        //dispatch
+        dispatch(cardActionCreators.DeleteComment(props.comment.id, props.cardId));
     }
 
     return (
-        <div className={css.comment}>
+        <div style={{...props.style}} className={css.comment}>
             <div className={css.commentHeader}>
                 <Media
                     text={formatDate(new Date(props.comment.createdDate))}
@@ -48,7 +50,7 @@ const Comments = (props: CommentsProps) => {
                 >
                 </Media>
                 {
-                    true
+                    currentUser.id === props.comment.createdBy.id
                     && <div>
                         <Button onClick={() => setIsEditing(true)} type="link">Edit</Button>
                         {" - "}
@@ -68,4 +70,4 @@ const Comments = (props: CommentsProps) => {
     );
 }
 
-export default Comments;
+export default Comment;

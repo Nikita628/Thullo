@@ -23,6 +23,8 @@ namespace Thullo.WebApi.MapperConfigs
             CreateMap<Application.DbModel.CardAttachment, Dtos.CardAttachment.CardAttachment>();
 
             CreateMap<Response<Application.DbModel.Card>, Response<Dtos.Card.Card>>();
+
+            CreateMap<Response<Application.DbModel.CardComment>, Response<Dtos.CardComment.CardComment>>();
         }
     }
 }

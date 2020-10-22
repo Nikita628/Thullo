@@ -15,9 +15,9 @@ namespace Thullo.Application.Services
 			_db = db;
 		}
 
-		public async Task<Response<int>> Create(CardComment comment)
+		public async Task<Response<CardComment>> Create(CardComment comment)
 		{
-			var result = new Response<int>();
+			var result = new Response<CardComment>();
 
 			if (string.IsNullOrWhiteSpace(comment.Text))
 			{
@@ -28,7 +28,12 @@ namespace Thullo.Application.Services
 			await _db.CardComments.AddAsync(comment);
 			await _db.SaveChangesAsync();
 
-			result.Item = comment.Id;
+			var createdComment = await _db.CardComments
+				.AsNoTracking()
+				.Include(c => c.CreatedBy)
+				.FirstOrDefaultAsync(c => c.Id == comment.Id);
+
+			result.Item = createdComment;
 
 			return result;
 		}

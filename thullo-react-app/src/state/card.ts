@@ -1,4 +1,4 @@
-import { Card, CardLabel } from "../models/card";
+import { Card, CardComment, CardLabel } from "../models/card";
 import { IPayloadedAction, ITypedAction } from "./common";
 import { actionTypes as boardActionTypes } from "./board";
 import { BoardList } from "../models/boardList";
@@ -19,6 +19,12 @@ export const actionTypes = {
     updateCardCoverUrlSucceeded: "card/updateCardCoverUrlSucceeded",
     addLabel: "card/addLabel",
     addLabelSucceeded: "card/addLabelSucceeded",
+    createComment: "card/createComment",
+    createCommentSucceeded: "card/createCommentSucceeded",
+    updateCommentText: "card/editCommentText",
+    updateCommentTextSucceeded: "card/editCommentTextSucceeded",
+    deleteComment: "card/deleteComment",
+    deleteCommentSucceeded: "card/deleteCommentSucceeded",
 };
 
 export const actionCreators = {
@@ -106,6 +112,42 @@ export const actionCreators = {
         payload: {
             cardId,
             label,
+        }
+    }),
+    CreateComment: (comment: CardComment): ITypedAction & IPayloadedAction<CardComment> => ({
+        type: actionTypes.createComment,
+        payload: comment
+    }),
+    CreateCommentSucceeded: (comment: CardComment): ITypedAction & IPayloadedAction<CardComment> => ({
+        type: actionTypes.createCommentSucceeded,
+        payload: comment
+    }),
+    UpdateCommentText: (commentId: number, text: string): ITypedAction & IPayloadedAction<{commentId: number, text: string}> => ({
+        type: actionTypes.updateCommentText,
+        payload: {
+            commentId,
+            text,
+        }
+    }),
+    UpdateCommentTextSucceeded: (commentId: number, text: string): ITypedAction & IPayloadedAction<{commentId: number, text: string}> => ({
+        type: actionTypes.updateCommentTextSucceeded,
+        payload: {
+            commentId,
+            text,
+        }
+    }),
+    DeleteComment: (commentId: number, cardId: number): ITypedAction & IPayloadedAction<{commentId: number, cardId: number}> => ({
+        type: actionTypes.deleteComment,
+        payload: {
+            commentId,
+            cardId
+        }
+    }),
+    DeleteCommentSucceeded: (commentId: number, cardId: number): ITypedAction & IPayloadedAction<{commentId: number, cardId: number}> => ({
+        type: actionTypes.deleteCommentSucceeded,
+        payload: {
+            commentId,
+            cardId
         }
     }),
 };
@@ -234,6 +276,47 @@ export const reducer = (state: CardState = initialState, action: ITypedAction & 
                 };
             }
             return updatedState;
+        }
+        case actionTypes.createCommentSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    comments: [...state.card.comments, action.payload]
+                },
+                boardCards: state.boardCards.map(bc =>
+                    bc.id === action.payload.cardId
+                        ? { ...bc, comments: [...bc.comments, action.payload] }
+                        : bc
+                )
+            };
+        }
+        case actionTypes.updateCommentTextSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    comments: state.card.comments.map(c =>
+                        c.id === action.payload.commentId
+                            ? { ...c, text: action.payload.text }
+                            : c
+                    )
+                }
+            };
+        }
+        case actionTypes.deleteCommentSucceeded: {
+            return {
+                ...state,
+                card: {
+                    ...state.card,
+                    comments: state.card.comments.filter(c => c.id !== action.payload.commentId)
+                },
+                boardCards: state.boardCards.map(bc =>
+                    bc.id === action.payload.cardId
+                        ? { ...bc, comments: bc.comments.filter(c => c.id !== action.payload.commentId) }
+                        : bc
+                )
+            };
         }
         default:
             return state;

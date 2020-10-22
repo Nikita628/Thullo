@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { ApiResponse } from "../../models/common";
 import config from "../../common/config";
-import { Card, CardLabel } from "../../models/card";
+import { Card, CardComment, CardLabel } from "../../models/card";
 
 export class CardApiClient {
     static moveCard(cardId: number, listId: number) {
@@ -46,5 +46,20 @@ export class CardApiClient {
             cardId,
             label
         });
+    }
+
+    static createComment(comment: CardComment) {
+        return axios.post<ApiResponse<CardComment>>(`${config.apiUrl}/cardComment/create`, comment);
+    }
+
+    static updateCommentText(commentId: number, text: string) {
+        return axios.put<ApiResponse<boolean>>(`${config.apiUrl}/cardComment/updateText`, {
+            cardCommentId: commentId,
+            text
+        });
+    }
+
+    static deleteComment(commentId: number) {
+        return axios.delete<ApiResponse<boolean>>(`${config.apiUrl}/cardComment/delete/${commentId}`);
     }
 }

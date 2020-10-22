@@ -13,3 +13,11 @@
     display: flex;
     justify-content: end;
 }
+
+.commentsContainer {
+    padding-top: 20px;
+}
+
+.comments {
+    padding-top: 20px;
+}

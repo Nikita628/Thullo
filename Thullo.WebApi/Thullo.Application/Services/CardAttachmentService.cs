@@ -20,9 +20,9 @@ namespace Thullo.Application.Services
 			_cloudService = cs;
 		}
 
-		public async Task<Response<int>> Create(FileData fileData, int cardId)
+		public async Task<Response<CardAttachment>> Create(FileData fileData, int cardId)
 		{
-			var result = new Response<int>();
+			var result = new Response<CardAttachment>();
 
 			using (var transaction = _db.Database.BeginTransaction())
 			{
@@ -53,7 +53,8 @@ namespace Thullo.Application.Services
 
 					transaction.Commit();
 
-					result.Item = attachment.Id;
+					attachment.File = file;
+					result.Item = attachment;
 				}
 				catch (Exception e)
 				{

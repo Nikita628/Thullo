@@ -7,7 +7,7 @@ import { actionCreators as commonActionCreators } from "../state/common";
 import { ApiResponse } from "../models/common";
 import { NotificationType } from "../common/data";
 import { CardApiClient } from "../services/api/cardApiClient";
-import { Card, CardLabel } from "../models/card";
+import { Card, CardComment, CardLabel } from "../models/card";
 
 function* moveCard(action: IPayloadedAction<{ cardId: number, futureListId: number }> & ITypedAction) {
     const res: AxiosResponse<ApiResponse<boolean>> = yield CardApiClient.moveCard(action.payload.cardId, action.payload.futureListId);
@@ -87,6 +87,39 @@ function* addLabel(action: IPayloadedAction<{cardId: number, label: CardLabel}> 
     }
 }
 
+function* createComment(action: IPayloadedAction<CardComment> & ITypedAction) {
+    const res: AxiosResponse<ApiResponse<CardComment>> = yield CardApiClient.createComment(action.payload);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Comment has been added"], NotificationType.success));
+        yield put(actionCreators.CreateCommentSucceeded(res.data.item));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
+function* updateCommentText(action: IPayloadedAction<{commentId: number, text: string}> & ITypedAction) {
+    const res: AxiosResponse<ApiResponse<boolean>> = yield CardApiClient.updateCommentText(action.payload.commentId, action.payload.text);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Comment has been edited"], NotificationType.success));
+        yield put(actionCreators.UpdateCommentTextSucceeded(action.payload.commentId, action.payload.text));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
+function* deleteComment(action: IPayloadedAction<{commentId: number, cardId: number}> & ITypedAction) {
+    const res: AxiosResponse<ApiResponse<boolean>> = yield CardApiClient.deleteComment(action.payload.commentId);
+
+    if (!res.data.errors.length) {
+        yield put(commonActionCreators.CreateNotificationsRequested(["Comment has been deleted"], NotificationType.success));
+        yield put(actionCreators.DeleteCommentSucceeded(action.payload.commentId, action.payload.cardId));
+    } else {
+        yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
+    }
+}
+
 export function* watchCard() {
     yield takeLatest(actionTypes.moveCardToList, moveCard);
     yield takeLatest(actionTypes.createCard, createCard);
@@ -95,4 +128,7 @@ export function* watchCard() {
     yield takeLatest(actionTypes.updateCardDescription, updateDescription);
     yield takeLatest(actionTypes.updateCardCoverUrl, updateCoverUrl);
     yield takeLatest(actionTypes.addLabel, addLabel);
+    yield takeLatest(actionTypes.createComment, createComment);
+    yield takeLatest(actionTypes.updateCommentText, updateCommentText);
+    yield takeLatest(actionTypes.deleteComment, deleteComment);
 }

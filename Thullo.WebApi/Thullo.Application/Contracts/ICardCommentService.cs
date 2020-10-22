@@ -8,6 +8,6 @@ namespace Thullo.Application.Contracts
 	{
 		Task<Response<bool>> UpdateText(string text, int commentId);
 		Task<Response<bool>> Delete(int commentId);
-		Task<Response<int>> Create(CardComment comment);
+		Task<Response<CardComment>> Create(CardComment comment);
 	}
 }

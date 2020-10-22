@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
+using Thullo.Application.Models;
 
 namespace Thullo.WebApi.Controllers
 {
-    [Authorize]
+	[Authorize]
 	[ApiController]
 	[Route("api/[controller]")]
 	public class CardCommentController : ControllerBase
@@ -22,12 +22,14 @@ namespace Thullo.WebApi.Controllers
 			_mapper = m;
 		}
 
-		[HttpPost]
+		[HttpPost("create")]
 		public async Task<IActionResult> Create(CardComment comment)
 		{
 			var res = await _commentService.Create(comment);
 
-			return Ok(res);
+			var mappedRes = _mapper.Map<Response<Dtos.CardComment.CardComment>>(res);
+
+			return Ok(mappedRes);
 		}
 
 		[HttpPut("updateText")]
