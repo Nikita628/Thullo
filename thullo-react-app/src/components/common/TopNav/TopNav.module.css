@@ -18,6 +18,14 @@
     white-space: nowrap;
 }
 
+.logo:active {
+    outline: none;
+}
+
+.logo:focus {
+    outline: none;
+}
+
 .boardMenu {
     display: flex;
     align-items: center;

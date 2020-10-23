@@ -8,6 +8,10 @@
     color: #333;
 }
 
+.commentArea:focus {
+    outline: none;
+}
+
 .buttonContainer {
     margin-top: 5px;
     display: flex;
