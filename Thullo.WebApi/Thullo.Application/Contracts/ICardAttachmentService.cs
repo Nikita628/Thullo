@@ -8,6 +8,5 @@ namespace Thullo.Application.Contracts
 	{
 		Task<Response<CardAttachment>> Create(FileData file, int cardId);
 		Task<Response<bool>> Delete(int attachmentId);
-		Task<Response<object>> Download(int attachmentId);
 	}
 }

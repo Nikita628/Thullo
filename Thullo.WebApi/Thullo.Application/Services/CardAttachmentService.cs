@@ -95,26 +95,5 @@ namespace Thullo.Application.Services
 
 			return result;
 		}
-
-		public async Task<Response<object>> Download(int attachmentId)
-		{
-			var result = new Response<object>();
-
-			var attachment = await _db.CardAttachments
-				.AsNoTracking()
-				.Include(a => a.File)
-				.FirstOrDefaultAsync(a => a.Id == attachmentId);
-
-			if (attachment is null)
-			{
-				result.Errors.Add($"Attachment with id {attachmentId} was not found");
-				return result;
-			}
-
-			// TODO download file from the cloud and send to the user
-			// alternative - user can use a link directly
-
-			return result;
-		}
 	}
 }

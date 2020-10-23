@@ -89,6 +89,8 @@ namespace Thullo.Application.Services
             if (!string.IsNullOrEmpty(param.TitleContains))
                 query = query.Where(b => b.Title.Contains(param.TitleContains));
 
+            // where currentUserId == board.createdBy.id || board.isPublic
+
             int totalCount = await query.CountAsync();
 
             query = query.OrderBy(b => b.Id);
@@ -96,8 +98,8 @@ namespace Thullo.Application.Services
             query = query.Skip((param.PageNumber - 1) * param.PageSize)
                 .Take(param.PageSize);
 
-            // query = query.Include(b => b.BoardLists);
-            query = query.Include(b => b.BoardMemberships)
+            query = query
+                .Include(b => b.BoardMemberships)
                 .ThenInclude(bm => bm.User)
                 .ThenInclude(u => u.Img);
 
