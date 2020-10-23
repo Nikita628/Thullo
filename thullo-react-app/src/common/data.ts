@@ -4,7 +4,8 @@ export type IActionFunction<T = any> = (param?: T) => void;
 
 export const constants = {
     localStorageTokenKey: "thullo_token",
-    localStorageUserKey: "thullo_user"
+    localStorageUserKey: "thullo_user",
+    localStorageTokenExpDate: "thullo_token_exp_date"
 };
 
 export enum NotificationType {

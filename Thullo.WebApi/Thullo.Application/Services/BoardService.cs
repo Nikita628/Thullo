@@ -56,6 +56,14 @@ namespace Thullo.Application.Services
                 .ThenInclude(c => c.LabelToCardRelations)
                 .ThenInclude(lc => lc.CardLabel)
 
+                .Include(b => b.BoardLists)
+                .ThenInclude(bl => bl.Cards)
+                .ThenInclude(c => c.CardAttachments)
+
+                .Include(b => b.BoardLists)
+                .ThenInclude(bl => bl.Cards)
+                .ThenInclude(c => c.CardComments)
+
                 .Include(b => b.CreatedBy)
                 .ThenInclude(u => u.Img)
 

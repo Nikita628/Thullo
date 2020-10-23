@@ -15,6 +15,7 @@ import UserSearch from '../../user/UserSearch/UserSearch';
 import { User } from '../../../models/user';
 import Button from '../../common/ui/Button/Button';
 import { actionCreators as userActionCreators } from "../../../state/user";
+import IconBadge from '../../common/ui/IconBadge/IconBadge';
 
 interface CardProps extends BaseProps {
     card: CardModel;
@@ -60,24 +61,31 @@ const Card = (props: CardProps) => {
             }
 
             <div className={css.usersMenu}>
-                <UserImagesList amountOfUsersToDisplay={defaultNumberOfUserToDisplay} users={props.card.users} imgSize={30} />
-                {
-                    props.card.users.length > defaultNumberOfUserToDisplay
-                    && <p className="text-muted mb-0 mr-3">+{props.card.users.length - defaultNumberOfUserToDisplay} others</p>
-                }
-                <Dropdown onClickOutside={() => setIsUserSearchDropdownOpened(false)}>
-                    <DropdownButton
-                        style={{ width: "30px", height: "30px", padding: "0" }}
-                        onClick={toggleUserSearchDropdown}
-                        onMouseDown={e => e.stopPropagation()}
-                        type="primary"
-                    >
-                        <Icon type="person-plus" />
-                    </DropdownButton>
-                    <DropdownContent isDisplayed={isUserSearchDropdownOpened} offsetY={10}>
-                        <UserSearch searchType="Card" onUserConfirmationClick={inviteUser} />
-                    </DropdownContent>
-                </Dropdown>
+                <div className={css.users}>
+                    <UserImagesList amountOfUsersToDisplay={defaultNumberOfUserToDisplay} users={props.card.users} imgSize={30} />
+                    {
+                        props.card.users.length > defaultNumberOfUserToDisplay
+                        && <p className="text-muted mb-0 mr-3">+{props.card.users.length - defaultNumberOfUserToDisplay} others</p>
+                    }
+                    <Dropdown style={{ marginRight: "10px" }} onClickOutside={() => setIsUserSearchDropdownOpened(false)}>
+                        <DropdownButton
+                            style={{ width: "30px", height: "30px", padding: "0" }}
+                            onClick={toggleUserSearchDropdown}
+                            onMouseDown={e => e.stopPropagation()}
+                            type="primary"
+                        >
+                            <Icon type="person-plus" />
+                        </DropdownButton>
+                        <DropdownContent isDisplayed={isUserSearchDropdownOpened} offsetY={10}>
+                            <UserSearch searchType="Card" onUserConfirmationClick={inviteUser} />
+                        </DropdownContent>
+                    </Dropdown>
+                </div>
+                <div className={css.icons}>
+                    <IconBadge icon="chat-left-text" text={props.card?.comments.length.toString()} />
+                    {" "}
+                    <IconBadge icon="file-earmark-plus" text={props.card?.attachments.length.toString()} />
+                </div>
             </div>
         </div>
     );

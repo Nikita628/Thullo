@@ -7,7 +7,7 @@ interface IconProps extends BaseProps {
     type: string | "chat-left-text" | "three-dots" | "trash" | "x-square"
     | "caret-down-fill" | "caret-up-fill" | "search" | "file-image"
     | "unlock" | "lock" | "eyeglasses" | "columns" | "person-plus"
-    | "x" | "list-ul" | "person-circle" | "pencil-fill";
+    | "x" | "list-ul" | "person-circle" | "pencil-fill" | "file-earmark-plus";
     /** width and height in px. default is 1em */
     size?: number;
 }
@@ -20,6 +20,14 @@ const Icon = (props: IconProps) => {
     }
 
     switch (props.type) {
+        case "file-earmark-plus":
+            return (
+                <svg style={{ ...props.style }} width={iconSize} height={iconSize} viewBox="0 0 16 16" className="bi bi-file-earmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" />
+                    <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z" />
+                    <path fillRule="evenodd" d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
+                </svg>
+            );
         case "chat-left-text":
             return (
                 <svg style={{ ...props.style }} width={iconSize} height={iconSize} viewBox="0 0 16 16" className="bi bi-chat-left-text" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

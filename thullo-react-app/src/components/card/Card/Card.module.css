@@ -34,6 +34,17 @@
     display: flex;
     flex-flow: row wrap;
     align-items: center;
+    justify-content: space-between;
+}
+
+.users {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.icons {
+    padding-top: 2px;
 }
 
 .labelContainer {
