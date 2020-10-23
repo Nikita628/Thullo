@@ -14,6 +14,7 @@ export const actionTypes = {
     updateBoardTitleSucceeded: "board/updateBoardTitleSucceeded",
     updateBoardDescriptionRequested: "board/updateBoardDescriptionRequested",
     updateBoardDescriptionSucceeded: "board/updateBoardDescriptionSucceeded",
+    deleteBoardFromState: "board/DeleteBoardFromState",
 };
 
 export const actionCreators = {
@@ -82,6 +83,9 @@ export const actionCreators = {
         type: actionTypes.updateBoardDescriptionSucceeded,
         payload: description
     }),
+    DeleteBoardFromState: (): ITypedAction => ({
+        type: actionTypes.deleteBoardFromState,
+    }),
 };
 
 export interface BoardState {
@@ -143,6 +147,12 @@ export const reducer = (state: BoardState = initialState, action: ITypedAction &
                     ...state.board,
                     description: action.payload
                 }
+            };
+        }
+        case actionTypes.deleteBoardFromState: {
+            return {
+                ...state,
+                board: null,
             };
         }
         default:

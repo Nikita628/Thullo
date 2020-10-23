@@ -32,6 +32,9 @@ const BoardDetails = (props: BoardDetailsProps) => {
     useEffect(() => {
         dispatch(commonActionCreators.SetAppContext("boardDetails"));
         dispatch(boardActionCreators.GetBoardRequested(Number(id)));
+        return () => {
+            dispatch(boardActionCreators.DeleteBoardFromState());
+        }
     }, []);
 
     const createBoardList = (title: string) => {

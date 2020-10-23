@@ -82,9 +82,9 @@ const Card = (props: CardProps) => {
                     </Dropdown>
                 </div>
                 <div className={css.icons}>
-                    <IconBadge icon="chat-left-text" text={props.card?.comments.length.toString()} />
+                    {!!props.card?.comments.length && <IconBadge icon="chat-left-text" text={props.card?.comments.length.toString()} />}
                     {" "}
-                    <IconBadge icon="file-earmark-plus" text={props.card?.attachments.length.toString()} />
+                    {!!props.card?.attachments.length && <IconBadge icon="file-earmark-plus" text={props.card?.attachments.length.toString()} />}
                 </div>
             </div>
         </div>

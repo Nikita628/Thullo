@@ -29,7 +29,7 @@ function* signIn(action: IPayloadedAction<SignInData> & ITypedAction) {
         yield localStorage.setItem(constants.localStorageUserKey, JSON.stringify(res.data.item.user));
         const _55minAsMs = 3300000;
         yield localStorage.setItem(constants.localStorageTokenExpDate, (_55minAsMs + new Date().getTime()).toString());
-        signOutAfterTimeout(_55minAsMs);
+        yield put(actionCreators.SignOutAfterTimeout(_55minAsMs));
         yield put(actionCreators.SignInSucceeded(res.data.item));
     } else {
         yield put(commonActionCreators.CreateNotificationsRequested(res.data.errors, NotificationType.error));
@@ -46,7 +46,7 @@ function* signInFromLocalStorage(action: ITypedAction) {
             yield put(actionCreators.SignOutRequested());
         } else {
             const timeout = Number(tokenExpDate) - new Date().getTime();
-            signOutAfterTimeout(timeout);
+            yield put(actionCreators.SignOutAfterTimeout(timeout));
             const signInResult = new SignInResult();
             signInResult.token = token;
             signInResult.user = JSON.parse(user);
@@ -57,8 +57,8 @@ function* signInFromLocalStorage(action: ITypedAction) {
     }
 }
 
-function* signOutAfterTimeout(timeoutMs: number) {
-    yield delay(timeoutMs);
+function* signOutAfterTimeout(action: IPayloadedAction<number> & ITypedAction) {
+    yield delay(action.payload);
     yield put(actionCreators.SignOutRequested());
 }
 
@@ -78,4 +78,5 @@ export function* watchAuth() {
     yield takeLatest(actionTypes.SignInRequested, signIn);
     yield takeLatest(actionTypes.SignInFromLocalStorageRequested, signInFromLocalStorage);
     yield takeLatest(actionTypes.SignOutRequested, signOut);
+    yield takeLatest(actionTypes.SignOutAfterTimeout, signOutAfterTimeout);
 }

@@ -12,6 +12,7 @@ export const actionTypes = {
     SignInFromLocalStorageRequested: "auth/signInFromLocalStorageRequested",
     SignInFromLocalStorageFailed: "auth/signInFromLocalStorageFailed",
     SignOutRequested: "auth/signOutRequested",
+    SignOutAfterTimeout: "auth/signOutAfterTimeout",
 };
 
 export const actionCreators = {
@@ -50,6 +51,10 @@ export const actionCreators = {
 
     SignOutRequested: (): ITypedAction => ({
         type: actionTypes.SignOutRequested,
+    }),
+    SignOutAfterTimeout: (timeoutMs: number): ITypedAction & IPayloadedAction<number> => ({
+        type: actionTypes.SignOutAfterTimeout,
+        payload: timeoutMs,
     }),
 };
 
