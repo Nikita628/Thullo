@@ -26,7 +26,7 @@ interface BoardTopMenuProps extends BaseProps {
 
 const BoardTopMenu = (props: BoardTopMenuProps) => {
     const dispatch = useDispatch();
-    const boardUsers = useSelector((state: AppState) => state.user.boardUsers);
+    const boardUsers = useSelector((state: AppState) => [props.board.createdBy, ...state.user.boardUsers]);
     const [isVisibilityDropdownOpened, setIsVisibilityDropdownOpened] = useState(false);
     const [isUserSearchDropdownOpened, setIsUserSearchDropdownOpened] = useState(false);
     const [isSideMenuDisplayed, setIsSideMenuDisplayed] = useState(false);

@@ -4,7 +4,7 @@
 
 .boardListMenu {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: space-between;
     margin-bottom: 10px;
 }
@@ -23,6 +23,7 @@
     padding: 7px;
     background-color: transparent;
     border-radius: 10px;
+    text-overflow: ellipsis;
 }
 
 .listTitleInput:focus {

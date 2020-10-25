@@ -60,7 +60,7 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
                 </div>
                 {
                     boardUsers.map(u => (
-                        <div key={u.id} className={css.teamMember}>
+                        u.id !== board.createdBy.id && <div key={u.id} className={css.teamMember}>
                             <Media
                                 imgSource={u.img ? u.img.url : null}
                                 imgPlaceholder={User.getInitials(u)}
@@ -85,7 +85,7 @@ const BoardSideMenu = (props: BoardSideMenuProps) => {
     }
 
     return (
-        <div style={{...props.style}} className={concatCssClasses(css.boardSideMenu, props.className)}>
+        <div style={{ ...props.style }} className={concatCssClasses(css.boardSideMenu, props.className)}>
             <div className={css.menuHeader}>
                 <input
                     onBlur={saveTitle}

@@ -89,7 +89,7 @@ namespace Thullo.Application.Services
             if (!string.IsNullOrEmpty(param.TitleContains))
                 query = query.Where(b => b.Title.Contains(param.TitleContains));
 
-            // where currentUserId == board.createdBy.id || board.isPublic
+            // TODO where currentUserId == board.createdBy.id || board.isPublic
 
             int totalCount = await query.CountAsync();
 
@@ -101,6 +101,9 @@ namespace Thullo.Application.Services
             query = query
                 .Include(b => b.BoardMemberships)
                 .ThenInclude(bm => bm.User)
+                .ThenInclude(u => u.Img)
+                
+                .Include(b => b.CreatedBy)
                 .ThenInclude(u => u.Img);
 
             var boards = await query.ToListAsync();

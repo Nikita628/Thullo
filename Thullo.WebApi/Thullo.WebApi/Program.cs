@@ -54,9 +54,14 @@ namespace Thullo.WebApi
 			}
 		}
 
+		class SeedUser: User
+        {
+            public string ImgUrl { get; set; }
+        }
+
 		class SeedData
 		{
-			public List<User> Users { get; set; }
+			public List<SeedUser> Users { get; set; }
 			public List<Board> Boards { get; set; }
 			public List<BoardList> BoardLists { get; set; }
 			public List<Card> Cards { get; set; }
@@ -86,7 +91,7 @@ namespace Thullo.WebApi
 				{
 					Name = "defaultUserImg",
 					StorageData = "defaultUserImg",
-					Url = "https://res.cloudinary.com/df10jbiiq/image/upload/v1581786163/slh8cysyl678asa0fbpd.jpg"
+					Url = u.ImgUrl
 				};
 				context.Files.Add(userImg);
 				context.SaveChanges();

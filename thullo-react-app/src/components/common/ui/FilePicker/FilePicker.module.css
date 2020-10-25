@@ -116,6 +116,10 @@
     outline: none;
 }
 
+.uploadButton:focus {
+    outline: none;
+}
+
 .uploadButton:hover {
     background-color: #2664b6;
 }
@@ -127,6 +131,10 @@
 .uploadButtonDisabled {
     opacity: 0.6;
     background-color: #2f80ed;
+}
+
+.uploadButtonDisabled:focus {
+    outline: none;
 }
 
 .uploadButtonDisabled:hover {

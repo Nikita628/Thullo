@@ -775,23 +775,23 @@
 	"CardLabels": [
 		{
 			"name": "id",
-			"color": "green"
+			"color": "#219653"
 		},
 		{
 			"name": "nulla",
-			"color": "green"
+			"color": "#bdbdbd"
 		},
 		{
 			"name": "ipsum",
-			"color": "green"
+			"color": "#f2c94c"
 		},
 		{
 			"name": "veniam",
-			"color": "green"
+			"color": "#56ccf2"
 		},
 		{
 			"name": "deserunt",
-			"color": "green"
+			"color": "#f2c94c"
 		}
 	]
 }

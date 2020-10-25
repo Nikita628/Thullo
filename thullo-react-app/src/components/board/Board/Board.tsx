@@ -13,6 +13,8 @@ interface BoardProps extends BaseProps {
 const maxNumberOfUsersToDisplay = 3;
 
 const Board = (props: BoardProps) => {
+    const users = [props.board.createdBy, ...props.board.users];
+
     return (
         <div className={concatCssClasses(css.board, props.className)} onClick={props.onClick}>
 
@@ -24,13 +26,13 @@ const Board = (props: BoardProps) => {
                 {
                     props.board.users
                     && <div style={{ display: "inline-block" }}>
-                        <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={props.board.users} />
+                        <UserImagesList amountOfUsersToDisplay={maxNumberOfUsersToDisplay} users={users} />
                     </div>
                 }
 
                 {
-                    props.board.users.length > maxNumberOfUsersToDisplay
-                    && <span className="text-muted">+ {props.board.users.length - maxNumberOfUsersToDisplay} others</span>
+                    users.length > maxNumberOfUsersToDisplay
+                    && <span className="text-muted">+ {users.length - maxNumberOfUsersToDisplay} others</span>
                 }
             </div>
 
