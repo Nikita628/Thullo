@@ -1,6 +1,5 @@
 # Thullo
-Thullo - Trello Clone
-
+Thullo - Trello Clone - task tracking
 
     User story: I can see a list of available boards
     User story: I can add a new board with a cover photo, title and visibility options
@@ -23,5 +22,4 @@ Thullo - Trello Clone
 
 Tech stack: Frontend - React (Redux, Saga), Backend - .Net Core Web Api, EF Core.
 
-Original post - https://devchallenges.io/challenges/wP0LbGgEeKhpFHUpPpDh
-designs - https://www.figma.com/file/UOqXCGxVb1fjY7pWUzvI8K/Thullo---Trello-Clone?node-id=0%3A1
+design - https://www.figma.com/file/UOqXCGxVb1fjY7pWUzvI8K/Thullo---Trello-Clone?node-id=0%3A1
