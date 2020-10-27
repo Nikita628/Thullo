@@ -140,9 +140,6 @@ namespace Thullo.Application.DbModel
 				.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
 			modelBuilder.Entity<User>()
 				.Property(u => u.LastName).IsRequired().HasMaxLength(100);
-			//modelBuilder.Entity<User>()
-			//	.HasOne(u => u.Img)
-			//	.WithOne(i => i.User);
 
 			modelBuilder.Entity<File>()
 				.Property(f => f.Name).IsRequired().HasMaxLength(1000);

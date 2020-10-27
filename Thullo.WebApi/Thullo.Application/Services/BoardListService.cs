@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Thullo.Application.Contracts;
 using Thullo.Application.DbModel;
 using Thullo.Application.Models;
@@ -42,23 +45,51 @@ namespace Thullo.Application.Services
 		{
 			var result = new Response<bool>();
 
-			var boardList = await _db.BoardLists.FindAsync(id);
-
-			if (boardList is null)
+			using (var transaction = _db.Database.BeginTransaction())
 			{
-				result.Errors.Add($"Boardlist with id {id} was not found");
-				return result;
+				try
+				{
+					var boardList = await _db.BoardLists
+						.Include(bl => bl.Cards)
+						.ThenInclude(c => c.CardAttachments)
+						.ThenInclude(ca => ca.File)
+
+						.Include(bl => bl.Cards)
+						.ThenInclude(c => c.LabelToCardRelations)
+						.ThenInclude(ltc => ltc.CardLabel)
+
+						.Include(bl => bl.Cards)
+						.ThenInclude(c => c.CardMemberships)
+
+						.Include(bl => bl.Cards)
+						.ThenInclude(c => c.CardComments)
+
+						.FirstOrDefaultAsync(bl => bl.Id == id);
+
+					_db.LabelToCardRelations.RemoveRange(boardList.Cards.SelectMany(c => c.LabelToCardRelations));
+
+					if (boardList is null)
+					{
+						result.Errors.Add($"Boardlist with id {id} was not found");
+						return result;
+					}
+
+					_db.BoardLists.Remove(boardList);
+
+					await _db.SaveChangesAsync();
+
+					result.Item = true;
+
+					transaction.Commit();
+
+					return result;
+				}
+				catch (Exception e)
+				{
+					await transaction.RollbackAsync();
+					throw;
+				}
 			}
-
-			// TODO delete all related data, eg. cards
-
-			_db.BoardLists.Remove(boardList);
-
-			await _db.SaveChangesAsync();
-
-			result.Item = true;
-
-			return result;
 		}
 
 		public async Task<Response<BoardList>> Get(int id)
