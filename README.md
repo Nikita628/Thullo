@@ -1,6 +1,8 @@
 # Thullo
 Thullo - Trello Clone - task tracking
 
+# Live demo - http://nikitabortnikov-001-site1.ctempurl.com
+
     User story: I can see a list of available boards
     User story: I can add a new board with a cover photo, title and visibility options
     User story: I can see a board with different columns, team members,... according to the design
