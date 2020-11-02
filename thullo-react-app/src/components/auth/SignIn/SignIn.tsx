@@ -28,6 +28,13 @@ const SignIn = () => {
     dispatch(actionCreators.SignInRequested(signInData));
   }
 
+  const signInDemo = () => {
+    const signInData = new SignInData();
+    signInData.login = "aguirrehebert@sensate.com";
+    signInData.password = "password";
+    dispatch(actionCreators.SignInRequested(signInData));
+  }
+
   return (
       <div className={css.signIn}>
         <div className={css.formLogo}>
@@ -51,6 +58,7 @@ const SignIn = () => {
           </div>
         </form>
         <p className={css.already}>Don't have an account? Sign up <Link to="/signup">here</Link></p>
+        <Button onClick={signInDemo} type="danger">CLICK HERE TO USE DEMO ACCOUNT</Button>
       </div>
   );
 }

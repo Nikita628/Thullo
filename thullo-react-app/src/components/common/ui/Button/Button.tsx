@@ -6,7 +6,7 @@ import css from './Button.module.css';
 
 interface ButtonProps extends BaseProps {
     type: "primary" | "secondary" | "secondary-outline"
-        | "light" | "success" | "danger-outline" | "primary-light" | "link";
+        | "light" | "success" | "danger-outline" | "primary-light" | "link" | "danger";
     disabled?: boolean;
 }
 

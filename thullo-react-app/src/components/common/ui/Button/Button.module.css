@@ -55,6 +55,15 @@
     color: white;
 }
 
+.danger {
+    background-color: red;
+    color: white;
+}
+
+.danger:active {
+    background-color: #b92828;
+}
+
 .success:hover {
     background-color: #186b3c;
 }
