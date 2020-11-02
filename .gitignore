@@ -5,6 +5,8 @@
 
 thullo-react-app/node_modules/
 thullo-react-app/.vscode/
+Thullo.WebApi/Thullo.WebApi/wwwroot/
+thullo-react-app/build
 
 # User-specific files
 *.rsuser

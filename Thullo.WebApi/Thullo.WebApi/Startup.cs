@@ -121,6 +121,9 @@ namespace Thullo.WebApi
 
 			app.UseAuthentication();
 
+			app.UseDefaultFiles();
+			app.UseStaticFiles();
+
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
@@ -130,6 +133,7 @@ namespace Thullo.WebApi
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				endpoints.MapFallbackToController("Index", "Fallback");
 			});
 		}
 	}
