@@ -84,6 +84,8 @@
     border: none;
     padding: 0 !important;
     cursor: pointer;
+    text-decoration: underline;
+    color: #3281ed;
 }
 
 .link:hover {
