@@ -1,7 +1,7 @@
 .board {
     padding: 10px;
     background-color: white;
-    box-shadow: 1px 1px 5px #bdbdbd;
+    box-shadow: 1px 1px 3px #b2b0b0;
     border-radius: 10px;
     cursor: pointer;
     border: 1px solid transparent;
