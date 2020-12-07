@@ -13,6 +13,7 @@
 
 .invalidInput {
     border: 1px solid red;
+    border-bottom: 1px solid red !important;
 }
 
 .invalidInput:focus {

@@ -177,7 +177,7 @@ const SignUp = (props: SignUpProps) => {
                     <div className={css.errorText}>{validationErrors?.passwordConfirmation}</div>
                 </div>
                 <div className={css.signUpButton}>
-                    <Button onClick={signUp} type="primary">Sign Up</Button>
+                    <Button style={{width: "100%", fontWeight: "bold"}} onClick={signUp} type="primary">SUBMIT</Button>
                 </div>
             </form>
             <p className={css.already}>Already have an account? Sign in <Link to="/signin">here</Link></p>
