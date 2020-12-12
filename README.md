@@ -4,7 +4,7 @@ Thullo - Trello Clone - task tracking.
 Users can create their task boards with different columns and move the tasks between them.
 \
 Live demo - http://nikitabortnikov-001-site1.ctempurl.com
-\
+
     User story: I can see a list of available boards
     User story: I can add a new board with a cover photo, title and visibility options
     User story: I can see a board with different columns, team members,... according to the design
@@ -24,7 +24,7 @@ Live demo - http://nikitabortnikov-001-site1.ctempurl.com
     User story: When a card is selected, I can change the card cover image by searching from Unsplash
     User story: When a card is selected, I can add labels with given colors
 
-\
+
 Tech stack: Frontend - React (Redux, Saga), Backend - .Net Core Web Api, EF Core.
 
 \
