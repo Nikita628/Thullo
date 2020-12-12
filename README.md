@@ -1,9 +1,12 @@
 # Thullo
 
-Thullo - Trello Clone - task tracking.\
-Users can create their task boards with different columns and move the tasks between them.\
-Live demo - http://nikitabortnikov-001-site1.ctempurl.com\
-Tech stack: Frontend - React (Redux, Saga), Backend - .Net Core Web Api, EF Core.\
+Trello Clone - task tracking.
+
+Tool for managing projects and personal tasks. Users can create task-boards containing various columns and fill those columns with tasks.
+
+Live demo - http://nikitabortnikov-001-site1.ctempurl.com
+
+**Frontend**: React (+Redux, +Saga), **Backend**: ASP.NET Core WebAPI, EntityFramework Core (Code First).
 
     User story: I can see a list of available boards
     User story: I can add a new board with a cover photo, title and visibility options
