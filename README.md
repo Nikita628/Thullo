@@ -3,6 +3,7 @@
 Thullo - Trello Clone - task tracking.
 Users can create their task boards with different columns and move the tasks between them.
 \
+\
 Live demo - http://nikitabortnikov-001-site1.ctempurl.com
 
     User story: I can see a list of available boards
