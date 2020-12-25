@@ -6,7 +6,8 @@ Tool for managing projects and personal tasks. Users can create task-boards cont
 
 #### Live demo - http://nikitabortnikov-001-site1.ctempurl.com
 
-**Frontend**: React (+Redux, +Saga), **Backend**: ASP.NET Core WebAPI, EntityFramework Core (Code First).
+**Frontend**: React (+Redux, +Saga).\
+**Backend**: ASP.NET Core WebAPI, EntityFramework Core (Code First).
 
     User story: I can see a list of available boards
     User story: I can add a new board with a cover photo, title and visibility options
