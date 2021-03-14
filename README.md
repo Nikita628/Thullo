@@ -28,5 +28,3 @@ Tool for managing projects and personal tasks. Users can create task-boards cont
     User story: When a card is selected, I can change the card cover image by searching from Unsplash
     User story: When a card is selected, I can add labels with given colors
 
-
-design - https://www.figma.com/file/UOqXCGxVb1fjY7pWUzvI8K/Thullo---Trello-Clone?node-id=0%3A1
