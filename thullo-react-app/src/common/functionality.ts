@@ -21,7 +21,7 @@ export const concatCssClasses = (...classes: string[]) => {
 export const formatDate = (date: Date): string => {
     if (!date) return "";
 
-    const options = {
+    const options: any = {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -46,12 +46,4 @@ export const downloadFile = (srcUrl: string, fileName: string, type = "text/plai
             window.URL.revokeObjectURL(url);
         })
         .catch(() => alert("Error whilte downloading the file"));
-
-    // const link = document.createElement("a");
-    // link.target = "_blank";
-    // link.download = fileName;
-    // link.href = srcUrl;
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
 }
