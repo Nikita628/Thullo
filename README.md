@@ -4,7 +4,6 @@ Trello Clone - task tracking.
 
 Tool for managing projects and personal tasks. Users can create task-boards containing various columns and fill those columns with tasks.
 
-#### Live demo - https://nikbthullo.azurewebsites.net
 
 **Frontend**: React (+Redux, +Saga).\
 **Backend**: ASP.NET Core WebAPI, EntityFramework Core (Code First).
